@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0a0a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>NYC · May 10–16</title>
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png" />
+<link rel="icon" type="image/svg+xml" href="./icon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800;900&display=swap" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<style>
+  :root {
+    --bg: #faf9f5;
+    --surface: #ffffff;
+    --surface-2: #f5f3ec;
+    --line: #e7e4d8;
+    --line-strong: #d4d0bf;
+    --ink: #0a0a0a;
+    --ink-2: #2a2a28;
+    --ink-3: #6b6b66;
+    --ink-4: #9a988f;
+    --gold: #c9a961;
+    --shadow-sm: 0 1px 2px rgba(20,18,10,0.04), 0 1px 3px rgba(20,18,10,0.06);
+    --shadow-md: 0 4px 14px rgba(20,18,10,0.06), 0 2px 4px rgba(20,18,10,0.04);
+    --shadow-lg: 0 12px 40px rgba(20,18,10,0.08), 0 4px 16px rgba(20,18,10,0.06);
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --r-xl: 22px;
+    --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: var(--ink); background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "cv11";
+    overscroll-behavior: none;
+  }
+  button { font-family: inherit; }
+
+  /* ---------- Layout ---------- */
+  #app { display: grid; grid-template-columns: 420px 1fr; height: 100vh; height: 100dvh; position: relative; }
+  #panel { background: var(--bg); border-right: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+  #map { height: 100%; width: 100%; background: #e8e6dd; }
+
+  /* ---------- Hero header ---------- */
+  .hero { padding: calc(22px + env(safe-area-inset-top)) 22px 16px; background: linear-gradient(180deg, var(--bg), var(--bg)); border-bottom: 1px solid var(--line); flex: 0 0 auto; position: relative; }
+  .hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 6px; }
+  .hero h1 { margin: 0; font-family: "Inter Tight", "Inter", sans-serif; font-size: 26px; line-height: 1.02; font-weight: 800; letter-spacing: -0.025em; color: var(--ink); }
+  .hero h1 .em { color: var(--gold); }
+  .countdown { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; background: var(--ink); color: var(--bg); white-space: nowrap; letter-spacing: 0.02em; flex: 0 0 auto; }
+  .countdown.today { background: var(--gold); color: var(--ink); animation: pulse 2.4s var(--ease) infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(201,169,97,0.55); } 50% { box-shadow: 0 0 0 8px rgba(201,169,97,0); } }
+  .hero-sub { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .hero-sub a { font-size: 11px; font-weight: 500; padding: 5px 10px; border-radius: 999px; background: var(--surface); color: var(--ink-2); text-decoration: none; border: 1px solid var(--line); transition: all 0.2s var(--ease); }
+  .hero-sub a:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  /* ---------- Day tabs ---------- */
+  #day-tabs { display: flex; gap: 6px; padding: 12px 22px; overflow-x: auto; background: var(--bg); border-bottom: 1px solid var(--line); flex: 0 0 auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  #day-tabs::-webkit-scrollbar { display: none; }
+  .day-tab { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 13px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--ink-2); white-space: nowrap; transition: all 0.18s var(--ease); display: flex; align-items: center; gap: 6px; }
+  .day-tab:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+  .day-tab.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .day-tab .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+  .day-tab.today-tab::after { content: ""; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 0 2px var(--bg); }
+
+  /* ---------- Filter chips ---------- */
+  #filters { display: flex; gap: 6px; padding: 10px 22px; flex-wrap: wrap; border-bottom: 1px solid var(--line); background: var(--bg); flex: 0 0 auto; }
+  .filter-chip { font-size: 11px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: var(--ink-2); user-select: none; font-weight: 500; transition: all 0.18s var(--ease); }
+  .filter-chip:hover { border-color: var(--line-strong); }
+  .filter-chip.active { background: var(--gold); border-color: var(--gold); color: var(--ink); font-weight: 600; }
+
+  /* ---------- Day content ---------- */
+  #day-content { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 20px 22px calc(100px + env(safe-area-inset-bottom)); }
+  #day-content::-webkit-scrollbar { width: 6px; }
+  #day-content::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+
+  .fade-in { animation: fadeIn 0.4s var(--ease-out) both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .day-title { font-family: "Inter Tight", "Inter", sans-serif; font-size: 28px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 6px; color: var(--ink); }
+  .day-date { font-size: 12px; color: var(--ink-3); margin-bottom: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+  .day-date .pill { padding: 3px 8px; border-radius: 999px; font-weight: 700; font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* Stats row (sunset, walking, subway) */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; }
+  .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 4px; }
+  .stat-value { font-family: "Inter Tight", "Inter", sans-serif; font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; line-height: 1.1; }
+  .stat-sub { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+  /* Subway lines block */
+  .lines-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .lines-card .label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-4); flex: 0 0 100%; }
+  .lines-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .line-bullet { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); font-weight: 500; }
+
+  /* Subway line chip (NYC bullet) */
+  .line-chip { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; color: #fff; font-weight: 800; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.25); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; flex: 0 0 24px; line-height: 1; }
+  .line-chip.lg { width: 32px; height: 32px; font-size: 16px; flex: 0 0 32px; }
+
+  /* Summary card */
+  .summary-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px; margin-bottom: 18px; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+
+  /* Section headings */
+  .section-h { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); margin: 22px 0 10px; display: flex; align-items: center; gap: 6px; }
+  .section-h::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .section-h:first-child { margin-top: 0; }
+
+  /* Stop cards */
+  .stops { display: flex; flex-direction: column; gap: 4px; }
+  .stop { display: flex; gap: 12px; padding: 12px 10px; border-radius: var(--r-md); cursor: pointer; transition: background 0.15s var(--ease); position: relative; align-items: flex-start; }
+  .stop:hover { background: var(--surface-2); }
+  .stop .check { flex: 0 0 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; transition: all 0.25s var(--ease-out); cursor: pointer; user-select: none; box-shadow: var(--shadow-sm); position: relative; -webkit-tap-highlight-color: transparent; }
+  .stop .check::before { content: attr(data-num); }
+  .stop.visited .check { background: #16a34a !important; transform: scale(0.92); }
+  .stop.visited .check::before { content: "✓"; font-size: 18px; }
+  .stop.visited .name { text-decoration: line-through; color: var(--ink-3); }
+  .stop .body { flex: 1; min-width: 0; }
+  .stop .name { font-size: 14.5px; font-weight: 600; line-height: 1.3; color: var(--ink); margin-bottom: 2px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .stop .name .emoji { font-size: 15px; }
+  .stop .name .badge { font-size: 9px; font-weight: 800; letter-spacing: 0.05em; padding: 2px 5px; border-radius: 4px; background: var(--gold); color: var(--ink); text-transform: uppercase; }
+  .stop .name .badge.work { background: #fef3c7; color: #78350f; }
+  .stop .name .badge.hidden { background: var(--ink); color: var(--bg); }
+  .stop .name .badge.photo { background: #fce7f3; color: #831843; }
+  .stop .name .badge.must { background: #fee2e2; color: #7f1d1d; }
+  .stop .addr { font-size: 12px; color: var(--ink-3); margin-bottom: 5px; line-height: 1.35; }
+  .stop .tip { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+  .stop.work .tip { background: #fef9e7; padding: 8px 10px; border-radius: var(--r-sm); border: 1px solid #fde68a; }
+  .stop .actions { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .stop .actions a, .stop .actions button { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: var(--ink); color: #fff; text-decoration: none; border: none; cursor: pointer; transition: all 0.15s var(--ease); }
+  .stop .actions a.secondary, .stop .actions button.secondary { background: var(--surface); color: var(--ink-2); border: 1px solid var(--line); }
+  .stop .actions a:hover { transform: translateY(-1px); }
+
+  /* Hidden gem & Local tip cards */
+  .gem-card, .tip-card { background: var(--ink); color: var(--bg); border-radius: var(--r-md); padding: 14px 16px; margin-bottom: 14px; position: relative; overflow: hidden; }
+  .gem-card { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2a 100%); }
+  .tip-card { background: linear-gradient(135deg, #b8941d 0%, #c9a961 100%); color: var(--ink); }
+  .gem-eyebrow, .tip-eyebrow { font-size: 9.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-bottom: 6px; }
+  .tip-eyebrow { opacity: 0.85; }
+  .gem-name, .tip-name { font-family: "Inter Tight", "Inter", sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .gem-blurb, .tip-blurb { font-size: 13px; line-height: 1.5; opacity: 0.9; }
+  .gem-card .gem-blurb { opacity: 0.78; }
+  .gem-card a { color: var(--gold); text-decoration: none; font-weight: 600; font-size: 12px; margin-top: 8px; display: inline-block; }
+  .tip-card .tip-blurb { opacity: 1; }
+
+  /* Progress bar */
+  .progress { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; margin-bottom: 14px; }
+  .progress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .progress-label { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); }
+  .progress-count { font-family: "Inter Tight"; font-size: 14px; font-weight: 700; color: var(--ink); }
+  .progress-bar { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), #b8941d); border-radius: 3px; transition: width 0.5s var(--ease-out); }
+
+  /* All-days view */
+  .all-hero { margin-bottom: 18px; }
+  .all-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+  .all-stat { background: var(--ink); color: var(--bg); border-radius: var(--r-md); padding: 12px 14px; }
+  .all-stat-num { font-family: "Inter Tight"; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+  .all-stat-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-top: 2px; }
+
+  .day-card { display: flex; gap: 12px; padding: 14px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: all 0.2s var(--ease); margin-bottom: 8px; }
+  .day-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); border-color: var(--line-strong); }
+  .day-card.today { border-color: var(--gold); background: linear-gradient(135deg, #fff 0%, #fef9e7 100%); }
+  .day-card-num { flex: 0 0 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Inter Tight"; font-size: 16px; font-weight: 800; color: #fff; box-shadow: var(--shadow-sm); }
+  .day-card-body { flex: 1; min-width: 0; }
+  .day-card-title { font-size: 14.5px; font-weight: 700; line-height: 1.25; margin-bottom: 2px; }
+  .day-card-meta { font-size: 11.5px; color: var(--ink-3); margin-bottom: 6px; }
+  .day-card-foot { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .day-card-foot .lines-mini { display: flex; gap: 4px; }
+  .day-card-foot .lines-mini .line-chip { width: 18px; height: 18px; font-size: 10px; }
+  .day-card-foot .meta-mini { font-size: 11px; color: var(--ink-3); font-weight: 500; }
+  .day-card.today::after { content: "TODAY"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 9px; font-weight: 800; padding: 3px 7px; border-radius: 999px; background: var(--gold); color: var(--ink); letter-spacing: 0.08em; }
+  .day-card { position: relative; }
+
+  .fact-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; margin-top: 18px; cursor: pointer; transition: all 0.2s var(--ease); }
+  .fact-card:hover { background: var(--surface-2); border-color: var(--line-strong); }
+  .fact-eyebrow { font-size: 9.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+  .fact-eyebrow .reroll { font-size: 9px; color: var(--ink-3); letter-spacing: 0.05em; }
+  .fact-text { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); font-style: italic; }
+
+  /* Map pin styles */
+  .pin-icon { background: transparent !important; border: none !important; }
+  .pin {
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; border: 2.5px solid #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: transform 0.15s var(--ease);
+  }
+  .pin.home { width: 40px; height: 40px; font-size: 20px; border-width: 3px; background: #0a0a0a !important; box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
+  .pin.visited { opacity: 0.55; filter: saturate(0.7); }
+  .pin.photo-spot::after { content: "★"; position: absolute; top: -4px; right: -4px; width: 14px; height: 14px; background: #c9a961; border-radius: 50%; font-size: 9px; color: #000; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.3); border: 1.5px solid #fff; line-height: 1; }
+  .pin.hidden-gem::after { content: "🤫"; position: absolute; top: -4px; right: -4px; width: 16px; height: 16px; font-size: 10px; }
+
+  /* Popup */
+  .leaflet-popup-content-wrapper { border-radius: var(--r-md); box-shadow: var(--shadow-lg); border: 1px solid var(--line); }
+  .leaflet-popup-content { margin: 14px 16px; font-size: 13px; min-width: 220px; }
+  .popup-name { font-family: "Inter Tight"; font-size: 15px; font-weight: 700; margin-bottom: 3px; letter-spacing: -0.01em; line-height: 1.25; }
+  .popup-meta { font-size: 11px; color: var(--ink-3); margin-bottom: 6px; font-weight: 500; }
+  .popup-tip { font-size: 12.5px; color: var(--ink-2); line-height: 1.45; margin-bottom: 10px; }
+  .popup-golden { background: #fef3c7; padding: 6px 8px; border-radius: var(--r-sm); font-size: 11px; color: #78350f; margin-bottom: 8px; font-weight: 500; }
+  .popup-actions { display: flex; gap: 6px; }
+  .popup-actions a { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: var(--ink); color: #fff !important; text-decoration: none; }
+  .popup-actions a.secondary { background: var(--surface); color: var(--ink-2) !important; border: 1px solid var(--line); }
+
+  /* Toast */
+  #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 32px; background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 999px; font-size: 13px; font-weight: 500; z-index: 5000; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: all 0.3s var(--ease-out); max-width: 90vw; text-align: center; }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+  #toast.gold { background: var(--gold); color: var(--ink); }
+
+  /* Confetti */
+  .confetti { position: fixed; top: -20px; width: 8px; height: 14px; pointer-events: none; z-index: 9999; }
+
+  /* Mobile */
+  #panel-handle { display: none; }
+  @media (max-width: 820px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+    #panel { position: fixed; bottom: 0; left: 0; right: 0; top: auto; max-height: 80vh; max-height: 80dvh; height: 80vh; height: 80dvh; transform: translateY(calc(100% - 168px)); transition: transform 0.4s var(--ease-out); border-right: none; border-top: 1px solid var(--line); box-shadow: 0 -10px 40px rgba(0,0,0,0.12); z-index: 1000; border-radius: 22px 22px 0 0; background: var(--bg); }
+    #panel.expanded { transform: translateY(0); }
+    #panel-handle { display: flex; align-items: center; justify-content: center; padding: 10px 0 4px; flex: 0 0 auto; cursor: grab; touch-action: none; }
+    #panel-handle::before { content: ""; width: 38px; height: 5px; border-radius: 999px; background: var(--line-strong); }
+    #map { height: 100vh; height: 100dvh; }
+    .hero { padding: 8px 18px 12px; }
+    .hero h1 { font-size: 19px; }
+    .hero-eyebrow { display: none; }
+    #day-tabs { padding: 10px 18px; }
+    #filters { padding: 8px 18px; }
+    #day-content { padding: 16px 18px 80px; }
+    .day-title { font-size: 22px; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat { padding: 8px 10px; }
+    .stat-value { font-size: 14px; }
+    .filter-chip { padding: 7px 13px; font-size: 12px; }
+    .day-tab { padding: 9px 14px; font-size: 12.5px; }
+    .pin { width: 38px; height: 38px; font-size: 17px; }
+    .pin.home { width: 44px; height: 44px; font-size: 22px; }
+    .stop .check { flex: 0 0 44px; height: 44px; font-size: 15px; }
+    .leaflet-control-zoom { display: none !important; }
+    #panel-handle { touch-action: none; padding: 14px 0 6px; }
+  }
+
+  /* Loader */
+  #loader { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 10000; transition: opacity 0.3s; }
+  #loader.gone { opacity: 0; pointer-events: none; }
+  .loader-mark { width: 60px; height: 60px; border-radius: 50%; background: var(--ink); display: flex; align-items: center; justify-content: center; color: var(--gold); font-family: "Inter Tight"; font-weight: 800; font-size: 22px; animation: spin 1.6s var(--ease) infinite; }
+  @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="loader-mark">NY</div></div>
+
+<div id="app">
+  <aside id="panel">
+    <div id="panel-handle"></div>
+    <div class="hero">
+      <div class="hero-top">
+        <div>
+          <p class="hero-eyebrow">Your trip</p>
+          <h1>NYC <span class="em">·</span> May 10–16</h1>
+        </div>
+        <div class="countdown" id="countdown">…</div>
+      </div>
+      <div class="hero-sub">
+        <a href="#" id="home-link">🏠 Home</a>
+        <a href="https://weather.com/weather/today/l/40.72,-73.99" target="_blank" rel="noopener">☀️ Weather</a>
+        <a href="https://new.mta.info/" target="_blank" rel="noopener">🚇 MTA</a>
+      </div>
+    </div>
+    <div id="day-tabs"></div>
+    <div id="filters">
+      <span class="filter-chip active" data-filter="all">All</span>
+      <span class="filter-chip" data-filter="attraction">⭐ Sights</span>
+      <span class="filter-chip" data-filter="museum">🏛 Museums</span>
+      <span class="filter-chip" data-filter="bookstore">📚 Books</span>
+      <span class="filter-chip" data-filter="pizza">🍕 Pizza</span>
+      <span class="filter-chip" data-filter="cafe">☕ Cafes</span>
+      <span class="filter-chip" data-filter="viewpoint">👁 Views</span>
+      <span class="filter-chip" data-filter="hidden">🤫 Hidden</span>
+    </div>
+    <div id="day-content"></div>
+  </aside>
+  <div id="map"></div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+/* ============================================================
+   SUBWAY LINES (MTA official colors + paths)
+============================================================ */
+const SUBWAY_LINES = {
+  "6": { color: "#00933C", label: "6", name: "Lexington Ave Local", path: [
+    [40.7128,-74.0040],[40.7186,-74.0001],[40.7224,-74.0000],[40.7256,-73.9913],
+    [40.7300,-73.9913],[40.7349,-73.9892],[40.7397,-73.9863],[40.7430,-73.9839],
+    [40.7461,-73.9821],[40.7517,-73.9772],[40.7570,-73.9722],[40.7626,-73.9678],
+    [40.7686,-73.9637],[40.7739,-73.9598],[40.7793,-73.9558]
+  ]},
+  "L": { color: "#A7A9AC", label: "L", name: "14th St-Canarsie", path: [
+    [40.7396,-74.0023],[40.7374,-73.9967],[40.7350,-73.9907],[40.7329,-73.9866],
+    [40.7307,-73.9817],[40.7172,-73.9569],[40.7142,-73.9501],[40.7141,-73.9442],
+    [40.7117,-73.9402],[40.7077,-73.9398],[40.7062,-73.9337],[40.7066,-73.9229],
+    [40.7039,-73.9181]
+  ]},
+  "F": { color: "#FF6319", label: "F", name: "6th Ave Express", path: [
+    [40.6862,-73.9905],[40.6924,-73.9874],[40.7008,-73.9869],[40.7138,-73.9901],
+    [40.7186,-73.9879],[40.7234,-73.9899],[40.7256,-73.9961],[40.7322,-74.0007],
+    [40.7382,-73.9959],[40.7427,-73.9924],[40.7493,-73.9881],[40.7541,-73.9844],
+    [40.7585,-73.9805],[40.7637,-73.9765]
+  ]},
+  "C": { color: "#0039A6", label: "C", name: "8th Ave Local", path: [
+    [40.7261,-74.0036],[40.7322,-74.0007],[40.7406,-74.0027],[40.7459,-73.9986],
+    [40.7521,-73.9929],[40.7572,-73.9899],[40.7621,-73.9854],[40.7682,-73.9819]
+  ]},
+  "1": { color: "#EE352E", label: "1", name: "Broadway-7th Ave Local", path: [
+    [40.7338,-74.0030],[40.7378,-73.9995],[40.7397,-73.9974],[40.7440,-73.9954],
+    [40.7474,-73.9929],[40.7506,-73.9909],[40.7556,-73.9884],[40.7615,-73.9836],
+    [40.7681,-73.9819]
+  ]}
+};
+
+/* ============================================================
+   WALKING SEGMENTS (per day, dashed black on the map)
+============================================================ */
+const WALK_SEGMENTS = {
+  1: [[
+    [40.7253,-73.9928],[40.7259,-73.9925],[40.7332,-73.9912],[40.7308,-73.9973],
+    [40.7305,-74.0026],[40.7245,-74.0019],[40.7240,-73.9971],[40.7234,-73.9971],
+    [40.7233,-73.9947],[40.7178,-73.9913],[40.7268,-73.9852],[40.7253,-73.9928]
+  ]],
+  2: [
+    [[40.7253,-73.9928],[40.7176,-73.9911],[40.7146,-73.9978],[40.7194,-73.9970],
+     [40.7117,-74.0124],[40.7115,-74.0134],[40.7056,-74.0134],[40.7044,-74.0117],
+     [40.7033,-74.0170],[40.7013,-74.0134],[40.7033,-74.0170],[40.7065,-74.0079],
+     [40.7128,-74.0040]],
+    [[40.7256,-73.9913],[40.7253,-73.9928]]
+  ],
+  3: [[
+    [40.7253,-73.9928],[40.7361,-73.9974],[40.7396,-74.0089],[40.7397,-74.0085],
+    [40.7423,-74.0107],[40.7424,-74.0061],[40.7538,-74.0019],[40.7547,-74.0048],
+    [40.7388,-74.0007],[40.7355,-74.0061],[40.7339,-74.0030],[40.7314,-74.0029],
+    [40.7253,-73.9928]
+  ]],
+  4: [
+    [[40.7253,-73.9928],[40.7256,-73.9961]],
+    [[40.7493,-73.9881],[40.7531,-73.9871],[40.7614,-73.9776],[40.7585,-73.9759],
+     [40.7587,-73.9787],[40.7592,-73.9795],[40.7580,-73.9855],[40.7536,-73.9832],
+     [40.7526,-73.9839],[40.7532,-73.9822],[40.7527,-73.9772],[40.7530,-73.9779],
+     [40.7625,-73.9685],[40.7521,-73.9928],[40.7493,-73.9881]],
+    [[40.7256,-73.9961],[40.7253,-73.9928]]
+  ],
+  5: [
+    [[40.7253,-73.9928],[40.7256,-73.9913]],
+    [[40.7739,-73.9598],[40.7794,-73.9632],[40.7830,-73.9590],[40.7798,-73.9692],
+     [40.7793,-73.9810],[40.7757,-73.9759],[40.7757,-73.9716],[40.7740,-73.9710],
+     [40.7720,-73.9716],[40.7715,-73.9759],[40.7681,-73.9819]],
+    [[40.7261,-74.0036],[40.7253,-73.9928]]
+  ],
+  6: [
+    // Home → 1st Ave L
+    [[40.7253,-73.9928],[40.7307,-73.9817]],
+    // Bedford Ave (Williamsburg) → Domino Park → L'Industrie → Devoción → back to Bedford L
+    [[40.7172,-73.9569],[40.7158,-73.9595],[40.7150,-73.9683],[40.7117,-73.9612],
+     [40.7146,-73.9609],[40.7172,-73.9569]],
+    // 1st Ave L (after L back from Williamsburg) → walk south to 2nd Ave F
+    [[40.7307,-73.9817],[40.7234,-73.9899]],
+    // York St F (DUMBO) → Time Out → Empire Stores → Carousel → Pier 1 → Brooklyn Roasting → Promenade → bridge entrance → across bridge → BB-City Hall 6
+    [[40.7008,-73.9869],[40.7027,-73.9888],[40.7030,-73.9895],[40.7028,-73.9921],
+     [40.7028,-73.9968],[40.7026,-73.9870],[40.6961,-73.9964],[40.7061,-73.9969],
+     [40.7088,-74.0006],[40.7117,-74.0050]],
+    // Bleecker St 6 → home
+    [[40.7256,-73.9913],[40.7253,-73.9928]]
+  ],
+  7: [
+    // Home → Russ & Daughters → Tompkins Square Park → Devoción NoHo → home
+    [[40.7253,-73.9928],[40.7196,-73.9886],[40.7264,-73.9818],[40.7259,-73.9925],
+     [40.7253,-73.9928]]
+  ]
+};
+
+/* ============================================================
+   DAY METADATA — sunset, theme, summary, hidden gem, local tip
+============================================================ */
+const DAYS = [
+  { n:0, label:"Home", date:"Home base", color:"#0a0a0a", lines:[],
+    title:"All 7 days", theme:"338 Bowery, NoHo", sunset:"—",
+    summary:"Tap a day above to focus the map and see ordered stops, the subway lines you'll need, sunset, walking time, a local tip, and a hidden gem.",
+    tip:null, gem:null
+  },
+  { n:1, label:"Day 1", date:"Sat May 10", color:"#e63946", lines:[],
+    title:"Arrival · NoHo · SoHo · Village", theme:"Land at JFK 10:30am. Half day — get home, settle, light walking.",
+    sunset:"7:58 PM",
+    summary:"JFK → home, two options: (1) Yellow cab — flat $70 + ~$10 toll + 18% tip ≈ $90, 30–50 min depending on traffic. (2) AirTrain ($8) → Sutphin Blvd-Archer Av-JFK → E train ($2.90) to Spring St → 5-min walk home. ~$11 total, ~60 min from terminal. With one bag, take the train. Drop bags ~12:30 → lunch nearby → easy loop: Devoción → SoHo cobblestones → Washington Square → Strand → Joe's Pizza for dinner. No agenda. Skip what you don't have energy for.",
+    tip:"From JFK: yellow cabs are a flat $70 to anywhere in Manhattan + tolls + tip ≈ $90 total. Uber/Lyft can surge to $100+. AirTrain + E train: $11, ~60 min, reliable.",
+    gem:{ name:"McSorley's Old Ale House", addr:"15 E 7th St, East Village", blurb:"Oldest Irish saloon in NYC (1854). Sawdust on the floor. Two beers only: light or dark. Cash only. Lincoln drank here.", lat:40.7287, lng:-73.9893 }
+  },
+  { n:2, label:"Day 2", date:"Sun May 11", color:"#f77f00", lines:["6"],
+    title:"Lower Manhattan + Free Lady Liberty", theme:"Partial day — pick the highlights, skip the rest.",
+    sunset:"7:59 PM",
+    summary:"Sunday is a partial day. Hit the must-dos: Chinatown brunch (Nom Wah) → 9/11 Memorial → Battery Park → Staten Island Ferry roundtrip (free, postcard view of Lady Liberty) → Scarr's Pizza on the walk home. Skip Stone Street + Black Fox if running short. 6 train from Brooklyn Bridge–City Hall is your shortcut home.",
+    tip:"Stand on the right of escalators. Walk on the left. New Yorkers will lose their minds otherwise.",
+    gem:{ name:"The Elevated Acre", addr:"55 Water St, FiDi", blurb:"Secret 1-acre rooftop park hidden between office buildings. Free, panoramic harbor views. The escalator looks like it goes nowhere — take it.", lat:40.7037, lng:-74.0089 }
+  },
+  { n:3, label:"Day 3", date:"Mon May 12", color:"#fcbf49", lines:["1"],
+    title:"Work · High Line · West Village", theme:"2-hr morning work session, then the High Line top to bottom.",
+    sunset:"8:00 PM",
+    summary:"9–11am work block at Bluestone Lane → walk High Line south-to-north → Little Island → Chelsea Market lunch → wander West Village → Three Lives & Co bookshop → John's of Bleecker. 1 train back from 14th St if needed.",
+    tip:"All Manhattan numbered streets run east-west; avenues run north-south. \"Up\" = uptown = north. You'll rarely get lost again.",
+    gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade, easy to miss. Photo it from across the street.", lat:40.7308, lng:-74.0048 }
+  },
+  { n:4, label:"Day 4", date:"Tue May 13", color:"#06a77d", lines:["F"],
+    title:"Work · Midtown · SUMMIT at sunset", theme:"2-hr morning work session, then every postcard hit + the best deck in NYC.",
+    sunset:"8:01 PM",
+    summary:"F to 34th-Herald Sq → 9–11am work block at Culture Espresso → MoMA at opening → St. Patrick's → Rockefeller Center → Times Square walk-through → Bryant Park + NYPL Rose Reading Room → Grand Central whisper gallery → SUMMIT at 7:00pm (sunset 8:01) → Argosy → NY Pizza Suprema.",
+    tip:"OMNY tap-to-pay is on every turnstile. No more MetroCard. Same for buses. $34 weekly cap — you'll never pay for a 13th ride in a week.",
+    gem:{ name:"The Whispering Gallery", addr:"Lower level, outside Oyster Bar, Grand Central", blurb:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally across the room. Architectural accident. Magic.", lat:40.7526, lng:-73.9772 }
+  },
+  { n:5, label:"Day 5", date:"Wed May 14", color:"#118ab2", lines:["6","C"],
+    title:"Central Park + UES Museums", theme:"Art and green — pace yourself.",
+    sunset:"8:02 PM",
+    summary:"6 train to 77th St → Met Museum (3 hrs) → enter Central Park behind it → Bethesda Terrace → Bow Bridge → The Mall → Sheep Meadow → Strawberry Fields → Belvedere Castle → Levain cookie detour → Columbus Circle. C train home from 59th.",
+    tip:"The Met is pay-what-you-wish for NY/NJ/CT residents only. Out-of-staters pay full. Worth it. Allow 3 hours minimum.",
+    gem:{ name:"Conservatory Garden", addr:"105th St & 5th Ave, Central Park", blurb:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Three styles (Italian, French, English), wisteria pergola in spring, perfect quiet.", lat:40.7942, lng:-73.9522 }
+  },
+  { n:6, label:"Day 6", date:"Thu May 15", color:"#4361ee", lines:["L","F","6"],
+    title:"Brooklyn: Williamsburg + DUMBO + Bridge", theme:"All of Brooklyn in one full day — coffee, slices, skyline, the bridge.",
+    sunset:"8:03 PM",
+    summary:"Big day. Start early. L from 1st Ave → Bedford → Williamsburg morning (Bedford Ave shops, Domino Park, L'Industrie Pizza for lunch, Devoción coffee) → L back to 1st Ave → walk south to 2nd Ave F → F to York St → DUMBO afternoon (Time Out Market, Empire Stores, Jane's Carousel, Pier 1 skyline shot) → Brooklyn Roasting break → Brooklyn Heights Promenade → walk Brooklyn Bridge back at sunset (8:03pm) → 6 from City Hall to Bleecker → home.",
+    tip:"Walk LEFT on the Brooklyn Bridge — that's the pedestrian side. Bikes get the right. Aim to start the bridge walk ~7:15pm so you finish at sunset (8:03pm). Magic.",
+    gem:{ name:"Squibb Park Bridge", addr:"Squibb Park, Brooklyn Heights", blurb:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to Brooklyn Bridge Park. Engineered to flex — and it does. Kids love it. Adults pretend not to.", lat:40.7000, lng:-73.9970 }
+  },
+  { n:7, label:"Day 7", date:"Fri May 16", color:"#7209b7", lines:[],
+    title:"Wind-down + Departure", theme:"Light morning near home. Pack up, eat well, fly out.",
+    sunset:"8:04 PM",
+    summary:"Slow morning. Brunch at Russ & Daughters Cafe (the iconic NYC bagel + lox spot, 5 min from home). Walk Tompkins Square Park for one last East Village wander. Last coffee at Devoción NoHo. Hit anything you missed from the week — open the All view to scan. Pack and head to JFK — reverse Day 1 (cab ~$90 or AirTrain + E train ~$11). Allow 2.5 hrs before international flights, 2 hrs domestic.",
+    tip:"Most airlines accept bag drop 4 hrs before departure. Drop bags early at JFK, come back to Manhattan for one last coffee, then return.",
+    gem:{ name:"Veselka", addr:"144 2nd Ave, East Village", blurb:"24-hour Ukrainian diner since 1954. Pierogi, borscht, blintzes. East Village institution. If you missed brunch, this is your backup any time of day.", lat:40.7283, lng:-73.9871 }
+  }
+];
+
+/* ============================================================
+   PIN DATA — name, day, type, lat, lng, addr, tip, emoji, photo, must
+============================================================ */
+const PINS = [
+  // HOME
+  { day:0, type:"home", name:"338 Bowery (Home)", lat:40.7253, lng:-73.9928, addr:"338 Bowery, NoHo", tip:"Your home base for the week. Tap me 5 times — I'll show you something.", emoji:"🏠" },
+
+  // DAY 1
+  { day:1, type:"cafe",       name:"Devoción NoHo",                lat:40.7259, lng:-73.9925, addr:"25 Bond St", tip:"30-second walk from home. Direct-trade Colombian beans. Start here.", emoji:"☕" },
+  { day:1, type:"cafe",       name:"La Cabra Coffee",              lat:40.7178, lng:-73.9913, addr:"152 Hester St, LES", tip:"Danish micro-roaster. Cardamom bun + filter coffee. Bright, photogenic.", emoji:"☕" },
+  { day:1, type:"bookstore",  name:"Housing Works Bookstore Cafe", lat:40.7234, lng:-73.9971, addr:"126 Crosby St, NoHo", tip:"Used bookstore + cafe + bar. Volunteer-run, profits to charity. 5 min from home.", emoji:"📚" },
+  { day:1, type:"bookstore",  name:"McNally Jackson SoHo",         lat:40.7240, lng:-73.9971, addr:"134 Prince St, SoHo", tip:"Best modern indie. Strong fiction + magazine wall.", emoji:"📚" },
+  { day:1, type:"attraction", name:"SoHo cast-iron district",      lat:40.7245, lng:-74.0019, addr:"Greene St & Spring St", tip:"Walk Greene/Mercer/Wooster between Houston and Canal — cobblestones and cast-iron facades. Most photogenic blocks in the city.", emoji:"⭐", photo:true },
+  { day:1, type:"pizza",      name:"Prince Street Pizza",          lat:40.7233, lng:-73.9947, addr:"27 Prince St, NoLita", tip:"The square pepperoni slice (\"Soho Squares\"). Before noon to skip the line.", emoji:"🍕" },
+  { day:1, type:"attraction", name:"Washington Square Park",       lat:40.7308, lng:-73.9973, addr:"Greenwich Village", tip:"The arch, the fountain, NYU students, chess hustlers. Peak village energy.", emoji:"⭐", photo:true },
+  { day:1, type:"bookstore",  name:"Strand Bookstore",             lat:40.7332, lng:-73.9912, addr:"828 Broadway at 12th St", tip:"THE NYC bookstore. \"18 miles of books.\" Don't miss the rare-books room (3rd floor). Get a red Strand tote — the unofficial NYC souvenir.", emoji:"📚", must:true },
+  { day:1, type:"pizza",      name:"Joe's Pizza (Carmine)",        lat:40.7305, lng:-74.0026, addr:"7 Carmine St, Greenwich Village", tip:"The classic NY slice. Plain cheese. Eat standing on the sidewalk. The move.", emoji:"🍕", must:true },
+  { day:1, type:"cafe",       name:"Abraço",                       lat:40.7268, lng:-73.9852, addr:"81 E 7th St, East Village", tip:"Cult espresso bar. Olive oil cake. Tiny — order, drink, leave.", emoji:"☕" },
+  { day:1, type:"hidden",     name:"McSorley's Old Ale House",     lat:40.7287, lng:-73.9893, addr:"15 E 7th St, East Village", tip:"Oldest Irish saloon in NYC (1854). Sawdust floors. Two beers: light or dark, $7 for two mugs. Cash only. Lincoln drank here.", emoji:"🤫" },
+
+  // DAY 2
+  { day:2, type:"attraction", name:"Nom Wah Tea Parlor",     lat:40.7146, lng:-73.9978, addr:"13 Doyers St, Chinatown", tip:"Oldest dim sum in Chinatown (1920). Get there at opening — solo wait is shorter.", emoji:"⭐", must:true },
+  { day:2, type:"attraction", name:"Little Italy",           lat:40.7194, lng:-73.9970, addr:"Mulberry St between Canal & Broome", tip:"Touristy but charming for a stroll. Don't eat here — stick to Chinatown.", emoji:"⭐" },
+  { day:2, type:"attraction", name:"9/11 Memorial",          lat:40.7115, lng:-74.0134, addr:"180 Greenwich St, FiDi", tip:"Two reflecting pools where the towers stood. Free outdoor memorial; museum is paid + needs ~2 hrs.", emoji:"⭐", photo:true },
+  { day:2, type:"attraction", name:"Oculus / WTC",           lat:40.7117, lng:-74.0124, addr:"Oculus Plaza", tip:"Calatrava's white wing-rib transit hub. Photogenic from inside looking up.", emoji:"⭐", photo:true },
+  { day:2, type:"attraction", name:"Charging Bull",          lat:40.7056, lng:-74.0134, addr:"Bowling Green / Broad St", tip:"Bull is at Bowling Green; Fearless Girl now stands opposite the NYSE on Broad St. 2-min photo stops.", emoji:"⭐" },
+  { day:2, type:"viewpoint",  name:"Battery Park",           lat:40.7033, lng:-74.0170, addr:"Battery Park, Lower Manhattan", tip:"Southern tip. Lady Liberty in the distance. Walk through to the ferry.", emoji:"👁" },
+  { day:2, type:"viewpoint",  name:"Staten Island Ferry",    lat:40.7013, lng:-74.0134, addr:"4 Whitehall St", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return.", emoji:"👁", must:true, photo:true },
+  { day:2, type:"attraction", name:"Stone Street",           lat:40.7044, lng:-74.0117, addr:"Stone St, FiDi", tip:"Tiny cobblestone block of bars. Quick photo + a beer.", emoji:"⭐" },
+  { day:2, type:"cafe",       name:"Black Fox Coffee",       lat:40.7065, lng:-74.0079, addr:"70 Pine St, FiDi", tip:"Best coffee in the Financial District. Stop on the walk back uptown.", emoji:"☕" },
+  { day:2, type:"pizza",      name:"Scarr's Pizza",          lat:40.7176, lng:-73.9911, addr:"35 Orchard St, LES", tip:"Modern legend. House-milled flour. Plain or pepperoni. On the walk home.", emoji:"🍕" },
+  { day:2, type:"hidden",     name:"The Elevated Acre",      lat:40.7037, lng:-74.0089, addr:"55 Water St, FiDi", tip:"Secret 1-acre rooftop park hidden between office buildings. Take the escalator that looks like it goes nowhere. Free, panoramic, almost empty.", emoji:"🤫" },
+
+  // DAY 3
+  { day:3, type:"cafe",       name:"Bluestone Lane (West Village)", lat:40.7361, lng:-73.9974, addr:"55 W 13th St", tip:"WORK CAFE — Mon 9–11am. Australian café, laptop-friendly, fast wifi. Take a Zoom call at the back.", emoji:"💻", work:true },
+  { day:3, type:"attraction", name:"High Line (south entry)",      lat:40.7397, lng:-74.0085, addr:"Gansevoort St & Washington St", tip:"Start here. Elevated rail-line-turned-park, ~1.5 miles, walk south-to-north.", emoji:"⭐", must:true, photo:true },
+  { day:3, type:"museum",     name:"Whitney Museum",                lat:40.7396, lng:-74.0089, addr:"99 Gansevoort St, Meatpacking", tip:"American art only. Skip if museum'd-out — the rooftop has Hudson views.", emoji:"🏛" },
+  { day:3, type:"viewpoint",  name:"Little Island",                 lat:40.7423, lng:-74.0107, addr:"Pier 55, Hudson River Park", tip:"Tulip-shaped floating park. 5-min detour off the High Line. Walk up to the high point.", emoji:"👁", photo:true },
+  { day:3, type:"attraction", name:"Chelsea Market",                lat:40.7424, lng:-74.0061, addr:"75 9th Ave (15th-16th)", tip:"Indoor food market. Lobster Place chowder, Los Tacos No.1, Doughnuttery for tiny donuts. Lunch.", emoji:"⭐" },
+  { day:3, type:"viewpoint",  name:"Vessel / Hudson Yards",         lat:40.7538, lng:-74.0019, addr:"20 Hudson Yards", tip:"The honeycomb sculpture (climb closed but free to view). North end of the High Line.", emoji:"👁", photo:true },
+  { day:3, type:"attraction", name:"High Line (north end)",         lat:40.7547, lng:-74.0048, addr:"34th St & 12th Ave", tip:"End of the walk. Vessel is right here.", emoji:"⭐" },
+  { day:3, type:"cafe",       name:"Partners Coffee",               lat:40.7388, lng:-74.0007, addr:"125 W 13th St", tip:"Brooklyn-born roaster. Light, bright, well-pulled espresso.", emoji:"☕" },
+  { day:3, type:"cafe",       name:"Magnolia Bakery",               lat:40.7355, lng:-74.0061, addr:"401 Bleecker St", tip:"Banana pudding (the famous one). The cupcake from Sex and the City.", emoji:"☕" },
+  { day:3, type:"bookstore",  name:"Three Lives & Company",         lat:40.7339, lng:-74.0030, addr:"154 W 10th St", tip:"Tiny, beloved village bookshop with a green-and-gold corner shopfront. Most charming in the city.", emoji:"📚", photo:true },
+  { day:3, type:"pizza",      name:"John's of Bleecker",            lat:40.7314, lng:-74.0029, addr:"278 Bleecker St", tip:"Coal-oven, no slices — order a whole pie. Cash only. 1929 institution.", emoji:"🍕" },
+  { day:3, type:"hidden",     name:"75½ Bedford Street",            lat:40.7308, lng:-74.0048, addr:"75½ Bedford St, West Village", tip:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Photo it from across the street.", emoji:"🤫" },
+
+  // DAY 4
+  { day:4, type:"cafe",       name:"Culture Espresso",         lat:40.7531, lng:-73.9871, addr:"72 W 38th St", tip:"WORK CAFE — Tue 9–11am. The Midtown work café. Big tables, outlets, fast wifi. Famous chocolate-chip cookie.", emoji:"💻", work:true },
+  { day:4, type:"museum",     name:"MoMA",                     lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Buy timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2.5 hrs.", emoji:"🏛", must:true },
+  { day:4, type:"attraction", name:"St. Patrick's Cathedral",  lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
+  { day:4, type:"attraction", name:"Rockefeller Center",       lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio.", emoji:"⭐", photo:true },
+  { day:4, type:"viewpoint",  name:"Top of the Rock",          lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"Best photo of the Empire State + Central Park. SKIP if doing SUMMIT — pick one.", emoji:"👁", photo:true },
+  { day:4, type:"attraction", name:"Times Square",             lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. Best at night for the lights.", emoji:"⭐" },
+  { day:4, type:"attraction", name:"Bryant Park",              lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
+  { day:4, type:"cafe",       name:"Blue Bottle Bryant Park",  lat:40.7526, lng:-73.9839, addr:"54 W 40th St", tip:"Reliable Blue Bottle. Take the latte to Bryant Park.", emoji:"☕" },
+  { day:4, type:"attraction", name:"NYPL Rose Reading Room",   lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Free entry. Rose Reading Room (3rd floor) is the iconic library shot. 15 min.", emoji:"⭐", photo:true },
+  { day:4, type:"attraction", name:"Grand Central Terminal",   lat:40.7527, lng:-73.9772, addr:"89 E 42nd St", tip:"Main concourse + celestial ceiling. Find the Whisper Gallery (lower level outside Oyster Bar) — your whisper carries diagonally across the room.", emoji:"⭐", must:true, photo:true },
+  { day:4, type:"viewpoint",  name:"SUMMIT One Vanderbilt",    lat:40.7530, lng:-73.9779, addr:"45 E 42nd St (next to Grand Central)", tip:"BEST VIEWING DECK IN NYC. 1,401 ft, multi-level mirrored glass rooms, glass-floor 'Levitation' boxes that hang OFF the building, full 360°. Book the 7:00pm slot — sunset is 8:01pm. Sells out.", emoji:"👁", must:true, photo:true },
+  { day:4, type:"bookstore",  name:"Argosy Book Store",        lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. THE vintage bookstore in NYC.", emoji:"📚" },
+  { day:4, type:"viewpoint",  name:"Empire State Building",    lat:40.7484, lng:-73.9857, addr:"20 W 34th St", tip:"Skip if you did SUMMIT or Top of the Rock. Better experiences at both.", emoji:"👁" },
+  { day:4, type:"pizza",      name:"NY Pizza Suprema",         lat:40.7521, lng:-73.9928, addr:"413 8th Ave (across from Penn)", tip:"Best slice in Midtown. The vodka slice is the move.", emoji:"🍕" },
+  { day:4, type:"hidden",     name:"The Whispering Gallery",   lat:40.7526, lng:-73.9772, addr:"Lower level, outside Oyster Bar, Grand Central", tip:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally. Architectural accident — magic.", emoji:"🤫" },
+
+  // DAY 5
+  { day:5, type:"museum",     name:"The Met",                lat:40.7794, lng:-73.9632, addr:"1000 5th Ave", tip:"Allow 3 hrs. Egyptian wing + Temple of Dendur, European Paintings, American Wing. Roof garden in summer.", emoji:"🏛", must:true },
+  { day:5, type:"museum",     name:"Guggenheim",             lat:40.7830, lng:-73.9590, addr:"1071 5th Ave", tip:"Frank Lloyd Wright spiral. Elevator up, ramp down. 1.5 hrs.", emoji:"🏛", photo:true },
+  { day:5, type:"attraction", name:"Bethesda Terrace",       lat:40.7740, lng:-73.9710, addr:"Mid-park at 72nd St", tip:"Most cinematic spot in CP. The angel statue, the arcade tile ceiling, the lake.", emoji:"⭐", must:true, photo:true },
+  { day:5, type:"attraction", name:"Bow Bridge",             lat:40.7757, lng:-73.9716, addr:"Just north of Bethesda", tip:"Cast-iron pedestrian bridge over the Lake. Classic NYC photo.", emoji:"⭐", photo:true },
+  { day:5, type:"attraction", name:"The Mall (Literary Walk)", lat:40.7720, lng:-73.9716, addr:"Central Park, 66th–72nd", tip:"The straight elm-tree-lined path you've seen in every NYC movie.", emoji:"⭐", photo:true },
+  { day:5, type:"attraction", name:"Sheep Meadow",           lat:40.7715, lng:-73.9759, addr:"Central Park, 66th-69th", tip:"Open lawn. Lie down with a coffee. Skyline views to the south.", emoji:"⭐" },
+  { day:5, type:"attraction", name:"Strawberry Fields",      lat:40.7757, lng:-73.9759, addr:"Near W 72nd St entrance", tip:"John Lennon memorial across from the Dakota. The Imagine mosaic. Quiet. Tap me if you know the song.", emoji:"⭐" },
+  { day:5, type:"viewpoint",  name:"Belvedere Castle",       lat:40.7798, lng:-73.9692, addr:"Mid-park at 79th St", tip:"Tiny faux castle on a rocky outcrop. Free to climb. Best park overlook. NYC's official weather station since 1869.", emoji:"👁" },
+  { day:5, type:"cafe",       name:"Levain Bakery (UWS)",    lat:40.7793, lng:-73.9810, addr:"167 W 74th St", tip:"The 6oz chocolate-chip walnut cookie. Worth the line. Eat warm.", emoji:"☕" },
+  { day:5, type:"attraction", name:"Columbus Circle",        lat:40.7681, lng:-73.9819, addr:"59th St & 8th Ave", tip:"SW corner of CP. A/C/E + 1 train here for the ride home.", emoji:"⭐" },
+  { day:5, type:"hidden",     name:"Conservatory Garden",    lat:40.7942, lng:-73.9522, addr:"105th St & 5th Ave", tip:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Italian, French, English styles. Wisteria pergola in spring.", emoji:"🤫" },
+
+  // DAY 6 — Combined Brooklyn (Williamsburg + DUMBO + Bridge walk)
+  { day:6, type:"subway",     name:"L: 1st Ave → Bedford",         lat:40.7172, lng:-73.9569, addr:"Bedford Ave Station, Williamsburg", tip:"Walk ~12 min from home to 1st Ave L. Then L 1 stop to Bedford. ~10 min total ride.", emoji:"🚇" },
+  { day:6, type:"attraction", name:"Bedford Ave",                  lat:40.7158, lng:-73.9595, addr:"Bedford Ave (N 4th – N 8th)", tip:"Williamsburg's main drag. Vintage shops, indie bookstores, design stores.", emoji:"⭐" },
+  { day:6, type:"viewpoint",  name:"Domino Park",                  lat:40.7150, lng:-73.9683, addr:"300 Kent Ave", tip:"Old sugar factory site, riverfront park. Best Manhattan skyline view from Brooklyn.", emoji:"👁", photo:true },
+  { day:6, type:"pizza",      name:"L'Industrie Pizza",            lat:40.7117, lng:-73.9612, addr:"254 S 2nd St", tip:"The cult slice of the moment. Burrata square or plain. Line moves fast — worth it. Lunch.", emoji:"🍕", must:true },
+  { day:6, type:"cafe",       name:"Devoción Williamsburg",        lat:40.7146, lng:-73.9609, addr:"69 Grand St", tip:"Flagship roaster — moss wall, skylights. Best espresso in BK. Coffee before heading to DUMBO.", emoji:"☕" },
+  { day:6, type:"subway",     name:"F: 2nd Ave → York St",         lat:40.7008, lng:-73.9869, addr:"York St Station, DUMBO", tip:"L back to 1st Ave → walk south through East Village to 2nd Ave F (~5 min) → F 4 stops to York St. Exit 1 block from DUMBO.", emoji:"🚇" },
+  { day:6, type:"attraction", name:"Time Out Market Brooklyn",     lat:40.7027, lng:-73.9888, addr:"55 Water St, DUMBO", tip:"Curated food hall — best of NYC chefs. Snack stop; you've already had pizza.", emoji:"⭐" },
+  { day:6, type:"attraction", name:"Empire Stores",                lat:40.7030, lng:-73.9895, addr:"53–83 Water St, DUMBO", tip:"Restored 19th-century coffee warehouses. Free rooftop view — go up.", emoji:"⭐" },
+  { day:6, type:"attraction", name:"Jane's Carousel",              lat:40.7028, lng:-73.9921, addr:"Old Dock St, DUMBO", tip:"Restored 1922 carousel in a glass pavilion. $2 ride. Photogenic from outside.", emoji:"⭐", photo:true },
+  { day:6, type:"viewpoint",  name:"Brooklyn Bridge Park Pier 1",  lat:40.7028, lng:-73.9968, addr:"Brooklyn Bridge Park", tip:"THE Manhattan skyline shot with both bridges. After sunrise or 1 hr before sunset for best light.", emoji:"👁", must:true, photo:true },
+  { day:6, type:"cafe",       name:"Brooklyn Roasting Co",         lat:40.7026, lng:-73.9870, addr:"25 Jay St, DUMBO", tip:"Big industrial space. Solid coffee. Rest your legs before the Promenade + bridge walk.", emoji:"☕" },
+  { day:6, type:"viewpoint",  name:"Brooklyn Heights Promenade",   lat:40.6961, lng:-73.9964, addr:"Brooklyn Heights", tip:"Elevated walkway with full Manhattan + Statue of Liberty + Brooklyn Bridge view. 0.5 miles.", emoji:"👁", must:true, photo:true },
+  { day:6, type:"attraction", name:"Brooklyn Bridge (walk back)",  lat:40.7061, lng:-73.9969, addr:"Pedestrian entrance, BK side", tip:"1.1 miles across. Stay LEFT (pedestrian, not bike). Start ~7:15pm to finish at sunset (8:03pm).", emoji:"⭐", must:true, photo:true },
+  { day:6, type:"subway",     name:"6: BB-City Hall → Bleecker",   lat:40.7117, lng:-74.0050, addr:"Brooklyn Bridge–City Hall Station", tip:"After the bridge walk, hop the 6 one stop home (or walk 25 min to Bowery).", emoji:"🚇" },
+  { day:6, type:"hidden",     name:"Squibb Park Bridge",           lat:40.7000, lng:-73.9970, addr:"Squibb Park, Brooklyn Heights", tip:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to BB Park. Engineered to flex — and it does.", emoji:"🤫" },
+
+  // DAY 7 — Wind-down + Departure (light morning near home)
+  { day:7, type:"cafe",       name:"Russ & Daughters Cafe",        lat:40.7196, lng:-73.9886, addr:"127 Orchard St, LES", tip:"Iconic since 1914. Bagels + lox + cream cheese. The classic NYC Jewish appetizing brunch. Sit-down cafe; original counter shop is at 179 E Houston if you want takeaway.", emoji:"🥯", must:true },
+  { day:7, type:"attraction", name:"Tompkins Square Park",         lat:40.7264, lng:-73.9818, addr:"E 7th–10th, Aves A–B, East Village", tip:"East Village green space. People-watch, take a coffee, sit. Last village wander before you fly.", emoji:"⭐" },
+  { day:7, type:"cafe",       name:"Devoción NoHo (one more)",     lat:40.7259, lng:-73.9925, addr:"25 Bond St", tip:"Right next to home. One last NYC coffee before you pack.", emoji:"☕" },
+  { day:7, type:"hidden",     name:"Veselka",                      lat:40.7283, lng:-73.9871, addr:"144 2nd Ave, East Village", tip:"24-hour Ukrainian diner since 1954. Pierogi, borscht, blintzes. East Village institution. Backup brunch any time of day.", emoji:"🤫" }
+];
+
+/* ============================================================
+   NYC FACTS (random rotation)
+============================================================ */
+const FACTS = [
+  "The Empire State Building has its own zip code: 10118.",
+  "Central Park is bigger than Monaco. By a lot.",
+  "There are more Italian restaurants in NYC than in Italy.",
+  "The High Line was 18 months from demolition before activists saved it in 1999.",
+  "Grand Central has 44 platforms — more than any train station on Earth.",
+  "The NYC subway has run 24/7/365 since 1904. It has only fully closed for 9/11 and Hurricane Sandy.",
+  "The walking speed of New Yorkers averages 4.27 ft/s — twice the global average.",
+  "If Brooklyn were independent, it'd be the 4th largest US city, bigger than Houston.",
+  "There's a hidden tennis court inside Grand Central Terminal.",
+  "Times Square gets 50 million visitors a year — more than the Eiffel Tower, Disney World, and the Great Wall combined.",
+  "Joe's Pizza on Carmine St has appeared in Spider-Man, 30 Rock, and at least 12 movies.",
+  "Manhattan was bought from the Lenape for the modern equivalent of about $1,143.",
+  "The Statue of Liberty's torch has been closed to visitors since 1916.",
+  "There's a private Whispering Gallery in Grand Central — stand in opposing corners and whisper to the wall.",
+  "NYC has 472 subway stations — more than any other system in the world.",
+  "The phrase \"23 skidoo\" came from the Flatiron Building, where wind would lift women's skirts and police would shoo men away.",
+  "There's a 1965 abandoned subway station under City Hall, with leaded glass skylights and chandeliers."
+];
+
+/* ============================================================
+   HELPERS
+============================================================ */
+function haversine(a, b) {
+  const R = 3958.8; // miles
+  const toRad = d => d * Math.PI / 180;
+  const dLat = toRad(b[0] - a[0]);
+  const dLng = toRad(b[1] - a[1]);
+  const lat1 = toRad(a[0]), lat2 = toRad(b[0]);
+  const x = Math.sin(dLat/2)**2 + Math.sin(dLng/2)**2 * Math.cos(lat1) * Math.cos(lat2);
+  return 2 * R * Math.asin(Math.sqrt(x));
+}
+function pathDistance(path) {
+  let d = 0;
+  for (let i = 1; i < path.length; i++) d += haversine(path[i-1], path[i]);
+  return d;
+}
+function dayWalkDistance(n) {
+  const segs = WALK_SEGMENTS[n] || [];
+  return segs.reduce((sum, s) => sum + pathDistance(s), 0);
+}
+function dayWalkMinutes(miles) {
+  return Math.round(miles / 3 * 60); // 3 mph average with stops
+}
+
+const TRIP_START = new Date(2026, 4, 10); // May 10, 2026
+function dayIndexForToday() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((today - TRIP_START) / 86400000);
+  if (diff < 0) return null;
+  if (diff > 6) return null;
+  return diff + 1; // Day 1..7
+}
+function countdownText() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dayIdx = dayIndexForToday();
+  if (dayIdx) return { text: `Day ${dayIdx} · TODAY`, today: true };
+  const diff = Math.round((TRIP_START - today) / 86400000);
+  if (diff > 0) return { text: diff === 1 ? "Tomorrow" : `${diff} days to go`, today: false };
+  return { text: "Trip complete ✨", today: false };
+}
+
+/* ============================================================
+   STATE + LOCALSTORAGE
+============================================================ */
+const VISITED_KEY = "nyc-trip-visited-v1";
+let visited = {};
+try { visited = JSON.parse(localStorage.getItem(VISITED_KEY) || "{}"); } catch(e) { visited = {}; }
+function saveVisited() { try { localStorage.setItem(VISITED_KEY, JSON.stringify(visited)); } catch(e) {} }
+function pinKey(p) { return `${p.day}|${p.lat.toFixed(4)}|${p.lng.toFixed(4)}`; }
+function isVisited(p) { return !!visited[pinKey(p)]; }
+function toggleVisited(p) { const k = pinKey(p); if (visited[k]) delete visited[k]; else visited[k] = Date.now(); saveVisited(); }
+function dayProgress(n) {
+  const dayPins = PINS.filter(p => p.day === n && p.type !== "subway");
+  const done = dayPins.filter(isVisited).length;
+  return { done, total: dayPins.length };
+}
+
+let state = { activeDay: 0, activeFilter: "all", showAll: true, factIdx: Math.floor(Math.random() * FACTS.length), homeTaps: 0, homeTapTimer: null };
+const todayN = dayIndexForToday();
+if (todayN) { state.activeDay = todayN; state.showAll = false; }
+
+/* ============================================================
+   MAP
+============================================================ */
+const map = L.map("map", { zoomControl: false, attributionControl: false }).setView([40.7253, -73.9928], 13);
+L.control.zoom({ position: "topright" }).addTo(map);
+L.control.attribution({ prefix: false, position: "bottomleft" }).addTo(map);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+  maxZoom: 19,
+  subdomains: "abcd",
+  attribution: '&copy; OSM &copy; CARTO'
+}).addTo(map);
+
+/* ============================================================
+   ROUTE LAYERS (subway + walking)
+============================================================ */
+const subwayLayers = {};
+Object.entries(SUBWAY_LINES).forEach(([k, line]) => {
+  subwayLayers[k] = L.polyline(line.path, {
+    color: line.color, weight: 6, opacity: 0.85, lineCap: "round", lineJoin: "round"
+  });
+});
+let walkLayerGroup = null;
+
+function updateRoutes() {
+  Object.values(subwayLayers).forEach(l => map.removeLayer(l));
+  if (walkLayerGroup) { map.removeLayer(walkLayerGroup); walkLayerGroup = null; }
+  if (state.showAll || state.activeDay === 0) return;
+  const day = DAYS.find(d => d.n === state.activeDay);
+  if (!day) return;
+  if (day.lines && day.lines.length) {
+    day.lines.forEach(k => { if (subwayLayers[k]) subwayLayers[k].addTo(map); });
+  }
+  const segs = WALK_SEGMENTS[day.n];
+  if (segs && segs.length) {
+    const polys = segs.map(seg => L.polyline(seg, {
+      color: "#0a0a0a", weight: 3.5, opacity: 0.85,
+      dashArray: "2, 8", lineCap: "round", lineJoin: "round"
+    }));
+    walkLayerGroup = L.layerGroup(polys);
+    walkLayerGroup.addTo(map);
+  }
+}
+
+/* ============================================================
+   PIN MARKERS
+============================================================ */
+const markers = [];
+function makeIcon(pin) {
+  const day = DAYS.find(d => d.n === pin.day);
+  const color = day ? day.color : "#0a0a0a";
+  const isHome = pin.type === "home";
+  const isHidden = pin.type === "hidden";
+  const isPhoto = !!pin.photo;
+  const visitedCls = isVisited(pin) ? " visited" : "";
+  const photoCls = isPhoto ? " photo-spot" : "";
+  const hiddenCls = isHidden ? " hidden-gem" : "";
+  return L.divIcon({
+    className: "pin-icon",
+    html: `<div class="pin${isHome ? " home" : ""}${visitedCls}${photoCls}${hiddenCls}" style="background:${color};position:relative">${pin.emoji}</div>`,
+    iconSize: isHome ? [40, 40] : [34, 34],
+    iconAnchor: isHome ? [20, 20] : [17, 17]
+  });
+}
+
+function popupHtml(pin) {
+  const day = DAYS.find(d => d.n === pin.day);
+  const dayLabel = pin.day === 0 ? "Home" : `${day.label} · ${day.date}`;
+  const gmapsDir = `https://www.google.com/maps/dir/?api=1&destination=${pin.lat},${pin.lng}`;
+  const gmapsName = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pin.name + " " + pin.addr)}`;
+  const golden = pin.photo && day && day.sunset !== "—"
+    ? `<div class="popup-golden">📸 Best light: golden hour, ~1 hr before ${day.sunset} sunset.</div>` : "";
+  return `
+    <div class="popup-name">${pin.emoji} ${pin.name}</div>
+    <div class="popup-meta">${dayLabel} · ${pin.addr}</div>
+    <div class="popup-tip">${pin.tip}</div>
+    ${golden}
+    <div class="popup-actions">
+      <a href="${gmapsDir}" target="_blank" rel="noopener">Directions</a>
+      <a href="${gmapsName}" target="_blank" rel="noopener" class="secondary">Search</a>
+    </div>
+  `;
+}
+
+PINS.forEach(pin => {
+  const m = L.marker([pin.lat, pin.lng], { icon: makeIcon(pin) }).bindPopup(popupHtml(pin));
+  m._pin = pin;
+
+  // Easter egg: home pin 5-tap
+  if (pin.type === "home") {
+    m.on("click", () => {
+      state.homeTaps++;
+      clearTimeout(state.homeTapTimer);
+      state.homeTapTimer = setTimeout(() => { state.homeTaps = 0; }, 1500);
+      if (state.homeTaps >= 5) {
+        state.homeTaps = 0;
+        celebrate();
+        toast("🗽 You've found the home key. Welcome to NYC.", true);
+      }
+    });
+  }
+  // Easter egg: Strawberry Fields
+  if (pin.name.includes("Strawberry Fields")) {
+    m.on("popupopen", () => toast("🎵 Imagine all the people, living life in peace…"));
+  }
+
+  markers.push(m);
+});
+
+/* ============================================================
+   FILTERS + MAP-FIT
+============================================================ */
+function applyFilters() {
+  markers.forEach(m => map.removeLayer(m));
+  const visible = [];
+  markers.forEach(m => {
+    const p = m._pin;
+    const dayMatch = state.showAll || p.day === state.activeDay || p.day === 0;
+    let typeMatch = state.activeFilter === "all" || p.type === state.activeFilter || p.type === "home";
+    if (state.activeFilter === "hidden") typeMatch = p.type === "hidden" || p.type === "home";
+    if (dayMatch && typeMatch) {
+      m.setIcon(makeIcon(p)); // refresh icon for visited state
+      m.addTo(map);
+      visible.push(m);
+    }
+  });
+  updateRoutes();
+
+  const fittable = visible.filter(m => m._pin.type !== "home" || visible.length === 1);
+  if (fittable.length > 1) {
+    const group = L.featureGroup(fittable);
+    map.fitBounds(group.getBounds().pad(0.2), { animate: true, maxZoom: 15 });
+  } else if (fittable.length === 1) {
+    map.setView([fittable[0]._pin.lat, fittable[0]._pin.lng], 14);
+  }
+}
+
+/* ============================================================
+   RENDER
+============================================================ */
+function lineChip(k, large) {
+  const line = SUBWAY_LINES[k]; if (!line) return "";
+  const cls = large ? "line-chip lg" : "line-chip";
+  return `<span class="${cls}" style="background:${line.color}" title="${line.name}">${line.label}</span>`;
+}
+
+function renderCountdown() {
+  const c = countdownText();
+  const el = document.getElementById("countdown");
+  el.textContent = c.text;
+  el.classList.toggle("today", c.today);
+}
+
+function renderTabs() {
+  const tabs = document.getElementById("day-tabs"); tabs.innerHTML = "";
+  const todayN = dayIndexForToday();
+
+  const allTab = document.createElement("button");
+  allTab.className = "day-tab" + (state.showAll ? " active" : "");
+  allTab.textContent = "All";
+  allTab.onclick = () => { state.showAll = true; state.activeDay = 0; renderAll(); };
+  tabs.appendChild(allTab);
+
+  DAYS.forEach(d => {
+    if (d.n === 0) return;
+    const t = document.createElement("button");
+    let cls = "day-tab";
+    if (!state.showAll && state.activeDay === d.n) cls += " active";
+    if (d.n === todayN) cls += " today-tab";
+    t.className = cls;
+    t.innerHTML = `<span class="dot" style="background:${d.color}"></span>${d.label}`;
+    t.onclick = () => { state.showAll = false; state.activeDay = d.n; renderAll(); };
+    tabs.appendChild(t);
+  });
+}
+
+function renderFilters() {
+  document.querySelectorAll(".filter-chip").forEach(chip => {
+    chip.classList.toggle("active", chip.dataset.filter === state.activeFilter);
+    chip.onclick = () => { state.activeFilter = chip.dataset.filter; renderAll(); };
+  });
+}
+
+function renderAllView() {
+  const totalStops = PINS.filter(p => p.type !== "home" && p.type !== "subway").length;
+  const visitedCount = PINS.filter(p => p.type !== "home" && p.type !== "subway" && isVisited(p)).length;
+  const totalMiles = [1,2,3,4,5,6,7].reduce((sum, n) => sum + dayWalkDistance(n), 0);
+  const todayN = dayIndexForToday();
+
+  const fact = FACTS[state.factIdx];
+
+  const dayCards = DAYS.filter(d => d.n > 0).map(d => {
+    const dist = dayWalkDistance(d.n);
+    const minutes = dayWalkMinutes(dist);
+    const linesHtml = d.lines.length ? `<div class="lines-mini">${d.lines.map(l => lineChip(l, false)).join("")}</div>` : "";
+    const isToday = d.n === todayN ? " today" : "";
+    const prog = dayProgress(d.n);
+    const progPct = prog.total ? Math.round(prog.done / prog.total * 100) : 0;
+    return `
+      <div class="day-card${isToday}" onclick="selectDay(${d.n})">
+        <div class="day-card-num" style="background:${d.color}">${d.n}</div>
+        <div class="day-card-body">
+          <div class="day-card-title">${d.title}</div>
+          <div class="day-card-meta">${d.date} · ${d.theme}</div>
+          <div class="day-card-foot">
+            ${linesHtml}
+            <span class="meta-mini">${dist.toFixed(1)} mi · ${minutes} min walk</span>
+            ${prog.total ? `<span class="meta-mini" style="margin-left:auto;font-weight:600;color:${progPct === 100 ? '#16a34a' : 'var(--ink-3)'}">${prog.done}/${prog.total}${progPct === 100 ? ' ✓' : ''}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("day-content").innerHTML = `
+    <div class="all-hero fade-in">
+      <div class="day-title">All 7 days</div>
+      <div class="day-date">May 10–16, 2026 · Solo · 338 Bowery</div>
+    </div>
+    <div class="all-stats fade-in">
+      <div class="all-stat"><div class="all-stat-num">${totalStops}</div><div class="all-stat-label">Stops</div></div>
+      <div class="all-stat"><div class="all-stat-num">${totalMiles.toFixed(0)}</div><div class="all-stat-label">Miles walking</div></div>
+      <div class="all-stat"><div class="all-stat-num">${visitedCount}</div><div class="all-stat-label">Visited</div></div>
+    </div>
+    <div class="section-h">The week</div>
+    <div class="stops fade-in">${dayCards}</div>
+    <div class="fact-card fade-in" onclick="rerollFact()">
+      <div class="fact-eyebrow"><span>Did you know</span><span class="reroll">tap to reroll ↻</span></div>
+      <div class="fact-text">${fact}</div>
+    </div>
+  `;
+}
+
+function renderDayView() {
+  const d = DAYS.find(x => x.n === state.activeDay);
+  if (!d) return;
+
+  let pinsForDay = PINS.filter(p => p.day === d.n);
+  if (state.activeFilter !== "all") {
+    if (state.activeFilter === "hidden") {
+      pinsForDay = pinsForDay.filter(p => p.type === "hidden");
+    } else {
+      pinsForDay = pinsForDay.filter(p => p.type === state.activeFilter);
+    }
+  }
+
+  const dist = dayWalkDistance(d.n);
+  const minutes = dayWalkMinutes(dist);
+  const prog = dayProgress(d.n);
+  const progPct = prog.total ? Math.round(prog.done / prog.total * 100) : 0;
+  const isToday = dayIndexForToday() === d.n;
+
+  const linesHtml = d.lines.length
+    ? d.lines.map(k => `<span class="line-bullet">${lineChip(k, false)}<span>${SUBWAY_LINES[k].name}</span></span>`).join('')
+    : `<span class="line-bullet" style="color:var(--ink-3)">All walking</span>`;
+
+  const goldenStart = d.sunset !== "—" ? d.sunset : "—";
+
+  const stopsHtml = pinsForDay.map((p, i) => {
+    const gmapsDir = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+    const visitedCls = isVisited(p) ? " visited" : "";
+    const workCls = p.work ? " work" : "";
+    const badges = [];
+    if (p.must) badges.push(`<span class="badge must">Must-do</span>`);
+    if (p.work) badges.push(`<span class="badge work">Work cafe</span>`);
+    if (p.photo) badges.push(`<span class="badge photo">📸</span>`);
+    if (p.type === "hidden") badges.push(`<span class="badge hidden">Hidden gem</span>`);
+    return `
+      <div class="stop${workCls}${visitedCls}">
+        <div class="check" data-num="${i + 1}" style="background:${d.color}" onclick="event.stopPropagation();toggleStop(${p.lat},${p.lng},${p.day})"></div>
+        <div class="body" onclick="zoomTo(${p.lat},${p.lng})">
+          <div class="name"><span class="emoji">${p.emoji}</span>${p.name}${badges.join("")}</div>
+          <div class="addr">${p.addr}</div>
+          <div class="tip">${p.tip}</div>
+          <div class="actions">
+            <a href="${gmapsDir}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Directions</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + p.addr)}" target="_blank" rel="noopener" class="secondary" onclick="event.stopPropagation()">Search</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("") || `<div style="padding:14px 0;color:var(--ink-3);font-size:13px">No stops match this filter.</div>`;
+
+  const gemHtml = d.gem ? `
+    <div class="gem-card" onclick="zoomTo(${d.gem.lat},${d.gem.lng})">
+      <div class="gem-eyebrow">🤫 Hidden gem</div>
+      <div class="gem-name">${d.gem.name}</div>
+      <div class="gem-blurb">${d.gem.blurb}</div>
+      <a>${d.gem.addr} →</a>
+    </div>` : "";
+
+  const tipHtml = d.tip ? `
+    <div class="tip-card">
+      <div class="tip-eyebrow">Local tip</div>
+      <div class="tip-blurb">${d.tip}</div>
+    </div>` : "";
+
+  document.getElementById("day-content").innerHTML = `
+    <div class="fade-in">
+      <div class="day-title">${d.title}</div>
+      <div class="day-date">
+        <span class="pill" style="background:${d.color};color:#fff">${d.label}</span>
+        <span>${d.date}</span>
+        ${isToday ? '<span class="pill" style="background:var(--gold);color:var(--ink)">TODAY</span>' : ''}
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-label">Walking</div><div class="stat-value">${dist.toFixed(1)} mi</div><div class="stat-sub">~${minutes} min</div></div>
+        <div class="stat"><div class="stat-label">Sunset</div><div class="stat-value">${goldenStart}</div><div class="stat-sub">golden hour ~1h prior</div></div>
+        <div class="stat"><div class="stat-label">Stops</div><div class="stat-value">${prog.done}/${prog.total}</div><div class="stat-sub">${progPct}% done</div></div>
+      </div>
+
+      <div class="lines-card">
+        <div class="label">Subway today</div>
+        <div class="lines-row">${linesHtml}</div>
+      </div>
+
+      <div class="summary-card">${d.summary}</div>
+
+      ${tipHtml}
+      ${gemHtml}
+
+      ${prog.total ? `<div class="progress">
+        <div class="progress-row">
+          <span class="progress-label">Day progress</span>
+          <span class="progress-count">${prog.done} / ${prog.total}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${progPct}%"></div></div>
+      </div>` : ''}
+
+      <div class="section-h">Stops in order</div>
+      <div class="stops">${stopsHtml}</div>
+    </div>
+  `;
+}
+
+function renderDayContent() {
+  if (state.showAll) renderAllView();
+  else renderDayView();
+}
+
+/* ============================================================
+   ACTIONS
+============================================================ */
+function selectDay(n) { state.showAll = false; state.activeDay = n; renderAll(); }
+function zoomTo(lat, lng) {
+  map.setView([lat, lng], 16, { animate: true });
+  const m = markers.find(mk => Math.abs(mk._pin.lat - lat) < 0.0001 && Math.abs(mk._pin.lng - lng) < 0.0001);
+  if (m) m.openPopup();
+  if (window.innerWidth <= 820) document.getElementById("panel").classList.remove("expanded");
+}
+function toggleStop(lat, lng, day) {
+  const p = PINS.find(pp => pp.day === day && Math.abs(pp.lat - lat) < 0.0001 && Math.abs(pp.lng - lng) < 0.0001);
+  if (!p) return;
+  const wasVisited = isVisited(p);
+  toggleVisited(p);
+  renderDayView();
+  applyFilters();
+  // Day completion celebration
+  if (!wasVisited) {
+    const prog = dayProgress(day);
+    if (prog.total > 0 && prog.done === prog.total) {
+      celebrate();
+      toast(`🎉 Day ${day} complete! All stops visited.`, true);
+    }
+  }
+}
+function rerollFact() {
+  let next = state.factIdx;
+  while (next === state.factIdx && FACTS.length > 1) next = Math.floor(Math.random() * FACTS.length);
+  state.factIdx = next;
+  renderAllView();
+}
+window.selectDay = selectDay;
+window.zoomTo = zoomTo;
+window.toggleStop = toggleStop;
+window.rerollFact = rerollFact;
+
+/* ============================================================
+   TOAST + CONFETTI
+============================================================ */
+function toast(msg, gold) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.toggle("gold", !!gold);
+  el.classList.add("show");
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove("show"), 2400);
+}
+
+function celebrate() {
+  const colors = ["#e63946","#f77f00","#fcbf49","#06a77d","#118ab2","#4361ee","#7209b7","#c9a961"];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.transform = `rotate(${Math.random() * 360}deg)`;
+    c.style.animation = `fall ${1.5 + Math.random() * 2}s linear forwards`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+const css = document.createElement("style");
+css.textContent = `@keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }`;
+document.head.appendChild(css);
+
+/* ============================================================
+   MOBILE PANEL — drag-to-expand bottom sheet
+============================================================ */
+const panel = document.getElementById("panel");
+const handle = document.getElementById("panel-handle");
+
+let dragState = null;
+function onDragStart(e) {
+  if (window.innerWidth > 820) return;
+  const t = e.touches ? e.touches[0] : e;
+  dragState = {
+    startY: t.clientY,
+    startTime: Date.now(),
+    initiallyExpanded: panel.classList.contains("expanded"),
+    moved: false
+  };
+  panel.style.transition = "none";
+}
+function onDragMove(e) {
+  if (!dragState) return;
+  const t = e.touches ? e.touches[0] : e;
+  const dy = t.clientY - dragState.startY;
+  if (Math.abs(dy) > 4) dragState.moved = true;
+  const collapsedOffset = panel.offsetHeight - 168;
+  const baseTranslate = dragState.initiallyExpanded ? 0 : collapsedOffset;
+  let translate = baseTranslate + dy;
+  translate = Math.max(0, Math.min(collapsedOffset, translate));
+  panel.style.transform = `translateY(${translate}px)`;
+  if (dragState.moved && e.cancelable) e.preventDefault();
+}
+function onDragEnd() {
+  if (!dragState) return;
+  if (!dragState.moved) {
+    panel.style.transition = "";
+    panel.style.transform = "";
+    panel.classList.toggle("expanded");
+    dragState = null;
+    return;
+  }
+  const m = panel.style.transform.match(/translateY\(([-\d.]+)px\)/);
+  const currentTranslate = m ? parseFloat(m[1]) : 0;
+  const collapsedOffset = panel.offsetHeight - 168;
+  const elapsed = Date.now() - dragState.startTime;
+  const baseTranslate = dragState.initiallyExpanded ? 0 : collapsedOffset;
+  const totalDy = currentTranslate - baseTranslate;
+  const velocity = Math.abs(totalDy) / Math.max(elapsed, 1);
+  // Velocity-based fling: > 0.5 px/ms commits to direction
+  let shouldExpand;
+  if (velocity > 0.5) {
+    shouldExpand = totalDy < 0;
+  } else {
+    shouldExpand = currentTranslate < collapsedOffset / 2;
+  }
+  panel.classList.toggle("expanded", shouldExpand);
+  panel.style.transition = "";
+  panel.style.transform = "";
+  dragState = null;
+}
+handle.addEventListener("touchstart", onDragStart, { passive: true });
+handle.addEventListener("touchmove", onDragMove, { passive: false });
+handle.addEventListener("touchend", onDragEnd);
+handle.addEventListener("touchcancel", onDragEnd);
+handle.addEventListener("click", (e) => {
+  if (window.innerWidth <= 820 && !dragState) panel.classList.toggle("expanded");
+});
+document.getElementById("day-tabs").addEventListener("click", () => {
+  if (window.innerWidth <= 820) panel.classList.add("expanded");
+});
+
+/* ============================================================
+   HOME LINK (zoom to home)
+============================================================ */
+document.getElementById("home-link").addEventListener("click", (e) => {
+  e.preventDefault();
+  zoomTo(40.7253, -73.9928);
+});
+
+/* ============================================================
+   RENDER ALL + INIT
+============================================================ */
+function renderAll() {
+  renderCountdown();
+  renderTabs();
+  renderFilters();
+  renderDayContent();
+  applyFilters();
+  document.getElementById("day-content").scrollTop = 0;
+}
+
+renderAll();
+
+// Hide loader after first paint
+setTimeout(() => document.getElementById("loader").classList.add("gone"), 200);
+
+// Register service worker for offline support
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch((err) => console.warn("SW registration failed:", err));
+  });
+}
+
+// Welcome toast
+setTimeout(() => {
+  const c = countdownText();
+  if (c.today) toast(`☀️ ${c.text}. Have a great day.`, true);
+  else if (c.text === "Tomorrow") toast("🗽 New York, tomorrow. Get some sleep.", true);
+}, 1200);
+</script>
+</body>
+</html>
