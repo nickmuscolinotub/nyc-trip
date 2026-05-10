@@ -225,6 +225,73 @@
   /* Confetti */
   .confetti { position: fixed; top: -20px; width: 8px; height: 14px; pointer-events: none; z-index: 9999; }
 
+  /* Locate button (floating action button on the map) */
+  #locate-btn {
+    position: absolute;
+    bottom: calc(28px + env(safe-area-inset-bottom));
+    right: 14px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 999;
+    transition: all 0.2s var(--ease);
+    -webkit-tap-highlight-color: transparent;
+  }
+  #locate-btn:hover { transform: scale(1.05); }
+  #locate-btn.active { background: #0084ff; color: #fff; border-color: #0084ff; }
+  #locate-btn.searching { animation: searching-pulse 1.4s var(--ease) infinite; }
+  @keyframes searching-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.92); }
+  }
+  @media (max-width: 820px) {
+    #locate-btn { bottom: calc(180px + env(safe-area-inset-bottom)); right: 12px; }
+  }
+
+  /* User location marker on the map */
+  .user-loc-icon { background: transparent !important; border: none !important; }
+  .user-loc-dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #0084ff;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 0 rgba(0, 132, 255, 0.6), 0 2px 6px rgba(0,0,0,0.3);
+    animation: locate-pulse 2s infinite;
+  }
+  @keyframes locate-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0.55), 0 2px 6px rgba(0,0,0,0.3); }
+    100% { box-shadow: 0 0 0 22px rgba(0, 132, 255, 0), 0 2px 6px rgba(0,0,0,0.3); }
+  }
+
+  /* Distance label in popups + stops */
+  .distance-pill {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 10.5px; font-weight: 600;
+    padding: 2px 7px; border-radius: 999px;
+    background: #e6f2ff; color: #0066cc;
+    margin-left: 6px; vertical-align: middle;
+    letter-spacing: 0.01em;
+  }
+  .stop .name .distance-pill { font-weight: 600; }
+
+  /* Sort toggle (Nearest first) */
+  .sort-toggle {
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--line); background: #fff;
+    cursor: pointer; color: var(--ink-2);
+    margin-left: auto;
+  }
+  .sort-toggle.active { background: #0084ff; color: #fff; border-color: #0084ff; }
+  .section-h .sort-toggle { margin-left: auto; }
+
   /* Mobile */
   #panel-handle { display: none; }
   @media (max-width: 820px) {
@@ -295,6 +362,7 @@
     <div id="day-content"></div>
   </aside>
   <div id="map"></div>
+  <button id="locate-btn" title="Find me / center on my location" aria-label="Locate me">📍</button>
 </div>
 
 <div id="toast"></div>
@@ -660,7 +728,7 @@ function dayProgress(n) {
   return { done, total: dayPins.length };
 }
 
-let state = { activeDay: 0, activeFilter: "all", showAll: true, factIdx: Math.floor(Math.random() * FACTS.length), homeTaps: 0, homeTapTimer: null };
+let state = { activeDay: 0, activeFilter: "all", showAll: true, factIdx: Math.floor(Math.random() * FACTS.length), homeTaps: 0, homeTapTimer: null, sortByDist: false };
 const todayN = dayIndexForToday();
 if (todayN) { state.activeDay = todayN; state.showAll = false; }
 
@@ -735,10 +803,15 @@ function popupHtml(pin) {
   const gmapsName = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pin.name + " " + pin.addr)}`;
   const golden = pin.photo && day && day.sunset !== "—"
     ? `<div class="popup-golden">📸 Best light: golden hour, ~1 hr before ${day.sunset} sunset.</div>` : "";
+  const dist = distanceFromUser(pin.lat, pin.lng);
+  const distHtml = dist != null
+    ? `<div class="popup-golden" style="background:#e6f2ff;color:#0066cc">📍 ${formatDistance(dist)} from you · ${walkMinutes(dist)} min walk</div>`
+    : "";
   return `
     <div class="popup-name">${pin.emoji} ${pin.name}</div>
     <div class="popup-meta">${dayLabel} · ${pin.addr}</div>
     <div class="popup-tip">${pin.tip}</div>
+    ${distHtml}
     ${golden}
     <div class="popup-actions">
       <a href="${gmapsDir}" target="_blank" rel="noopener">Directions</a>
@@ -748,7 +821,7 @@ function popupHtml(pin) {
 }
 
 PINS.forEach(pin => {
-  const m = L.marker([pin.lat, pin.lng], { icon: makeIcon(pin) }).bindPopup(popupHtml(pin));
+  const m = L.marker([pin.lat, pin.lng], { icon: makeIcon(pin) }).bindPopup(() => popupHtml(pin));
   m._pin = pin;
 
   // Easter egg: home pin 5-tap
@@ -911,6 +984,14 @@ function renderDayView() {
       pinsForDay = pinsForDay.filter(p => p.type === state.activeFilter);
     }
   }
+  // Sort by distance from user if toggle is on and we have location
+  if (state.sortByDist && userLocation) {
+    pinsForDay = pinsForDay.slice().sort((a, b) => {
+      const da = distanceFromUser(a.lat, a.lng) ?? 999;
+      const db = distanceFromUser(b.lat, b.lng) ?? 999;
+      return da - db;
+    });
+  }
 
   const dist = dayWalkDistance(d.n);
   const minutes = dayWalkMinutes(dist);
@@ -933,11 +1014,15 @@ function renderDayView() {
     if (p.work) badges.push(`<span class="badge work">Work cafe</span>`);
     if (p.photo) badges.push(`<span class="badge photo">📸</span>`);
     if (p.type === "hidden") badges.push(`<span class="badge hidden">Hidden gem</span>`);
+    const dist = distanceFromUser(p.lat, p.lng);
+    const distPill = dist != null
+      ? `<span class="distance-pill">📍 ${formatDistance(dist)}</span>`
+      : "";
     return `
       <div class="stop${workCls}${visitedCls}">
         <div class="check" data-num="${i + 1}" style="background:${d.color}" onclick="event.stopPropagation();toggleStop(${p.lat},${p.lng},${p.day})"></div>
         <div class="body" onclick="zoomTo(${p.lat},${p.lng})">
-          <div class="name"><span class="emoji">${p.emoji}</span>${p.name}${badges.join("")}</div>
+          <div class="name"><span class="emoji">${p.emoji}</span>${p.name}${distPill}${badges.join("")}</div>
           <div class="addr">${p.addr}</div>
           <div class="tip">${p.tip}</div>
           <div class="actions">
@@ -996,7 +1081,7 @@ function renderDayView() {
         <div class="progress-bar"><div class="progress-fill" style="width:${progPct}%"></div></div>
       </div>` : ''}
 
-      <div class="section-h">Stops in order</div>
+      <div class="section-h">${state.sortByDist && userLocation ? 'Nearest first' : 'Stops in order'}${userLocation ? `<button class="sort-toggle ${state.sortByDist ? 'active' : ''}" onclick="toggleSortByDist()">📍 ${state.sortByDist ? 'Sort: nearest' : 'Sort by nearest'}</button>` : ''}</div>
       <div class="stops">${stopsHtml}</div>
     </div>
   `;
@@ -1039,10 +1124,15 @@ function rerollFact() {
   state.factIdx = next;
   renderAllView();
 }
+function toggleSortByDist() {
+  state.sortByDist = !state.sortByDist;
+  if (!state.showAll) renderDayContent();
+}
 window.selectDay = selectDay;
 window.zoomTo = zoomTo;
 window.toggleStop = toggleStop;
 window.rerollFact = rerollFact;
+window.toggleSortByDist = toggleSortByDist;
 
 /* ============================================================
    TOAST + CONFETTI
@@ -1151,6 +1241,130 @@ document.getElementById("home-link").addEventListener("click", (e) => {
 });
 
 /* ============================================================
+   GEOLOCATION — Locate me + continuous watch
+============================================================ */
+const LOC_PERM_KEY = "nyc-trip-loc-perm";
+let userLocation = null;          // { lat, lng, accuracy }
+let userLocMarker = null;
+let userLocCircle = null;
+let watchId = null;
+const locBtn = document.getElementById("locate-btn");
+
+function renderUserLocation() {
+  if (!userLocation) return;
+  const { lat, lng, accuracy } = userLocation;
+  if (userLocMarker) {
+    userLocMarker.setLatLng([lat, lng]);
+    if (userLocCircle) userLocCircle.setLatLng([lat, lng]).setRadius(accuracy);
+  } else {
+    const icon = L.divIcon({
+      className: "user-loc-icon",
+      html: '<div class="user-loc-dot"></div>',
+      iconSize: [20, 20], iconAnchor: [10, 10]
+    });
+    userLocMarker = L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(map);
+    userLocCircle = L.circle([lat, lng], {
+      radius: accuracy, color: "#0084ff", fillColor: "#0084ff",
+      fillOpacity: 0.08, weight: 1, interactive: false
+    }).addTo(map);
+  }
+}
+
+function clearUserLocation() {
+  if (userLocMarker) { map.removeLayer(userLocMarker); userLocMarker = null; }
+  if (userLocCircle) { map.removeLayer(userLocCircle); userLocCircle = null; }
+  userLocation = null;
+}
+
+function startLocationWatch() {
+  if (!("geolocation" in navigator) || watchId !== null) return;
+  watchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy };
+      renderUserLocation();
+      localStorage.setItem(LOC_PERM_KEY, "true");
+      locBtn.classList.add("active");
+      locBtn.classList.remove("searching");
+      // Refresh stops list to update distances
+      if (!state.showAll) renderDayContent();
+    },
+    (err) => {
+      console.warn("Watch position error:", err.message);
+      if (err.code === err.PERMISSION_DENIED) {
+        localStorage.setItem(LOC_PERM_KEY, "denied");
+        locBtn.classList.remove("active", "searching");
+      }
+    },
+    { enableHighAccuracy: false, maximumAge: 30000, timeout: 20000 }
+  );
+}
+
+function stopLocationWatch() {
+  if (watchId !== null) {
+    navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+  }
+}
+
+function locateMe(centerMap = true, silent = false) {
+  if (!("geolocation" in navigator)) {
+    if (!silent) toast("Location not supported on this device.");
+    return;
+  }
+  locBtn.classList.add("searching");
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy };
+      renderUserLocation();
+      localStorage.setItem(LOC_PERM_KEY, "true");
+      locBtn.classList.add("active");
+      locBtn.classList.remove("searching");
+      if (centerMap) map.setView([userLocation.lat, userLocation.lng], 15, { animate: true });
+      if (!silent) toast("📍 Got you. Distances now show in stops.", true);
+      startLocationWatch();
+      if (!state.showAll) renderDayContent();
+    },
+    (err) => {
+      locBtn.classList.remove("searching");
+      if (!silent) {
+        if (err.code === err.PERMISSION_DENIED) {
+          toast("Location denied. Enable in iPhone Settings → Safari → Location.");
+          localStorage.setItem(LOC_PERM_KEY, "denied");
+        } else {
+          toast("Couldn't get location. Try again outside.");
+        }
+      }
+    },
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
+  );
+}
+
+locBtn.addEventListener("click", () => {
+  if (userLocation) {
+    // Already located — re-center on user
+    map.setView([userLocation.lat, userLocation.lng], 15, { animate: true });
+    toast("Centered on you.", true);
+  } else {
+    locateMe(true, false);
+  }
+});
+
+/* Distance helpers */
+function distanceFromUser(lat, lng) {
+  if (!userLocation) return null;
+  return haversine([userLocation.lat, userLocation.lng], [lat, lng]);
+}
+function formatDistance(mi) {
+  if (mi == null) return "";
+  if (mi < 0.1) return "<0.1 mi";
+  if (mi < 10) return mi.toFixed(1) + " mi";
+  return Math.round(mi) + " mi";
+}
+function walkMinutes(mi) {
+  return Math.max(1, Math.round(mi / 3 * 60));
+}
+
+/* ============================================================
    RENDER ALL + INIT
 ============================================================ */
 function renderAll() {
@@ -1166,6 +1380,11 @@ renderAll();
 
 // Hide loader after first paint
 setTimeout(() => document.getElementById("loader").classList.add("gone"), 200);
+
+// Auto-locate if permission was previously granted
+if (localStorage.getItem(LOC_PERM_KEY) === "true") {
+  setTimeout(() => locateMe(false, true), 600); // silent, don't recenter
+}
 
 // Register service worker for offline support
 if ("serviceWorker" in navigator) {
