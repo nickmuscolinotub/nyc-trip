@@ -325,7 +325,8 @@ const SUBWAY_LINES = {
   ]},
   "C": { color: "#0039A6", label: "C", name: "8th Ave Local", path: [
     [40.7261,-74.0036],[40.7322,-74.0007],[40.7406,-74.0027],[40.7459,-73.9986],
-    [40.7521,-73.9929],[40.7572,-73.9899],[40.7621,-73.9854],[40.7682,-73.9819]
+    [40.7521,-73.9929],[40.7572,-73.9899],[40.7621,-73.9854],[40.7682,-73.9819],
+    [40.7758,-73.9776],[40.7813,-73.9719],[40.7858,-73.9682]
   ]},
   "1": { color: "#EE352E", label: "1", name: "Broadway-7th Ave Local", path: [
     [40.7338,-74.0030],[40.7378,-73.9995],[40.7397,-73.9974],[40.7440,-73.9954],
@@ -338,59 +339,74 @@ const SUBWAY_LINES = {
    WALKING SEGMENTS (per day, dashed black on the map)
 ============================================================ */
 const WALK_SEGMENTS = {
+  // Day 1 — Sun May 10 — arrival afternoon: Nom Wah → SoHo → Joe's → Wash Sq → Strand → home
   1: [[
-    [40.7253,-73.9928],[40.7259,-73.9925],[40.7332,-73.9912],[40.7308,-73.9973],
-    [40.7305,-74.0026],[40.7245,-74.0019],[40.7240,-73.9971],[40.7234,-73.9971],
-    [40.7233,-73.9947],[40.7178,-73.9913],[40.7268,-73.9852],[40.7253,-73.9928]
-  ]],
-  2: [
-    [[40.7253,-73.9928],[40.7176,-73.9911],[40.7146,-73.9978],[40.7194,-73.9970],
-     [40.7117,-74.0124],[40.7115,-74.0134],[40.7056,-74.0134],[40.7044,-74.0117],
-     [40.7033,-74.0170],[40.7013,-74.0134],[40.7033,-74.0170],[40.7065,-74.0079],
-     [40.7128,-74.0040]],
-    [[40.7256,-73.9913],[40.7253,-73.9928]]
-  ],
-  3: [[
-    [40.7253,-73.9928],[40.7361,-73.9974],[40.7396,-74.0089],[40.7397,-74.0085],
-    [40.7423,-74.0107],[40.7424,-74.0061],[40.7538,-74.0019],[40.7547,-74.0048],
-    [40.7388,-74.0007],[40.7355,-74.0061],[40.7339,-74.0030],[40.7314,-74.0029],
+    [40.7253,-73.9928],[40.7146,-73.9978],[40.7233,-73.9947],[40.7245,-74.0019],
+    [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7259,-73.9925],
     [40.7253,-73.9928]
   ]],
-  4: [
-    [[40.7253,-73.9928],[40.7256,-73.9961]],
-    [[40.7493,-73.9881],[40.7531,-73.9871],[40.7614,-73.9776],[40.7585,-73.9759],
-     [40.7587,-73.9787],[40.7592,-73.9795],[40.7580,-73.9855],[40.7536,-73.9832],
-     [40.7526,-73.9839],[40.7532,-73.9822],[40.7527,-73.9772],[40.7530,-73.9779],
-     [40.7625,-73.9685],[40.7521,-73.9928],[40.7493,-73.9881]],
-    [[40.7256,-73.9961],[40.7253,-73.9928]]
+  // Day 2 — Mon — work + High Line + Friends + WV
+  // Seg 1: home → Bluestone (work cafe)
+  // Seg 2: Bluestone → High Line south → Whitney → Little Island → Chelsea Market → Vessel → High Line N → Magnolia → Three Lives → Friends apt → 75½ Bedford → John's → home
+  2: [
+    [[40.7253,-73.9928],[40.7361,-73.9974]],
+    [[40.7361,-73.9974],[40.7396,-74.0089],[40.7397,-74.0085],[40.7423,-74.0107],
+     [40.7424,-74.0061],[40.7538,-74.0019],[40.7547,-74.0048],[40.7355,-74.0061],
+     [40.7339,-74.0030],[40.7314,-74.0050],[40.7308,-74.0048],[40.7314,-74.0029],
+     [40.7253,-73.9928]]
   ],
-  5: [
-    [[40.7253,-73.9928],[40.7256,-73.9913]],
-    [[40.7739,-73.9598],[40.7794,-73.9632],[40.7830,-73.9590],[40.7798,-73.9692],
-     [40.7793,-73.9810],[40.7757,-73.9759],[40.7757,-73.9716],[40.7740,-73.9710],
-     [40.7720,-73.9716],[40.7715,-73.9759],[40.7681,-73.9819]],
+  // Day 3 — Tue — work + Midtown + Daily Bugle + Tram + SUMMIT
+  // Seg 1: home → Flatiron (Daily Bugle photo) → Culture Espresso (work cafe)
+  // Seg 2: Culture → MoMA → St Pat's → Rockefeller → ToTR → Times Sq → Bryant → Blue Bottle → NYPL → GC → Argosy → Roosevelt Tram → SUMMIT → Pizza Suprema → home
+  3: [
+    [[40.7253,-73.9928],[40.7411,-73.9897],[40.7531,-73.9871]],
+    [[40.7531,-73.9871],[40.7614,-73.9776],[40.7585,-73.9759],[40.7587,-73.9787],
+     [40.7592,-73.9795],[40.7580,-73.9855],[40.7536,-73.9832],[40.7526,-73.9839],
+     [40.7532,-73.9822],[40.7527,-73.9772],[40.7625,-73.9685],[40.7595,-73.9624],
+     [40.7530,-73.9779],[40.7521,-73.9928],[40.7253,-73.9928]]
+  ],
+  // Day 4 — Wed — work UWS + Met + Park
+  // Seg 1: home → Spring St C
+  // Seg 2: 81st-Museum C → Joe Coffee → Met → Bethesda → Bow → Mall → Sheep Meadow → Strawberry → Belvedere → Levain → Columbus Circle (C station)
+  // Seg 3: Spring St C → home
+  4: [
+    [[40.7253,-73.9928],[40.7261,-74.0036]],
+    [[40.7813,-73.9719],[40.7869,-73.9737],[40.7794,-73.9632],[40.7798,-73.9692],
+     [40.7757,-73.9716],[40.7740,-73.9710],[40.7720,-73.9716],[40.7715,-73.9759],
+     [40.7757,-73.9759],[40.7793,-73.9810],[40.7681,-73.9819]],
     [[40.7261,-74.0036],[40.7253,-73.9928]]
   ],
+  // Day 5 — Thu — work FiDi + Lower Manhattan + Statue Ferry
+  // Seg 1: home → Brooklyn Bridge–City Hall 6
+  // Seg 2: Black Fox (work) → 9/11 → Oculus → Bull → Stone St → Battery → Ferry → Battery → Chinatown → Scarr's
+  // Seg 3: Scarr's → home
+  5: [
+    [[40.7253,-73.9928],[40.7128,-74.0040]],
+    [[40.7065,-74.0079],[40.7115,-74.0134],[40.7117,-74.0124],[40.7056,-74.0134],
+     [40.7044,-74.0117],[40.7033,-74.0170],[40.7013,-74.0134],[40.7033,-74.0170],
+     [40.7194,-73.9970],[40.7176,-73.9911]],
+    [[40.7176,-73.9911],[40.7253,-73.9928]]
+  ],
+  // Day 6 — Fri — work + Brooklyn (Williamsburg + DUMBO + Bridge walk)
+  // Seg 1: home → Coffee Project NY (work cafe, 5 min walk)
+  // Seg 2: Coffee Project → 1st Ave L
+  // Seg 3: Bedford → Domino → L'Industrie → Devoción WB → back to Bedford
+  // Seg 4: 1st Ave (after L back) → 2nd Ave F (walk south)
+  // Seg 5: York St F → Time Out → Empire Stores → Jane's Carousel → Pier 1 → Promenade → Brooklyn Bridge → Manhattan side
+  // Seg 6: Bleecker St 6 → home
   6: [
-    // Home → 1st Ave L
-    [[40.7253,-73.9928],[40.7307,-73.9817]],
-    // Bedford Ave (Williamsburg) → Domino Park → L'Industrie → Devoción → back to Bedford L
+    [[40.7253,-73.9928],[40.7286,-73.9883]],
+    [[40.7286,-73.9883],[40.7307,-73.9817]],
     [[40.7172,-73.9569],[40.7158,-73.9595],[40.7150,-73.9683],[40.7117,-73.9612],
      [40.7146,-73.9609],[40.7172,-73.9569]],
-    // 1st Ave L (after L back from Williamsburg) → walk south to 2nd Ave F
     [[40.7307,-73.9817],[40.7234,-73.9899]],
-    // York St F (DUMBO) → Time Out → Empire Stores → Carousel → Pier 1 → Brooklyn Roasting → Promenade → bridge entrance → across bridge → BB-City Hall 6
     [[40.7008,-73.9869],[40.7027,-73.9888],[40.7030,-73.9895],[40.7028,-73.9921],
-     [40.7028,-73.9968],[40.7026,-73.9870],[40.6961,-73.9964],[40.7061,-73.9969],
-     [40.7088,-74.0006],[40.7117,-74.0050]],
-    // Bleecker St 6 → home
+     [40.7028,-73.9968],[40.6961,-73.9964],[40.7061,-73.9969],[40.7088,-74.0006],
+     [40.7117,-74.0050]],
     [[40.7256,-73.9913],[40.7253,-73.9928]]
   ],
-  7: [
-    // Home → Russ & Daughters → Tompkins Square Park → Devoción NoHo → home
-    [[40.7253,-73.9928],[40.7196,-73.9886],[40.7264,-73.9818],[40.7259,-73.9925],
-     [40.7253,-73.9928]]
-  ]
+  // Day 7 — Sat — departure 6:55am. Just home → JFK by cab.
+  7: []
 };
 
 /* ============================================================
@@ -402,54 +418,54 @@ const DAYS = [
     summary:"Tap a day above to focus the map and see ordered stops, the subway lines you'll need, sunset, walking time, a local tip, and a hidden gem.",
     tip:null, gem:null
   },
-  { n:1, label:"Day 1", date:"Sat May 10", color:"#e63946", lines:[],
-    title:"Arrival · NoHo · SoHo · Village", theme:"Land at JFK 10:30am. Half day — get home, settle, light walking.",
+  { n:1, label:"Day 1", date:"Sun May 10", color:"#e63946", lines:[],
+    title:"Arrival · NoHo · SoHo · Village", theme:"Land at JFK 10:30am. Half day — get home, drop bags, easy walking.",
     sunset:"7:58 PM",
-    summary:"JFK → home, two options: (1) Yellow cab — flat $70 + ~$10 toll + 18% tip ≈ $90, 30–50 min depending on traffic. (2) AirTrain ($8) → Sutphin Blvd-Archer Av-JFK → E train ($2.90) to Spring St → 5-min walk home. ~$11 total, ~60 min from terminal. With one bag, take the train. Drop bags ~12:30 → lunch nearby → easy loop: Devoción → SoHo cobblestones → Washington Square → Strand → Joe's Pizza for dinner. No agenda. Skip what you don't have energy for.",
+    summary:"JFK → home, two options: (1) Yellow cab — flat $70 + ~$10 toll + 18% tip ≈ $90, 30–50 min. (2) AirTrain ($8) → Sutphin Blvd → E train ($2.90) to Spring St → 5-min walk home. ~$11 total, ~60 min. Drop bags ~12:30 → late lunch at Nom Wah (Chinatown dim sum, 5 min walk south) → afternoon loop home through SoHo cobblestones → Joe's Pizza dinner → Washington Square → Strand for a tote → home. Skip what you don't have energy for.",
     tip:"From JFK: yellow cabs are a flat $70 to anywhere in Manhattan + tolls + tip ≈ $90 total. Uber/Lyft can surge to $100+. AirTrain + E train: $11, ~60 min, reliable.",
     gem:{ name:"McSorley's Old Ale House", addr:"15 E 7th St, East Village", blurb:"Oldest Irish saloon in NYC (1854). Sawdust on the floor. Two beers only: light or dark. Cash only. Lincoln drank here.", lat:40.7287, lng:-73.9893 }
   },
-  { n:2, label:"Day 2", date:"Sun May 11", color:"#f77f00", lines:["6"],
-    title:"Lower Manhattan + Free Lady Liberty", theme:"Partial day — pick the highlights, skip the rest.",
+  { n:2, label:"Day 2", date:"Mon May 11", color:"#fcbf49", lines:[],
+    title:"Work · High Line · Friends · West Village", theme:"4-hr work block 10–2, then the High Line and the Village circuit.",
     sunset:"7:59 PM",
-    summary:"Sunday is a partial day. Hit the must-dos: Chinatown brunch (Nom Wah) → 9/11 Memorial → Battery Park → Staten Island Ferry roundtrip (free, postcard view of Lady Liberty) → Scarr's Pizza on the walk home. Skip Stone Street + Black Fox if running short. 6 train from Brooklyn Bridge–City Hall is your shortcut home.",
-    tip:"Stand on the right of escalators. Walk on the left. New Yorkers will lose their minds otherwise.",
-    gem:{ name:"The Elevated Acre", addr:"55 Water St, FiDi", blurb:"Secret 1-acre rooftop park hidden between office buildings. Free, panoramic harbor views. The escalator looks like it goes nowhere — take it.", lat:40.7037, lng:-74.0089 }
+    summary:"Morning at home → 10am-2pm WORK at Bluestone Lane (Greenwich Village) → walk High Line south-to-north → Little Island detour → Chelsea Market → Vessel at the north end → walk south through West Village → Magnolia Bakery → Three Lives & Co bookstore → Friends apartment exterior (90 Bedford St — \"How you doin'?\") → 75½ Bedford (narrowest house in NYC) → John's of Bleecker pizza for dinner → home.",
+    tip:"All Manhattan numbered streets run east-west, avenues run north-south. \"Up\" = uptown = north. You'll never get turned around again.",
+    gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade. Photo from across the street.", lat:40.7308, lng:-74.0048 }
   },
-  { n:3, label:"Day 3", date:"Mon May 12", color:"#fcbf49", lines:["1"],
-    title:"Work · High Line · West Village", theme:"2-hr morning work session, then the High Line top to bottom.",
+  { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
+    title:"Work · Midtown · Daily Bugle · SUMMIT", theme:"Spider-Man bonus + every postcard hit + best deck in NYC.",
     sunset:"8:00 PM",
-    summary:"9–11am work block at Bluestone Lane → walk High Line south-to-north → Little Island → Chelsea Market lunch → wander West Village → Three Lives & Co bookshop → John's of Bleecker. 1 train back from 14th St if needed.",
-    tip:"All Manhattan numbered streets run east-west; avenues run north-south. \"Up\" = uptown = north. You'll rarely get lost again.",
-    gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade, easy to miss. Photo it from across the street.", lat:40.7308, lng:-74.0048 }
-  },
-  { n:4, label:"Day 4", date:"Tue May 13", color:"#06a77d", lines:["F"],
-    title:"Work · Midtown · SUMMIT at sunset", theme:"2-hr morning work session, then every postcard hit + the best deck in NYC.",
-    sunset:"8:01 PM",
-    summary:"F to 34th-Herald Sq → 9–11am work block at Culture Espresso → MoMA at opening → St. Patrick's → Rockefeller Center → Times Square walk-through → Bryant Park + NYPL Rose Reading Room → Grand Central whisper gallery → SUMMIT at 7:00pm (sunset 8:01) → Argosy → NY Pizza Suprema.",
+    summary:"Morning walk past the Flatiron Building (used as the Daily Bugle in Sam Raimi's Spider-Man trilogy) en route to work → 10am-2pm WORK at Culture Espresso → MoMA → St. Patrick's → Rockefeller Center → Top of the Rock → Times Square → Bryant Park + NYPL Rose Reading Room → Grand Central whisper gallery → Argosy vintage bookstore → Roosevelt Island Tram (Spider-Man 2002 — Goblin attacks the tram) — quick aerial round trip → SUMMIT at 7:00pm (sunset 8:00pm — book online) → NY Pizza Suprema for dinner → F home.",
     tip:"OMNY tap-to-pay is on every turnstile. No more MetroCard. Same for buses. $34 weekly cap — you'll never pay for a 13th ride in a week.",
     gem:{ name:"The Whispering Gallery", addr:"Lower level, outside Oyster Bar, Grand Central", blurb:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally across the room. Architectural accident. Magic.", lat:40.7526, lng:-73.9772 }
   },
-  { n:5, label:"Day 5", date:"Wed May 14", color:"#118ab2", lines:["6","C"],
-    title:"Central Park + UES Museums", theme:"Art and green — pace yourself.",
+  { n:4, label:"Day 4", date:"Wed May 13", color:"#118ab2", lines:["C"],
+    title:"Work · Met · Central Park", theme:"4-hr work block on UWS, then the Met (closes 5pm) and a long park walk.",
+    sunset:"8:01 PM",
+    summary:"C train Spring St → 81st-Museum → 10am-2pm WORK at Joe Coffee (Columbus Ave UWS) → walk east to The Met (allow 2.5 hrs — closes 5pm Wed, last entry 4:30pm, get there RIGHT after work) → enter Central Park behind it → Bethesda Terrace → Bow Bridge → The Mall → Sheep Meadow → Strawberry Fields → Belvedere Castle → Levain Bakery cookie detour (UWS) → Columbus Circle → C train home.",
+    tip:"The Met is pay-what-you-wish for NY/NJ/CT residents only. Out-of-staters pay full ($30). Last entry Wed: 4:30pm. Go straight from work — no detours.",
+    gem:{ name:"Conservatory Garden", addr:"105th St & 5th Ave, Central Park", blurb:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Italian, French, English styles. Wisteria pergola in spring.", lat:40.7942, lng:-73.9522 }
+  },
+  { n:5, label:"Day 5", date:"Thu May 14", color:"#f77f00", lines:["6"],
+    title:"Work · Lower Manhattan · Free Lady Liberty", theme:"4-hr work block in FiDi, then the downtown loop + free harbor cruise.",
     sunset:"8:02 PM",
-    summary:"6 train to 77th St → Met Museum (3 hrs) → enter Central Park behind it → Bethesda Terrace → Bow Bridge → The Mall → Sheep Meadow → Strawberry Fields → Belvedere Castle → Levain cookie detour → Columbus Circle. C train home from 59th.",
-    tip:"The Met is pay-what-you-wish for NY/NJ/CT residents only. Out-of-staters pay full. Worth it. Allow 3 hours minimum.",
-    gem:{ name:"Conservatory Garden", addr:"105th St & 5th Ave, Central Park", blurb:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Three styles (Italian, French, English), wisteria pergola in spring, perfect quiet.", lat:40.7942, lng:-73.9522 }
+    summary:"6 train to Brooklyn Bridge–City Hall → walk to Black Fox Coffee → 10am-2pm WORK → 9/11 Memorial → Oculus → Charging Bull → Stone Street → Battery Park → Staten Island Ferry roundtrip (free, postcard Lady Liberty view) → walk back up via Chinatown → Scarr's Pizza on the walk home.",
+    tip:"Stand on the right of escalators. Walk on the left. New Yorkers will lose their minds otherwise.",
+    gem:{ name:"The Elevated Acre", addr:"55 Water St, FiDi", blurb:"Secret 1-acre rooftop park hidden between office buildings. Free, panoramic harbor views. The escalator looks like it goes nowhere — take it.", lat:40.7037, lng:-74.0089 }
   },
-  { n:6, label:"Day 6", date:"Thu May 15", color:"#4361ee", lines:["L","F","6"],
-    title:"Brooklyn: Williamsburg + DUMBO + Bridge", theme:"All of Brooklyn in one full day — coffee, slices, skyline, the bridge.",
+  { n:6, label:"Day 6", date:"Fri May 15", color:"#4361ee", lines:["L","F","6"],
+    title:"Work · Brooklyn (last full day!)", theme:"4-hr work block + ALL of Brooklyn in one big afternoon-evening.",
     sunset:"8:03 PM",
-    summary:"Big day. Start early. L from 1st Ave → Bedford → Williamsburg morning (Bedford Ave shops, Domino Park, L'Industrie Pizza for lunch, Devoción coffee) → L back to 1st Ave → walk south to 2nd Ave F → F to York St → DUMBO afternoon (Time Out Market, Empire Stores, Jane's Carousel, Pier 1 skyline shot) → Brooklyn Roasting break → Brooklyn Heights Promenade → walk Brooklyn Bridge back at sunset (8:03pm) → 6 from City Hall to Bleecker → home.",
+    summary:"YOUR LAST DAY. 10am-2pm WORK at Coffee Project NY (East Village, 5 min from home) → 2:15pm L from 1st Ave → Bedford (Williamsburg) → Bedford Ave → Domino Park (Manhattan skyline view) → L'Industrie Pizza for late lunch → L back to 1st Ave → walk south to 2nd Ave F → F to York St (DUMBO) → Time Out Market → Empire Stores → Jane's Carousel → Pier 1 (the skyline shot) → Brooklyn Heights Promenade → start Brooklyn Bridge walk ~7:15pm → finish at sunset (8:03pm) → 6 from City Hall to Bleecker → home. PACK TONIGHT — 4am cab tomorrow.",
     tip:"Walk LEFT on the Brooklyn Bridge — that's the pedestrian side. Bikes get the right. Aim to start the bridge walk ~7:15pm so you finish at sunset (8:03pm). Magic.",
-    gem:{ name:"Squibb Park Bridge", addr:"Squibb Park, Brooklyn Heights", blurb:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to Brooklyn Bridge Park. Engineered to flex — and it does. Kids love it. Adults pretend not to.", lat:40.7000, lng:-73.9970 }
+    gem:{ name:"Squibb Park Bridge", addr:"Squibb Park, Brooklyn Heights", blurb:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to Brooklyn Bridge Park. Engineered to flex — and it does.", lat:40.7000, lng:-73.9970 }
   },
-  { n:7, label:"Day 7", date:"Fri May 16", color:"#7209b7", lines:[],
-    title:"Wind-down + Departure", theme:"Light morning near home. Pack up, eat well, fly out.",
-    sunset:"8:04 PM",
-    summary:"Slow morning. Brunch at Russ & Daughters Cafe (the iconic NYC bagel + lox spot, 5 min from home). Walk Tompkins Square Park for one last East Village wander. Last coffee at Devoción NoHo. Hit anything you missed from the week — open the All view to scan. Pack and head to JFK — reverse Day 1 (cab ~$90 or AirTrain + E train ~$11). Allow 2.5 hrs before international flights, 2 hrs domestic.",
-    tip:"Most airlines accept bag drop 4 hrs before departure. Drop bags early at JFK, come back to Manhattan for one last coffee, then return.",
-    gem:{ name:"Veselka", addr:"144 2nd Ave, East Village", blurb:"24-hour Ukrainian diner since 1954. Pierogi, borscht, blintzes. East Village institution. If you missed brunch, this is your backup any time of day.", lat:40.7283, lng:-73.9871 }
+  { n:7, label:"Day 7", date:"Sat May 16", color:"#7209b7", lines:[],
+    title:"Departure (6:55am flight)", theme:"Wake at 3:30am. Cab at 4am. JFK by 4:45am.",
+    sunset:"—",
+    summary:"6:55am flight = leave home by 4:00am sharp. Yellow cab is the only reliable option this early (AirTrain runs but with sparse schedules + transfer risk; not worth it). Pre-book via Curb or just hail outside on Bowery (cabs run 24/7). Flat $70 to JFK + ~$10 toll + tip ≈ $90 cash or card. Allow 45 min in light early-morning traffic. At JFK by 4:45am, bag drop 5am, security 5:15am, gate 5:45am, board 6:25am, depart 6:55am. Sleep on the plane.",
+    tip:"Pre-arrange a cab the night before. Curb app, or call a car service. Don't risk relying on hailing one in the rain at 4am.",
+    gem:null
   }
 ];
 
@@ -460,98 +476,98 @@ const PINS = [
   // HOME
   { day:0, type:"home", name:"338 Bowery (Home)", lat:40.7253, lng:-73.9928, addr:"338 Bowery, NoHo", tip:"Your home base for the week. Tap me 5 times — I'll show you something.", emoji:"🏠" },
 
-  // DAY 1
-  { day:1, type:"cafe",       name:"Devoción NoHo",                lat:40.7259, lng:-73.9925, addr:"25 Bond St", tip:"30-second walk from home. Direct-trade Colombian beans. Start here.", emoji:"☕" },
+  // DAY 1 — Sun May 10 (arrival, half day, walking)
+  { day:1, type:"attraction", name:"Nom Wah Tea Parlor",           lat:40.7146, lng:-73.9978, addr:"13 Doyers St, Chinatown", tip:"Late lunch on arrival. Oldest dim sum in Chinatown (1920). 5 min walk south of home. Get the OG egg roll, har gow, roast pork bun.", emoji:"⭐", must:true },
+  { day:1, type:"cafe",       name:"Devoción NoHo",                lat:40.7259, lng:-73.9925, addr:"25 Bond St", tip:"30-second walk from home. Direct-trade Colombian beans. Afternoon coffee.", emoji:"☕" },
   { day:1, type:"cafe",       name:"La Cabra Coffee",              lat:40.7178, lng:-73.9913, addr:"152 Hester St, LES", tip:"Danish micro-roaster. Cardamom bun + filter coffee. Bright, photogenic.", emoji:"☕" },
   { day:1, type:"bookstore",  name:"Housing Works Bookstore Cafe", lat:40.7234, lng:-73.9971, addr:"126 Crosby St, NoHo", tip:"Used bookstore + cafe + bar. Volunteer-run, profits to charity. 5 min from home.", emoji:"📚" },
   { day:1, type:"bookstore",  name:"McNally Jackson SoHo",         lat:40.7240, lng:-73.9971, addr:"134 Prince St, SoHo", tip:"Best modern indie. Strong fiction + magazine wall.", emoji:"📚" },
   { day:1, type:"attraction", name:"SoHo cast-iron district",      lat:40.7245, lng:-74.0019, addr:"Greene St & Spring St", tip:"Walk Greene/Mercer/Wooster between Houston and Canal — cobblestones and cast-iron facades. Most photogenic blocks in the city.", emoji:"⭐", photo:true },
-  { day:1, type:"pizza",      name:"Prince Street Pizza",          lat:40.7233, lng:-73.9947, addr:"27 Prince St, NoLita", tip:"The square pepperoni slice (\"Soho Squares\"). Before noon to skip the line.", emoji:"🍕" },
+  { day:1, type:"pizza",      name:"Prince Street Pizza",          lat:40.7233, lng:-73.9947, addr:"27 Prince St, NoLita", tip:"The square pepperoni slice (\"Soho Squares\"). 2 min from home.", emoji:"🍕" },
   { day:1, type:"attraction", name:"Washington Square Park",       lat:40.7308, lng:-73.9973, addr:"Greenwich Village", tip:"The arch, the fountain, NYU students, chess hustlers. Peak village energy.", emoji:"⭐", photo:true },
   { day:1, type:"bookstore",  name:"Strand Bookstore",             lat:40.7332, lng:-73.9912, addr:"828 Broadway at 12th St", tip:"THE NYC bookstore. \"18 miles of books.\" Don't miss the rare-books room (3rd floor). Get a red Strand tote — the unofficial NYC souvenir.", emoji:"📚", must:true },
-  { day:1, type:"pizza",      name:"Joe's Pizza (Carmine)",        lat:40.7305, lng:-74.0026, addr:"7 Carmine St, Greenwich Village", tip:"The classic NY slice. Plain cheese. Eat standing on the sidewalk. The move.", emoji:"🍕", must:true },
+  { day:1, type:"pizza",      name:"🕷️ Joe's Pizza (Carmine)",     lat:40.7305, lng:-74.0026, addr:"7 Carmine St, Greenwich Village", tip:"The classic NY slice. Plain cheese. Eat standing on the sidewalk. Where Peter Parker works as a delivery boy in Sam Raimi's Spider-Man 2 — \"Pizza Time!\" Spider-Man swings off this block.", emoji:"🍕", must:true, photo:true },
   { day:1, type:"cafe",       name:"Abraço",                       lat:40.7268, lng:-73.9852, addr:"81 E 7th St, East Village", tip:"Cult espresso bar. Olive oil cake. Tiny — order, drink, leave.", emoji:"☕" },
   { day:1, type:"hidden",     name:"McSorley's Old Ale House",     lat:40.7287, lng:-73.9893, addr:"15 E 7th St, East Village", tip:"Oldest Irish saloon in NYC (1854). Sawdust floors. Two beers: light or dark, $7 for two mugs. Cash only. Lincoln drank here.", emoji:"🤫" },
 
-  // DAY 2
-  { day:2, type:"attraction", name:"Nom Wah Tea Parlor",     lat:40.7146, lng:-73.9978, addr:"13 Doyers St, Chinatown", tip:"Oldest dim sum in Chinatown (1920). Get there at opening — solo wait is shorter.", emoji:"⭐", must:true },
-  { day:2, type:"attraction", name:"Little Italy",           lat:40.7194, lng:-73.9970, addr:"Mulberry St between Canal & Broome", tip:"Touristy but charming for a stroll. Don't eat here — stick to Chinatown.", emoji:"⭐" },
-  { day:2, type:"attraction", name:"9/11 Memorial",          lat:40.7115, lng:-74.0134, addr:"180 Greenwich St, FiDi", tip:"Two reflecting pools where the towers stood. Free outdoor memorial; museum is paid + needs ~2 hrs.", emoji:"⭐", photo:true },
-  { day:2, type:"attraction", name:"Oculus / WTC",           lat:40.7117, lng:-74.0124, addr:"Oculus Plaza", tip:"Calatrava's white wing-rib transit hub. Photogenic from inside looking up.", emoji:"⭐", photo:true },
-  { day:2, type:"attraction", name:"Charging Bull",          lat:40.7056, lng:-74.0134, addr:"Bowling Green / Broad St", tip:"Bull is at Bowling Green; Fearless Girl now stands opposite the NYSE on Broad St. 2-min photo stops.", emoji:"⭐" },
-  { day:2, type:"viewpoint",  name:"Battery Park",           lat:40.7033, lng:-74.0170, addr:"Battery Park, Lower Manhattan", tip:"Southern tip. Lady Liberty in the distance. Walk through to the ferry.", emoji:"👁" },
-  { day:2, type:"viewpoint",  name:"Staten Island Ferry",    lat:40.7013, lng:-74.0134, addr:"4 Whitehall St", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return.", emoji:"👁", must:true, photo:true },
-  { day:2, type:"attraction", name:"Stone Street",           lat:40.7044, lng:-74.0117, addr:"Stone St, FiDi", tip:"Tiny cobblestone block of bars. Quick photo + a beer.", emoji:"⭐" },
-  { day:2, type:"cafe",       name:"Black Fox Coffee",       lat:40.7065, lng:-74.0079, addr:"70 Pine St, FiDi", tip:"Best coffee in the Financial District. Stop on the walk back uptown.", emoji:"☕" },
-  { day:2, type:"pizza",      name:"Scarr's Pizza",          lat:40.7176, lng:-73.9911, addr:"35 Orchard St, LES", tip:"Modern legend. House-milled flour. Plain or pepperoni. On the walk home.", emoji:"🍕" },
-  { day:2, type:"hidden",     name:"The Elevated Acre",      lat:40.7037, lng:-74.0089, addr:"55 Water St, FiDi", tip:"Secret 1-acre rooftop park hidden between office buildings. Take the escalator that looks like it goes nowhere. Free, panoramic, almost empty.", emoji:"🤫" },
+  // DAY 2 — Mon May 11 (work + High Line + Friends + WV)
+  { day:2, type:"cafe",       name:"★ Bluestone Lane (West Village)", lat:40.7361, lng:-73.9974, addr:"55 W 13th St", tip:"WORK CAFE — Mon 10am–2pm. Australian café, laptop-friendly, fast wifi. Order the flat white. Take meetings at the back.", emoji:"💻", work:true },
+  { day:2, type:"attraction", name:"High Line (south entry)",      lat:40.7397, lng:-74.0085, addr:"Gansevoort St & Washington St", tip:"Start here at 2pm. Elevated rail-line-turned-park, ~1.5 miles, walk south-to-north.", emoji:"⭐", must:true, photo:true },
+  { day:2, type:"museum",     name:"Whitney Museum",                lat:40.7396, lng:-74.0089, addr:"99 Gansevoort St, Meatpacking", tip:"American art only. Skip if museum'd-out — the rooftop has Hudson views.", emoji:"🏛" },
+  { day:2, type:"viewpoint",  name:"Little Island",                 lat:40.7423, lng:-74.0107, addr:"Pier 55, Hudson River Park", tip:"Tulip-shaped floating park. 5-min detour off the High Line. Walk up to the high point.", emoji:"👁", photo:true },
+  { day:2, type:"attraction", name:"Chelsea Market",                lat:40.7424, lng:-74.0061, addr:"75 9th Ave (15th-16th)", tip:"Indoor food market. Lobster Place chowder, Los Tacos No.1, Doughnuttery for tiny donuts.", emoji:"⭐" },
+  { day:2, type:"viewpoint",  name:"Vessel / Hudson Yards",         lat:40.7538, lng:-74.0019, addr:"20 Hudson Yards", tip:"The honeycomb sculpture (climb closed but free to view). North end of the High Line.", emoji:"👁", photo:true },
+  { day:2, type:"attraction", name:"High Line (north end)",         lat:40.7547, lng:-74.0048, addr:"34th St & 12th Ave", tip:"End of the walk. Vessel is right here.", emoji:"⭐" },
+  { day:2, type:"cafe",       name:"Magnolia Bakery",               lat:40.7355, lng:-74.0061, addr:"401 Bleecker St", tip:"Banana pudding (the famous one). The cupcake from Sex and the City.", emoji:"☕" },
+  { day:2, type:"bookstore",  name:"Three Lives & Company",         lat:40.7339, lng:-74.0030, addr:"154 W 10th St", tip:"Tiny, beloved village bookshop with a green-and-gold corner shopfront. Most charming in the city.", emoji:"📚", photo:true },
+  { day:2, type:"attraction", name:"📺 Friends apartment building", lat:40.7314, lng:-74.0050, addr:"90 Bedford St (at Grove), West Village", tip:"The exterior used in Friends. (Interior was a Burbank soundstage.) Photo from across Grove St — get the corner shot. Little Owl restaurant on the ground floor — eat there if you want full immersion.", emoji:"📺", must:true, photo:true },
+  { day:2, type:"pizza",      name:"John's of Bleecker",            lat:40.7314, lng:-74.0029, addr:"278 Bleecker St", tip:"Coal-oven, no slices — order a whole pie. Cash only. 1929 institution. Dinner.", emoji:"🍕" },
+  { day:2, type:"hidden",     name:"75½ Bedford Street",            lat:40.7308, lng:-74.0048, addr:"75½ Bedford St, West Village", tip:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Photo from across the street. RIGHT NEXT to the Friends building — hit both at once.", emoji:"🤫" },
 
-  // DAY 3
-  { day:3, type:"cafe",       name:"Bluestone Lane (West Village)", lat:40.7361, lng:-73.9974, addr:"55 W 13th St", tip:"WORK CAFE — Mon 9–11am. Australian café, laptop-friendly, fast wifi. Take a Zoom call at the back.", emoji:"💻", work:true },
-  { day:3, type:"attraction", name:"High Line (south entry)",      lat:40.7397, lng:-74.0085, addr:"Gansevoort St & Washington St", tip:"Start here. Elevated rail-line-turned-park, ~1.5 miles, walk south-to-north.", emoji:"⭐", must:true, photo:true },
-  { day:3, type:"museum",     name:"Whitney Museum",                lat:40.7396, lng:-74.0089, addr:"99 Gansevoort St, Meatpacking", tip:"American art only. Skip if museum'd-out — the rooftop has Hudson views.", emoji:"🏛" },
-  { day:3, type:"viewpoint",  name:"Little Island",                 lat:40.7423, lng:-74.0107, addr:"Pier 55, Hudson River Park", tip:"Tulip-shaped floating park. 5-min detour off the High Line. Walk up to the high point.", emoji:"👁", photo:true },
-  { day:3, type:"attraction", name:"Chelsea Market",                lat:40.7424, lng:-74.0061, addr:"75 9th Ave (15th-16th)", tip:"Indoor food market. Lobster Place chowder, Los Tacos No.1, Doughnuttery for tiny donuts. Lunch.", emoji:"⭐" },
-  { day:3, type:"viewpoint",  name:"Vessel / Hudson Yards",         lat:40.7538, lng:-74.0019, addr:"20 Hudson Yards", tip:"The honeycomb sculpture (climb closed but free to view). North end of the High Line.", emoji:"👁", photo:true },
-  { day:3, type:"attraction", name:"High Line (north end)",         lat:40.7547, lng:-74.0048, addr:"34th St & 12th Ave", tip:"End of the walk. Vessel is right here.", emoji:"⭐" },
-  { day:3, type:"cafe",       name:"Partners Coffee",               lat:40.7388, lng:-74.0007, addr:"125 W 13th St", tip:"Brooklyn-born roaster. Light, bright, well-pulled espresso.", emoji:"☕" },
-  { day:3, type:"cafe",       name:"Magnolia Bakery",               lat:40.7355, lng:-74.0061, addr:"401 Bleecker St", tip:"Banana pudding (the famous one). The cupcake from Sex and the City.", emoji:"☕" },
-  { day:3, type:"bookstore",  name:"Three Lives & Company",         lat:40.7339, lng:-74.0030, addr:"154 W 10th St", tip:"Tiny, beloved village bookshop with a green-and-gold corner shopfront. Most charming in the city.", emoji:"📚", photo:true },
-  { day:3, type:"pizza",      name:"John's of Bleecker",            lat:40.7314, lng:-74.0029, addr:"278 Bleecker St", tip:"Coal-oven, no slices — order a whole pie. Cash only. 1929 institution.", emoji:"🍕" },
-  { day:3, type:"hidden",     name:"75½ Bedford Street",            lat:40.7308, lng:-74.0048, addr:"75½ Bedford St, West Village", tip:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Photo it from across the street.", emoji:"🤫" },
+  // DAY 3 — Tue May 12 (work + Midtown + Daily Bugle + Tram + SUMMIT)
+  { day:3, type:"attraction", name:"🕷️ Flatiron Building (Daily Bugle)", lat:40.7411, lng:-73.9897, addr:"175 5th Ave at 23rd St", tip:"Used as the Daily Bugle in Sam Raimi's Spider-Man trilogy. Iconic 1902 wedge — one of NYC's first skyscrapers. Walk past on the way to work; photo from Madison Square Park diagonally for the classic shot.", emoji:"🕷️", must:true, photo:true },
+  { day:3, type:"cafe",       name:"★ Culture Espresso",              lat:40.7531, lng:-73.9871, addr:"72 W 38th St", tip:"WORK CAFE — Tue 10am–2pm. The Midtown work café. Big tables, outlets, fast wifi. Famous chocolate-chip cookie too.", emoji:"💻", work:true },
+  { day:3, type:"museum",     name:"MoMA",                            lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Buy timed entry online (book a 2:30pm slot). 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2 hrs.", emoji:"🏛", must:true },
+  { day:3, type:"attraction", name:"St. Patrick's Cathedral",         lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
+  { day:3, type:"attraction", name:"Rockefeller Center",              lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio.", emoji:"⭐", photo:true },
+  { day:3, type:"viewpoint",  name:"Top of the Rock",                 lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"Best photo of the Empire State + Central Park. SKIP if doing SUMMIT — pick one.", emoji:"👁", photo:true },
+  { day:3, type:"attraction", name:"Times Square",                    lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. (Where the Spider-Man 1 World Unity Festival fight with Goblin happens.) Best at night.", emoji:"⭐" },
+  { day:3, type:"attraction", name:"Bryant Park",                     lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
+  { day:3, type:"cafe",       name:"Blue Bottle Bryant Park",         lat:40.7526, lng:-73.9839, addr:"54 W 40th St", tip:"Reliable Blue Bottle. Take the latte to Bryant Park.", emoji:"☕" },
+  { day:3, type:"attraction", name:"NYPL Rose Reading Room",          lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Free entry. Rose Reading Room (3rd floor) is the iconic library shot. 15 min.", emoji:"⭐", photo:true },
+  { day:3, type:"attraction", name:"Grand Central Terminal",          lat:40.7527, lng:-73.9772, addr:"89 E 42nd St", tip:"Main concourse + celestial ceiling. Find the Whisper Gallery (lower level outside Oyster Bar) — your whisper carries diagonally across the room.", emoji:"⭐", must:true, photo:true },
+  { day:3, type:"bookstore",  name:"Argosy Book Store",               lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. Closes 6pm — go after Grand Central.", emoji:"📚" },
+  { day:3, type:"viewpoint",  name:"🕷️ Roosevelt Island Tram",        lat:40.7595, lng:-73.9624, addr:"E 60th St & 2nd Ave", tip:"4-min aerial tram ride to Roosevelt Island. Tap OMNY ($2.90, like a subway). Made famous by Sam Raimi's Spider-Man (2002) — Goblin attacks the tram with the children on it. Free panorama of the East River + Manhattan skyline. Quick 30-min out-and-back from Argosy area.", emoji:"🚡", must:true, photo:true },
+  { day:3, type:"viewpoint",  name:"SUMMIT One Vanderbilt",           lat:40.7530, lng:-73.9779, addr:"45 E 42nd St (next to Grand Central)", tip:"BEST VIEWING DECK IN NYC. 1,401 ft, multi-level mirrored glass rooms, glass-floor 'Levitation' boxes that hang OFF the building, full 360°. BOOK 7:00pm slot — sunset is 8:00pm. Sells out — book days ahead.", emoji:"👁", must:true, photo:true },
+  { day:3, type:"viewpoint",  name:"Empire State Building",           lat:40.7484, lng:-73.9857, addr:"20 W 34th St", tip:"Skip if you did SUMMIT or Top of the Rock. Better experiences at both.", emoji:"👁" },
+  { day:3, type:"pizza",      name:"NY Pizza Suprema",                lat:40.7521, lng:-73.9928, addr:"413 8th Ave (across from Penn)", tip:"Best slice in Midtown. The vodka slice is the move. Dinner.", emoji:"🍕" },
+  { day:3, type:"hidden",     name:"The Whispering Gallery",          lat:40.7526, lng:-73.9772, addr:"Lower level, outside Oyster Bar, Grand Central", tip:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally. Architectural accident — magic.", emoji:"🤫" },
 
-  // DAY 4
-  { day:4, type:"cafe",       name:"Culture Espresso",         lat:40.7531, lng:-73.9871, addr:"72 W 38th St", tip:"WORK CAFE — Tue 9–11am. The Midtown work café. Big tables, outlets, fast wifi. Famous chocolate-chip cookie.", emoji:"💻", work:true },
-  { day:4, type:"museum",     name:"MoMA",                     lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Buy timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2.5 hrs.", emoji:"🏛", must:true },
-  { day:4, type:"attraction", name:"St. Patrick's Cathedral",  lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
-  { day:4, type:"attraction", name:"Rockefeller Center",       lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio.", emoji:"⭐", photo:true },
-  { day:4, type:"viewpoint",  name:"Top of the Rock",          lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"Best photo of the Empire State + Central Park. SKIP if doing SUMMIT — pick one.", emoji:"👁", photo:true },
-  { day:4, type:"attraction", name:"Times Square",             lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. Best at night for the lights.", emoji:"⭐" },
-  { day:4, type:"attraction", name:"Bryant Park",              lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
-  { day:4, type:"cafe",       name:"Blue Bottle Bryant Park",  lat:40.7526, lng:-73.9839, addr:"54 W 40th St", tip:"Reliable Blue Bottle. Take the latte to Bryant Park.", emoji:"☕" },
-  { day:4, type:"attraction", name:"NYPL Rose Reading Room",   lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Free entry. Rose Reading Room (3rd floor) is the iconic library shot. 15 min.", emoji:"⭐", photo:true },
-  { day:4, type:"attraction", name:"Grand Central Terminal",   lat:40.7527, lng:-73.9772, addr:"89 E 42nd St", tip:"Main concourse + celestial ceiling. Find the Whisper Gallery (lower level outside Oyster Bar) — your whisper carries diagonally across the room.", emoji:"⭐", must:true, photo:true },
-  { day:4, type:"viewpoint",  name:"SUMMIT One Vanderbilt",    lat:40.7530, lng:-73.9779, addr:"45 E 42nd St (next to Grand Central)", tip:"BEST VIEWING DECK IN NYC. 1,401 ft, multi-level mirrored glass rooms, glass-floor 'Levitation' boxes that hang OFF the building, full 360°. Book the 7:00pm slot — sunset is 8:01pm. Sells out.", emoji:"👁", must:true, photo:true },
-  { day:4, type:"bookstore",  name:"Argosy Book Store",        lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. THE vintage bookstore in NYC.", emoji:"📚" },
-  { day:4, type:"viewpoint",  name:"Empire State Building",    lat:40.7484, lng:-73.9857, addr:"20 W 34th St", tip:"Skip if you did SUMMIT or Top of the Rock. Better experiences at both.", emoji:"👁" },
-  { day:4, type:"pizza",      name:"NY Pizza Suprema",         lat:40.7521, lng:-73.9928, addr:"413 8th Ave (across from Penn)", tip:"Best slice in Midtown. The vodka slice is the move.", emoji:"🍕" },
-  { day:4, type:"hidden",     name:"The Whispering Gallery",   lat:40.7526, lng:-73.9772, addr:"Lower level, outside Oyster Bar, Grand Central", tip:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally. Architectural accident — magic.", emoji:"🤫" },
+  // DAY 4 — Wed May 13 (work UWS + Met + Central Park)
+  { day:4, type:"cafe",       name:"★ Joe Coffee (UWS)",            lat:40.7869, lng:-73.9737, addr:"514 Columbus Ave (at 85th)", tip:"WORK CAFE — Wed 10am–2pm. UWS's best laptop-friendly coffee. Take C train Spring St → 81st-Museum, walk 3 min. After work, walk east into Central Park / down to The Met (10 min walk).", emoji:"💻", work:true },
+  { day:4, type:"museum",     name:"The Met",                       lat:40.7794, lng:-73.9632, addr:"1000 5th Ave", tip:"CLOSES 5PM WED — last entry 4:30pm. Go RIGHT after work. Egyptian wing + Temple of Dendur, European Paintings, American Wing. Roof garden in summer.", emoji:"🏛", must:true },
+  { day:4, type:"museum",     name:"Guggenheim",                    lat:40.7830, lng:-73.9590, addr:"1071 5th Ave", tip:"Frank Lloyd Wright spiral. SKIP this Wed if Met takes the full afternoon — closes 5:30pm.", emoji:"🏛", photo:true },
+  { day:4, type:"attraction", name:"Bethesda Terrace",              lat:40.7740, lng:-73.9710, addr:"Mid-park at 72nd St", tip:"Most cinematic spot in CP. The angel statue, the arcade tile ceiling, the lake.", emoji:"⭐", must:true, photo:true },
+  { day:4, type:"attraction", name:"Bow Bridge",                    lat:40.7757, lng:-73.9716, addr:"Just north of Bethesda", tip:"Cast-iron pedestrian bridge over the Lake. Classic NYC photo.", emoji:"⭐", photo:true },
+  { day:4, type:"attraction", name:"The Mall (Literary Walk)",      lat:40.7720, lng:-73.9716, addr:"Central Park, 66th–72nd", tip:"The straight elm-tree-lined path you've seen in every NYC movie.", emoji:"⭐", photo:true },
+  { day:4, type:"attraction", name:"Sheep Meadow",                  lat:40.7715, lng:-73.9759, addr:"Central Park, 66th-69th", tip:"Open lawn. Lie down with a coffee. Skyline views to the south.", emoji:"⭐" },
+  { day:4, type:"attraction", name:"Strawberry Fields",             lat:40.7757, lng:-73.9759, addr:"Near W 72nd St entrance", tip:"John Lennon memorial across from the Dakota. The Imagine mosaic. Quiet. Tap me if you know the song.", emoji:"⭐" },
+  { day:4, type:"viewpoint",  name:"Belvedere Castle",              lat:40.7798, lng:-73.9692, addr:"Mid-park at 79th St", tip:"Tiny faux castle on a rocky outcrop. Free to climb. Best park overlook. NYC's official weather station since 1869.", emoji:"👁" },
+  { day:4, type:"cafe",       name:"Levain Bakery (UWS)",           lat:40.7793, lng:-73.9810, addr:"167 W 74th St", tip:"The 6oz chocolate-chip walnut cookie. Worth the line. Eat warm.", emoji:"☕" },
+  { day:4, type:"attraction", name:"Columbus Circle",               lat:40.7681, lng:-73.9819, addr:"59th St & 8th Ave", tip:"SW corner of CP. C train here for the ride home.", emoji:"⭐" },
+  { day:4, type:"hidden",     name:"Conservatory Garden",           lat:40.7942, lng:-73.9522, addr:"105th St & 5th Ave", tip:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Italian, French, English styles. Wisteria pergola in spring.", emoji:"🤫" },
 
-  // DAY 5
-  { day:5, type:"museum",     name:"The Met",                lat:40.7794, lng:-73.9632, addr:"1000 5th Ave", tip:"Allow 3 hrs. Egyptian wing + Temple of Dendur, European Paintings, American Wing. Roof garden in summer.", emoji:"🏛", must:true },
-  { day:5, type:"museum",     name:"Guggenheim",             lat:40.7830, lng:-73.9590, addr:"1071 5th Ave", tip:"Frank Lloyd Wright spiral. Elevator up, ramp down. 1.5 hrs.", emoji:"🏛", photo:true },
-  { day:5, type:"attraction", name:"Bethesda Terrace",       lat:40.7740, lng:-73.9710, addr:"Mid-park at 72nd St", tip:"Most cinematic spot in CP. The angel statue, the arcade tile ceiling, the lake.", emoji:"⭐", must:true, photo:true },
-  { day:5, type:"attraction", name:"Bow Bridge",             lat:40.7757, lng:-73.9716, addr:"Just north of Bethesda", tip:"Cast-iron pedestrian bridge over the Lake. Classic NYC photo.", emoji:"⭐", photo:true },
-  { day:5, type:"attraction", name:"The Mall (Literary Walk)", lat:40.7720, lng:-73.9716, addr:"Central Park, 66th–72nd", tip:"The straight elm-tree-lined path you've seen in every NYC movie.", emoji:"⭐", photo:true },
-  { day:5, type:"attraction", name:"Sheep Meadow",           lat:40.7715, lng:-73.9759, addr:"Central Park, 66th-69th", tip:"Open lawn. Lie down with a coffee. Skyline views to the south.", emoji:"⭐" },
-  { day:5, type:"attraction", name:"Strawberry Fields",      lat:40.7757, lng:-73.9759, addr:"Near W 72nd St entrance", tip:"John Lennon memorial across from the Dakota. The Imagine mosaic. Quiet. Tap me if you know the song.", emoji:"⭐" },
-  { day:5, type:"viewpoint",  name:"Belvedere Castle",       lat:40.7798, lng:-73.9692, addr:"Mid-park at 79th St", tip:"Tiny faux castle on a rocky outcrop. Free to climb. Best park overlook. NYC's official weather station since 1869.", emoji:"👁" },
-  { day:5, type:"cafe",       name:"Levain Bakery (UWS)",    lat:40.7793, lng:-73.9810, addr:"167 W 74th St", tip:"The 6oz chocolate-chip walnut cookie. Worth the line. Eat warm.", emoji:"☕" },
-  { day:5, type:"attraction", name:"Columbus Circle",        lat:40.7681, lng:-73.9819, addr:"59th St & 8th Ave", tip:"SW corner of CP. A/C/E + 1 train here for the ride home.", emoji:"⭐" },
-  { day:5, type:"hidden",     name:"Conservatory Garden",    lat:40.7942, lng:-73.9522, addr:"105th St & 5th Ave", tip:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Italian, French, English styles. Wisteria pergola in spring.", emoji:"🤫" },
+  // DAY 5 — Thu May 14 (work FiDi + Lower Manhattan + Ferry)
+  { day:5, type:"subway",     name:"6: Bleecker → BB-City Hall",    lat:40.7128, lng:-74.0040, addr:"Brooklyn Bridge–City Hall Station", tip:"6 train south to FiDi. ~5 min ride. Walk to Black Fox Coffee from there.", emoji:"🚇" },
+  { day:5, type:"cafe",       name:"★ Black Fox Coffee",            lat:40.7065, lng:-74.0079, addr:"70 Pine St, FiDi", tip:"WORK CAFE — Thu 10am–2pm. Best coffee in FiDi. Laptop-friendly, fast wifi. After work, walk west to 9/11 Memorial.", emoji:"💻", work:true },
+  { day:5, type:"attraction", name:"9/11 Memorial",                 lat:40.7115, lng:-74.0134, addr:"180 Greenwich St, FiDi", tip:"Two reflecting pools where the towers stood. Free outdoor memorial; museum is paid + needs ~2 hrs.", emoji:"⭐", photo:true },
+  { day:5, type:"attraction", name:"Oculus / WTC",                  lat:40.7117, lng:-74.0124, addr:"Oculus Plaza", tip:"Calatrava's white wing-rib transit hub. Photogenic from inside looking up.", emoji:"⭐", photo:true },
+  { day:5, type:"attraction", name:"Charging Bull",                 lat:40.7056, lng:-74.0134, addr:"Bowling Green / Broad St", tip:"Bull is at Bowling Green; Fearless Girl now stands opposite the NYSE on Broad St. 2-min photo stops.", emoji:"⭐" },
+  { day:5, type:"attraction", name:"Stone Street",                  lat:40.7044, lng:-74.0117, addr:"Stone St, FiDi", tip:"Tiny cobblestone block of bars. Quick photo + a beer.", emoji:"⭐" },
+  { day:5, type:"viewpoint",  name:"Battery Park",                  lat:40.7033, lng:-74.0170, addr:"Battery Park, Lower Manhattan", tip:"Southern tip. Lady Liberty in the distance. Walk through to the ferry.", emoji:"👁" },
+  { day:5, type:"viewpoint",  name:"Staten Island Ferry",           lat:40.7013, lng:-74.0134, addr:"4 Whitehall St", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return.", emoji:"👁", must:true, photo:true },
+  { day:5, type:"attraction", name:"Little Italy / Chinatown walk", lat:40.7194, lng:-73.9970, addr:"Mulberry St between Canal & Broome", tip:"Walk back through Little Italy + Chinatown on your way home from FiDi. Touristy but charming for a stroll.", emoji:"⭐" },
+  { day:5, type:"pizza",      name:"Scarr's Pizza",                 lat:40.7176, lng:-73.9911, addr:"35 Orchard St, LES", tip:"Modern legend. House-milled flour. Plain or pepperoni. On the walk home from FiDi/Chinatown.", emoji:"🍕" },
+  { day:5, type:"hidden",     name:"The Elevated Acre",             lat:40.7037, lng:-74.0089, addr:"55 Water St, FiDi", tip:"Secret 1-acre rooftop park hidden between office buildings. Take the escalator that looks like it goes nowhere. Free, panoramic, almost empty. Great work-break spot during your 10-2 block.", emoji:"🤫" },
 
-  // DAY 6 — Combined Brooklyn (Williamsburg + DUMBO + Bridge walk)
-  { day:6, type:"subway",     name:"L: 1st Ave → Bedford",         lat:40.7172, lng:-73.9569, addr:"Bedford Ave Station, Williamsburg", tip:"Walk ~12 min from home to 1st Ave L. Then L 1 stop to Bedford. ~10 min total ride.", emoji:"🚇" },
-  { day:6, type:"attraction", name:"Bedford Ave",                  lat:40.7158, lng:-73.9595, addr:"Bedford Ave (N 4th – N 8th)", tip:"Williamsburg's main drag. Vintage shops, indie bookstores, design stores.", emoji:"⭐" },
-  { day:6, type:"viewpoint",  name:"Domino Park",                  lat:40.7150, lng:-73.9683, addr:"300 Kent Ave", tip:"Old sugar factory site, riverfront park. Best Manhattan skyline view from Brooklyn.", emoji:"👁", photo:true },
-  { day:6, type:"pizza",      name:"L'Industrie Pizza",            lat:40.7117, lng:-73.9612, addr:"254 S 2nd St", tip:"The cult slice of the moment. Burrata square or plain. Line moves fast — worth it. Lunch.", emoji:"🍕", must:true },
-  { day:6, type:"cafe",       name:"Devoción Williamsburg",        lat:40.7146, lng:-73.9609, addr:"69 Grand St", tip:"Flagship roaster — moss wall, skylights. Best espresso in BK. Coffee before heading to DUMBO.", emoji:"☕" },
+  // DAY 6 — Fri May 15 (work + Brooklyn, last full day)
+  { day:6, type:"cafe",       name:"★ Coffee Project NY",          lat:40.7286, lng:-73.9883, addr:"239 E 5th St, East Village", tip:"WORK CAFE — Fri 10am–2pm. Specialty coffee 5 min from home. Order the deconstructed latte. PACK TONIGHT — 4am cab tomorrow.", emoji:"💻", work:true },
+  { day:6, type:"subway",     name:"L: 1st Ave → Bedford",         lat:40.7172, lng:-73.9569, addr:"Bedford Ave Station, Williamsburg", tip:"After work: walk ~12 min from home to 1st Ave L → 1 stop to Bedford. ~25 min total.", emoji:"🚇" },
+  { day:6, type:"attraction", name:"Bedford Ave",                  lat:40.7158, lng:-73.9595, addr:"Bedford Ave (N 4th – N 8th)", tip:"Williamsburg's main drag. Vintage shops, indie bookstores. Quick walk-through.", emoji:"⭐" },
+  { day:6, type:"viewpoint",  name:"Domino Park",                  lat:40.7150, lng:-73.9683, addr:"300 Kent Ave", tip:"Old sugar factory site, riverfront park. Best Manhattan skyline view from Brooklyn. 5-min stop.", emoji:"👁", photo:true },
+  { day:6, type:"pizza",      name:"L'Industrie Pizza",            lat:40.7117, lng:-73.9612, addr:"254 S 2nd St", tip:"The cult slice. Burrata square or plain. Late lunch — line moves fast.", emoji:"🍕", must:true },
   { day:6, type:"subway",     name:"F: 2nd Ave → York St",         lat:40.7008, lng:-73.9869, addr:"York St Station, DUMBO", tip:"L back to 1st Ave → walk south through East Village to 2nd Ave F (~5 min) → F 4 stops to York St. Exit 1 block from DUMBO.", emoji:"🚇" },
-  { day:6, type:"attraction", name:"Time Out Market Brooklyn",     lat:40.7027, lng:-73.9888, addr:"55 Water St, DUMBO", tip:"Curated food hall — best of NYC chefs. Snack stop; you've already had pizza.", emoji:"⭐" },
+  { day:6, type:"attraction", name:"Time Out Market Brooklyn",     lat:40.7027, lng:-73.9888, addr:"55 Water St, DUMBO", tip:"Curated food hall — quick snack stop if still hungry.", emoji:"⭐" },
   { day:6, type:"attraction", name:"Empire Stores",                lat:40.7030, lng:-73.9895, addr:"53–83 Water St, DUMBO", tip:"Restored 19th-century coffee warehouses. Free rooftop view — go up.", emoji:"⭐" },
   { day:6, type:"attraction", name:"Jane's Carousel",              lat:40.7028, lng:-73.9921, addr:"Old Dock St, DUMBO", tip:"Restored 1922 carousel in a glass pavilion. $2 ride. Photogenic from outside.", emoji:"⭐", photo:true },
-  { day:6, type:"viewpoint",  name:"Brooklyn Bridge Park Pier 1",  lat:40.7028, lng:-73.9968, addr:"Brooklyn Bridge Park", tip:"THE Manhattan skyline shot with both bridges. After sunrise or 1 hr before sunset for best light.", emoji:"👁", must:true, photo:true },
-  { day:6, type:"cafe",       name:"Brooklyn Roasting Co",         lat:40.7026, lng:-73.9870, addr:"25 Jay St, DUMBO", tip:"Big industrial space. Solid coffee. Rest your legs before the Promenade + bridge walk.", emoji:"☕" },
-  { day:6, type:"viewpoint",  name:"Brooklyn Heights Promenade",   lat:40.6961, lng:-73.9964, addr:"Brooklyn Heights", tip:"Elevated walkway with full Manhattan + Statue of Liberty + Brooklyn Bridge view. 0.5 miles.", emoji:"👁", must:true, photo:true },
-  { day:6, type:"attraction", name:"Brooklyn Bridge (walk back)",  lat:40.7061, lng:-73.9969, addr:"Pedestrian entrance, BK side", tip:"1.1 miles across. Stay LEFT (pedestrian, not bike). Start ~7:15pm to finish at sunset (8:03pm).", emoji:"⭐", must:true, photo:true },
-  { day:6, type:"subway",     name:"6: BB-City Hall → Bleecker",   lat:40.7117, lng:-74.0050, addr:"Brooklyn Bridge–City Hall Station", tip:"After the bridge walk, hop the 6 one stop home (or walk 25 min to Bowery).", emoji:"🚇" },
-  { day:6, type:"hidden",     name:"Squibb Park Bridge",           lat:40.7000, lng:-73.9970, addr:"Squibb Park, Brooklyn Heights", tip:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to BB Park. Engineered to flex — and it does.", emoji:"🤫" },
+  { day:6, type:"viewpoint",  name:"Brooklyn Bridge Park Pier 1",  lat:40.7028, lng:-73.9968, addr:"Brooklyn Bridge Park", tip:"THE Manhattan skyline shot with both bridges. ~6:30pm here = magic light.", emoji:"👁", must:true, photo:true },
+  { day:6, type:"viewpoint",  name:"Brooklyn Heights Promenade",   lat:40.6961, lng:-73.9964, addr:"Brooklyn Heights", tip:"Elevated walkway with full Manhattan + Statue of Liberty + Brooklyn Bridge view. 0.5 miles. Walk it slowly ~7pm.", emoji:"👁", must:true, photo:true },
+  { day:6, type:"attraction", name:"Brooklyn Bridge (walk back)",  lat:40.7061, lng:-73.9969, addr:"Pedestrian entrance, BK side", tip:"1.1 miles across. Stay LEFT (pedestrian, not bike). Start ~7:15pm. Sunset 8:03pm — finish on the bridge for magic.", emoji:"⭐", must:true, photo:true },
+  { day:6, type:"subway",     name:"6: BB-City Hall → Bleecker",   lat:40.7117, lng:-74.0050, addr:"Brooklyn Bridge–City Hall Station", tip:"After the bridge walk, hop the 6 one stop home. Bowery in 5 min.", emoji:"🚇" },
+  { day:6, type:"hidden",     name:"Squibb Park Bridge",           lat:40.7000, lng:-73.9970, addr:"Squibb Park, Brooklyn Heights", tip:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to BB Park. 30-second detour.", emoji:"🤫" },
 
-  // DAY 7 — Wind-down + Departure (light morning near home)
-  { day:7, type:"cafe",       name:"Russ & Daughters Cafe",        lat:40.7196, lng:-73.9886, addr:"127 Orchard St, LES", tip:"Iconic since 1914. Bagels + lox + cream cheese. The classic NYC Jewish appetizing brunch. Sit-down cafe; original counter shop is at 179 E Houston if you want takeaway.", emoji:"🥯", must:true },
-  { day:7, type:"attraction", name:"Tompkins Square Park",         lat:40.7264, lng:-73.9818, addr:"E 7th–10th, Aves A–B, East Village", tip:"East Village green space. People-watch, take a coffee, sit. Last village wander before you fly.", emoji:"⭐" },
-  { day:7, type:"cafe",       name:"Devoción NoHo (one more)",     lat:40.7259, lng:-73.9925, addr:"25 Bond St", tip:"Right next to home. One last NYC coffee before you pack.", emoji:"☕" },
-  { day:7, type:"hidden",     name:"Veselka",                      lat:40.7283, lng:-73.9871, addr:"144 2nd Ave, East Village", tip:"24-hour Ukrainian diner since 1954. Pierogi, borscht, blintzes. East Village institution. Backup brunch any time of day.", emoji:"🤫" }
+  // DAY 7 — Sat May 16 (departure 6:55am)
+  { day:7, type:"subway",     name:"🚕 4:00am cab to JFK",          lat:40.7253, lng:-73.9928, addr:"338 Bowery → JFK", tip:"Pre-book a cab the night before. Wake 3:30am, leave 4:00am sharp, arrive JFK ~4:45am. Bag drop 5am, security 5:15am, gate 5:45am, board 6:25am, depart 6:55am.", emoji:"🚕" }
 ];
 
 /* ============================================================
