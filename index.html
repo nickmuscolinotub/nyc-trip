@@ -415,18 +415,18 @@ const WALK_SEGMENTS = {
     [40.7424,-73.9908],[40.7423,-73.9897],[40.7414,-73.9881],[40.7423,-73.9879],
     [40.7411,-73.9897],[40.7424,-73.9908]
   ]],
-  // Day 2 — Mon — work cafe + 2pm High Line + West Village + Joe's
+  // Day 2 — Mon — work cafe + 2pm High Line + West Village + Joe's + WSP + Strand
   // Seg 1: home → Joe Coffee Flatiron (5 min N)
   // Seg 2: Joe Coffee → Chelsea Market → High Line south → Little Island → High Line north (Vessel)
-  // Seg 3: Christopher St 1 → Three Lives → Friends apt → 75½ Bedford → Joe's Pizza → Christopher St 1
-  // Seg 4: 23rd St 1 → home
+  // Seg 3: Christopher St 1 → Three Lives → Friends apt → 75½ Bedford → Joe's Pizza → Washington Sq Park → Strand → 14th St-Union Sq
+  // Seg 4: home → from Union Sq area (subway home)
   2: [
     [[40.7424,-73.9908],[40.7434,-73.9920]],
     [[40.7434,-73.9920],[40.7424,-74.0061],[40.7397,-74.0085],[40.7423,-74.0107],
      [40.7397,-74.0085],[40.7538,-74.0019]],
     [[40.7338,-74.0030],[40.7339,-74.0030],[40.7314,-74.0050],[40.7308,-74.0048],
-     [40.7305,-74.0026],[40.7338,-74.0030]],
-    [[40.7440,-73.9954],[40.7424,-73.9908]]
+     [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7349,-73.9908]],
+    [[40.7349,-73.9908],[40.7424,-73.9908]]
   ],
   // Day 3 — Tue — work + Midtown + Daily Bugle + Tram + SUMMIT + Pure Thai
   // Seg 1: home → Culture Espresso (15 min walk N)
@@ -451,13 +451,14 @@ const WALK_SEGMENTS = {
   ],
   // Day 5 — Thu — work FiDi + Lower Manhattan + Ferry + LES food
   // Seg 1: home → 23rd St 6 (4 blocks east)
-  // Seg 2: BB-City Hall 6 → Black Fox (work) → 9/11 → Oculus → Bull → Stone St → Battery → Ferry → Battery → Chinatown → Katz's → Kiki's
+  // Seg 2: BB-City Hall 6 → Black Fox (work) → 9/11 → Oculus → Bull → Stone St → Battery → Ferry → Battery → Chinatown → Katz's → Russ & Daughters → Kiki's
   // Seg 3: Kiki's → home (walk back up through LES)
   5: [
     [[40.7424,-73.9908],[40.7397,-73.9863]],
     [[40.7128,-74.0040],[40.7065,-74.0079],[40.7115,-74.0134],[40.7117,-74.0124],
      [40.7056,-74.0134],[40.7044,-74.0117],[40.7033,-74.0170],[40.7013,-74.0134],
-     [40.7033,-74.0170],[40.7152,-73.9971],[40.7223,-73.9874],[40.7138,-73.9911]],
+     [40.7033,-74.0170],[40.7152,-73.9971],[40.7223,-73.9874],[40.7196,-73.9886],
+     [40.7138,-73.9911]],
     [[40.7138,-73.9911],[40.7424,-73.9908]]
   ],
   // Day 6 — Fri — work + Brooklyn (LAST FULL DAY)
@@ -499,14 +500,14 @@ const DAYS = [
   { n:2, label:"Day 2", date:"Mon May 11", color:"#fcbf49", lines:["1"],
     title:"Work · High Line · West Village · Joe's", theme:"4-hr work block 10–2. 2pm onwards: High Line + Chelsea + West Village + dinner.",
     sunset:"7:59 PM",
-    summary:"10am-2pm WORK at Joe Coffee Flatiron (130 W 23rd St, 5 min walk). 2:00pm onwards: walk west to Chelsea Market for late lunch (Los Tacos No.1, Lobster Place chowder). Then High Line south entry → walk the full 1.5 miles north → Little Island detour mid-way → Vessel at the north end (34th & 12th). 1 train back south from 34th-Penn Station → Christopher St. West Village walk: Three Lives & Co bookshop → Friends apartment exterior (90 Bedford) → 75½ Bedford (narrowest house in NYC). Dinner at Joe's Pizza Carmine (Spider-Man 2 \"Pizza Time!\"). 1 train home from Christopher St → 23rd St.",
+    summary:"10am-2pm WORK at Joe Coffee Flatiron (130 W 23rd St, 5 min walk). 2:00pm onwards: walk west to Chelsea Market for late lunch (Los Tacos No.1, Lobster Place chowder). High Line south entry → walk the full 1.5 miles north → Little Island detour mid-way → Vessel at the north end (34th & 12th). 1 train back south from 34th-Penn → Christopher St. West Village walk: Three Lives & Co bookshop → Friends apartment exterior (90 Bedford) → 75½ Bedford (narrowest house in NYC) → Joe's Pizza Carmine for dinner (Spider-Man 2 \"Pizza Time!\"). Then east through Washington Square Park → up Broadway past Strand Bookstore (\"18 miles of books\" — get the red tote) → 14th St-Union Sq subway home.",
     tip:"Walk the High Line south-to-north — it's the better direction (south end is harder to find, north exit drops you at Hudson Yards). ~1 hour at a leisurely pace including Little Island stop.",
     gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade. Photo from across the street. RIGHT NEXT to the Friends building — hit both at once.", lat:40.7308, lng:-74.0048 }
   },
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
     title:"Work · Midtown · Daily Bugle · SUMMIT", theme:"Every Midtown postcard + the best deck in NYC + Spider-Man bonuses.",
     sunset:"8:00 PM",
-    summary:"10am-2pm WORK at Culture Espresso (72 W 38th St, 15 min walk north). 2pm onwards: MoMA → St. Patrick's → Rockefeller Center → Top of the Rock → Times Square (Spider-Man 1 World Unity Festival fight) → Bryant Park + NYPL Rose Reading Room → Grand Central whisper gallery → Argosy vintage bookstore → Roosevelt Island Tram (Spider-Man 2002 — Goblin attacks the tram) — quick aerial round trip → SUMMIT at 7:00pm (sunset 8:00pm — book online). Dinner: Pure Thai Cookhouse (Hell's Kitchen) — famous noodle shop, $$ and casual. F home.",
+    summary:"Optional 8am bagel breakfast at Ess-a-Bagel (3rd Ave & 51st — 6 train 23rd St → 51st St, walk 2 blocks east). 10am-2pm WORK at Culture Espresso. 2pm onwards: MoMA → St. Patrick's → Rockefeller Center → Top of the Rock → Times Square (Spider-Man 1 World Unity Festival fight) — STOP AT TKTS BOOTH in Father Duffy Sq for same-day Broadway tickets (Wed or Thu evening). Bryant Park + NYPL Rose Reading Room → Grand Central whisper gallery → Argosy vintage bookstore → Steinway Tower (the supertall) → Roosevelt Island Tram (Spider-Man 2002 — Goblin attacks the tram) → SUMMIT at 7:00pm (sunset 8:00pm — book online). Dinner: Pure Thai Cookhouse (Hell's Kitchen). F home.",
     tip:"OMNY tap-to-pay is on every turnstile. No more MetroCard. $34 weekly cap — you'll never pay for a 13th ride in a week.",
     gem:{ name:"The Whispering Gallery", addr:"Lower level, outside Oyster Bar, Grand Central", blurb:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally across the room. Architectural accident. Magic.", lat:40.7526, lng:-73.9772 }
   },
@@ -520,7 +521,7 @@ const DAYS = [
   { n:5, label:"Day 5", date:"Thu May 14", color:"#f77f00", lines:["6"],
     title:"Work · Lower Manhattan · Lady Liberty · Katz's", theme:"4-hr work in FiDi, then downtown loop, ferry, deli + Greek on the way home.",
     sunset:"8:02 PM",
-    summary:"6 train 23rd St → Brooklyn Bridge–City Hall → walk to Black Fox Coffee → 10am-2pm WORK → 9/11 Memorial → Oculus → Charging Bull → Stone Street → Battery Park → Staten Island Ferry roundtrip (free, postcard Lady Liberty view) → walk up through Chinatown → into LES. Pick one for dinner: Katz's Delicatessen (1888, the iconic pastrami sandwich) OR Kiki's (Greek, cult favorite, cash, no reservations). Or both — they're 3 min apart.",
+    summary:"Optional 8am bagel breakfast at Russ & Daughters Cafe (LES, 127 Orchard) — the iconic NYC Jewish appetizing spot. 6 train 23rd St → Brooklyn Bridge–City Hall → walk to Black Fox Coffee → 10am-2pm WORK → 9/11 Memorial → Oculus → Charging Bull → Stone Street → Battery Park → Staten Island Ferry roundtrip (free, postcard Lady Liberty view) → walk up through Chinatown → into LES. Dinner: Katz's Delicatessen (1888, pastrami), Kiki's (Greek), Café Habana (Cuban), or Frank (Italian) — pick one or two.",
     tip:"Stand on the right of escalators. Walk on the left. New Yorkers will lose their minds otherwise.",
     gem:{ name:"The Elevated Acre", addr:"55 Water St, FiDi", blurb:"Secret 1-acre rooftop park hidden between office buildings. Free, panoramic harbor views. The escalator looks like it goes nowhere — take it.", lat:40.7037, lng:-74.0089 }
   },
@@ -563,14 +564,18 @@ const PINS = [
   { day:2, type:"attraction", name:"📺 Friends apartment building", lat:40.7314, lng:-74.0050, addr:"90 Bedford St (at Grove), West Village", tip:"The Friends exterior. Photo from across Grove St for the corner shot. (Interior was Burbank.) Little Owl restaurant on the ground floor.", emoji:"📺", must:true, photo:true },
   { day:2, type:"hidden",     name:"75½ Bedford Street",            lat:40.7308, lng:-74.0048, addr:"75½ Bedford St, West Village", tip:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. RIGHT NEXT to the Friends building — hit both at once.", emoji:"🤫" },
   { day:2, type:"pizza",      name:"🕷️ Joe's Pizza (Carmine)",      lat:40.7305, lng:-74.0026, addr:"7 Carmine St, Greenwich Village", tip:"Dinner. The classic NY slice. Plain cheese, fold it, eat standing on the sidewalk. Where Peter Parker delivers pizzas in Spider-Man 2 — \"Pizza Time!\" 5 min walk from 75½ Bedford.", emoji:"🍕", must:true, photo:true },
+  { day:2, type:"attraction", name:"Washington Square Park",        lat:40.7308, lng:-73.9973, addr:"5th Ave & Waverly Pl, Greenwich Village", tip:"5 min east of Joe's Pizza. The arch, the fountain, NYU students, chess hustlers, jazz buskers. Peak village energy. Walk through on your way to the Strand + subway home.", emoji:"⭐", must:true, photo:true },
+  { day:2, type:"bookstore",  name:"Strand Bookstore",              lat:40.7332, lng:-73.9912, addr:"828 Broadway at 12th St (Union Sq)", tip:"\"18 miles of books.\" Iconic since 1927. Rare-books room on the 3rd floor. Get the red Strand tote — the unofficial NYC souvenir. ON THE WALK HOME: WSP → up Broadway past Strand → 14th-Union Sq subway → home.", emoji:"📚", must:true },
 
-  // DAY 3 — Tue May 12 (work + Midtown + Tram + SUMMIT)
+  // DAY 3 — Tue May 12 (work + Midtown + Tram + SUMMIT + Broadway optional)
+  { day:3, type:"american",   name:"🥯 Ess-a-Bagel",                 lat:40.7559, lng:-73.9697, addr:"831 3rd Ave at 51st St", tip:"NYC bagel done right since 1976. Hand-rolled, kettle-boiled, baked. Order the bagel-with-the-works (cream cheese + lox + tomato + onion + capers). Opens 6am — grab on the morning walk to Culture Espresso.", emoji:"🥯", must:true },
   { day:3, type:"cafe",       name:"★ Culture Espresso",            lat:40.7531, lng:-73.9871, addr:"72 W 38th St", tip:"WORK CAFE — Tue 10am–2pm. Midtown work café. Big tables, outlets, fast wifi. Famous chocolate-chip cookie too.", emoji:"💻", work:true },
   { day:3, type:"museum",     name:"MoMA",                          lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Book a 2:30pm timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2 hrs.", emoji:"🏛", must:true },
   { day:3, type:"attraction", name:"St. Patrick's Cathedral",       lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
   { day:3, type:"attraction", name:"Rockefeller Center",            lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio.", emoji:"⭐", photo:true },
   { day:3, type:"viewpoint",  name:"Top of the Rock",               lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"Best photo of the Empire State + Central Park. SKIP if doing SUMMIT — pick one.", emoji:"👁", photo:true },
   { day:3, type:"attraction", name:"Times Square",                  lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. Where the Spider-Man 1 World Unity Festival fight with Goblin happens. Best at night for the lights.", emoji:"⭐" },
+  { day:3, type:"attraction", name:"🎭 TKTS Booth (Broadway tix)",   lat:40.7589, lng:-73.9853, addr:"Father Duffy Sq, 47th & Broadway", tip:"Same-day half-price Broadway tickets. Booth opens 3pm for evening shows. Lines move but go early. Picks: Hamilton, Wicked, MJ, Six, Hadestown, Outsiders. ~$50–100 post-discount. Solo seats often the best deal (singles fill last). Book a show for Wed or Thu evening.", emoji:"🎭", must:true },
   { day:3, type:"attraction", name:"Bryant Park",                   lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
   { day:3, type:"cafe",       name:"Blue Bottle Bryant Park",       lat:40.7526, lng:-73.9839, addr:"54 W 40th St", tip:"Reliable Blue Bottle. The cafe itself is small — but Bryant Park is right outside with FREE public wifi and tables. Grab a latte, work at a park table. Backup work spot for Tue if Culture Espresso is full.", emoji:"☕", wifi:true },
   { day:3, type:"attraction", name:"NYPL Rose Reading Room",        lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Free entry. Rose Reading Room (3rd floor) is the iconic library shot. 15 min.", emoji:"⭐", photo:true },
@@ -607,6 +612,7 @@ const PINS = [
   { day:5, type:"viewpoint",  name:"Battery Park",                  lat:40.7033, lng:-74.0170, addr:"Battery Park, Lower Manhattan", tip:"Southern tip. Lady Liberty in the distance. Walk through to the ferry.", emoji:"👁" },
   { day:5, type:"viewpoint",  name:"Staten Island Ferry",           lat:40.7013, lng:-74.0134, addr:"4 Whitehall St", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return.", emoji:"👁", must:true, photo:true },
   { day:5, type:"attraction", name:"Chinatown walk",                lat:40.7152, lng:-73.9971, addr:"Mott St, Chinatown", tip:"Walk back through Chinatown on your way home from FiDi. Pell St, Doyers St (the curve), Mott St.", emoji:"⭐" },
+  { day:5, type:"american",   name:"🥯 Russ & Daughters Cafe",      lat:40.7196, lng:-73.9886, addr:"127 Orchard St, LES", tip:"Iconic since 1914. THE NYC Jewish appetizing brunch — bagel + lox + cream cheese, latkes, blintzes. Sit-down cafe (counter shop next door at 179 E Houston). Opens 8am. Stop on the morning walk to FiDi or as a lunch alternative.", emoji:"🥯", must:true },
   { day:5, type:"american",   name:"Katz's Delicatessen",           lat:40.7223, lng:-73.9874, addr:"205 E Houston St, LES", tip:"Since 1888. THE pastrami sandwich, hand-carved, on rye, mustard, pickle. Ticket system at the door (don't lose it). \"I'll have what she's having\" filmed here.", emoji:"🥪", must:true, photo:true },
   { day:5, type:"greek",      name:"Kiki's",                        lat:40.7138, lng:-73.9911, addr:"130 Division St, LES", tip:"Cult Greek taverna. Family-run since 2013. No reservations, cash only, expect a wait. Dakos, saganaki, lamb chops, anything with feta. THE Greek pick in NYC.", emoji:"🇬🇷", must:true },
   { day:5, type:"latin",      name:"Café Habana",                   lat:40.7228, lng:-73.9947, addr:"17 Prince St (NoLita)", tip:"Cuban-Mexican corner spot since 1998. THE grilled corn — queso fresco, chili powder, lime. Cuban sandwich. Line out the door. Alternative LES-area dinner.", emoji:"🌽" },
@@ -659,7 +665,9 @@ const PRICES = {
   "Kiki's": "$$$",
   "Café Habana": "$$",
   "Frank": "$$",
-  "L'Industrie Pizza": "$"
+  "L'Industrie Pizza": "$",
+  "🥯 Ess-a-Bagel": "$",
+  "🥯 Russ & Daughters Cafe": "$$"
 };
 function priceForPin(pin) {
   return PRICES[pin.name] || "";
