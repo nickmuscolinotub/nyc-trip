@@ -357,6 +357,8 @@
       <span class="filter-chip" data-filter="eats">🍽 Eats</span>
       <span class="filter-chip" data-filter="cafe">☕ Cafes</span>
       <span class="filter-chip" data-filter="viewpoint">👁 Views</span>
+      <span class="filter-chip" data-filter="grocery">🛒 Grocery</span>
+      <span class="filter-chip" data-filter="shop">🛍 Shops</span>
       <span class="filter-chip" data-filter="hidden">🤫 Hidden</span>
     </div>
     <div id="day-content"></div>
@@ -579,7 +581,7 @@ const PINS = [
   { day:3, type:"viewpoint",  name:"Top of the Rock",               lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"Best photo of the Empire State + Central Park. SKIP if doing SUMMIT — pick one.", emoji:"👁", photo:true },
   { day:3, type:"attraction", name:"Times Square",                  lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. Where the Spider-Man 1 World Unity Festival fight with Goblin happens. Best at night for the lights.", emoji:"⭐" },
   { day:3, type:"attraction", name:"Bryant Park",                   lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
-  { day:3, type:"cafe",       name:"Blue Bottle Bryant Park",       lat:40.7526, lng:-73.9839, addr:"54 W 40th St", tip:"Reliable Blue Bottle. Take the latte to Bryant Park.", emoji:"☕" },
+  { day:3, type:"cafe",       name:"Blue Bottle Bryant Park",       lat:40.7526, lng:-73.9839, addr:"54 W 40th St", tip:"Reliable Blue Bottle. The cafe itself is small — but Bryant Park is right outside with FREE public wifi and tables. Grab a latte, work at a park table. Backup work spot for Tue if Culture Espresso is full.", emoji:"☕", wifi:true },
   { day:3, type:"attraction", name:"NYPL Rose Reading Room",        lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Free entry. Rose Reading Room (3rd floor) is the iconic library shot. 15 min.", emoji:"⭐", photo:true },
   { day:3, type:"attraction", name:"Grand Central Terminal",        lat:40.7527, lng:-73.9772, addr:"89 E 42nd St", tip:"Main concourse + celestial ceiling. Find the Whisper Gallery (lower level outside Oyster Bar) — your whisper carries diagonally across the room.", emoji:"⭐", must:true, photo:true },
   { day:3, type:"bookstore",  name:"Argosy Book Store",             lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. Closes 6pm — go after Grand Central.", emoji:"📚" },
@@ -600,7 +602,7 @@ const PINS = [
   { day:4, type:"attraction", name:"Strawberry Fields",             lat:40.7757, lng:-73.9759, addr:"Near W 72nd St entrance", tip:"John Lennon memorial across from the Dakota. Imagine mosaic. Tap me if you know the song.", emoji:"⭐" },
   { day:4, type:"viewpoint",  name:"Belvedere Castle",              lat:40.7798, lng:-73.9692, addr:"Mid-park at 79th St", tip:"Tiny faux castle. Free to climb. NYC's official weather station since 1869.", emoji:"👁" },
   { day:4, type:"american",   name:"J.G. Melon",                    lat:40.7741, lng:-73.9614, addr:"1291 3rd Ave at 74th St (UES)", tip:"Famous UES burger since 1972. Bacon cheeseburger + cottage fries + Bloody Mary. Cash and Amex only. Casual, $$, ~5 min walk from the Met.", emoji:"🍔", must:true },
-  { day:4, type:"cafe",       name:"Levain Bakery (UWS)",           lat:40.7793, lng:-73.9810, addr:"167 W 74th St", tip:"The 6oz chocolate-chip walnut cookie. Worth the line. Eat warm.", emoji:"☕" },
+  { day:4, type:"american",   name:"Levain Bakery (UWS)",           lat:40.7793, lng:-73.9810, addr:"167 W 74th St", tip:"The 6oz chocolate-chip walnut cookie. ~$6. Counter only, no seating — grab and eat warm in Central Park. NOT a work cafe.", emoji:"🍪", price:"$" },
   { day:4, type:"attraction", name:"Columbus Circle",               lat:40.7681, lng:-73.9819, addr:"59th St & 8th Ave", tip:"SW corner of CP. 1 train here for the ride home.", emoji:"⭐" },
   { day:4, type:"hidden",     name:"Conservatory Garden",           lat:40.7942, lng:-73.9522, addr:"105th St & 5th Ave", tip:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Italian, French, English styles. Wisteria pergola in spring.", emoji:"🤫" },
 
@@ -644,8 +646,40 @@ const PINS = [
   { day:7, type:"hidden",     name:"Squibb Park Bridge",            lat:40.7000, lng:-73.9970, addr:"Squibb Park, Brooklyn Heights", tip:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to BB Park. 30-second detour.", emoji:"🤫" },
 
   // DAY 8 — Sun May 17 (3am cab departure)
-  { day:8, type:"subway",     name:"🚕 3:00am cab to JFK",          lat:40.7424, lng:-73.9908, addr:"25 W 24th St → JFK", tip:"Pre-book a cab the night before — DO NOT rely on hailing one at 3am. Wake 2:30am, leave 3:00am sharp, arrive JFK ~3:45am. Flat $70 + ~$10 toll + tip ≈ $90.", emoji:"🚕" }
+  { day:8, type:"subway",     name:"🚕 3:00am cab to JFK",          lat:40.7424, lng:-73.9908, addr:"25 W 24th St → JFK", tip:"Pre-book a cab the night before — DO NOT rely on hailing one at 3am. Wake 2:30am, leave 3:00am sharp, arrive JFK ~3:45am. Flat $70 + ~$10 toll + tip ≈ $90.", emoji:"🚕" },
+
+  // ─── UTILITY PINS (cross-day: grocery + shops) ───
+  // GROCERY — pulled up via the 🛒 Grocery filter
+  { day:0, type:"grocery",  name:"Whole Foods Chelsea",        lat:40.7445, lng:-73.9956, addr:"250 7th Ave at 24th St", tip:"Closest premium grocery, 2 blocks west of home. Water, fruit, prepared meals, snacks. Open 7am–10pm. Hot bar + salad bar for cheap dinner at the hotel.", emoji:"🛒" },
+  { day:0, type:"grocery",  name:"Trader Joe's (Union Sq)",    lat:40.7344, lng:-73.9897, addr:"142 E 14th St (Union Sq)", tip:"Cult favorite cheap grocery — frozen meals, snacks, drinks, all $2–8. 10 min walk south. Famously long checkout line but moves fast.", emoji:"🛒" },
+  { day:0, type:"grocery",  name:"Eataly (groceries upstairs)", lat:40.7423, lng:-73.9897, addr:"200 5th Ave (across from MSP)", tip:"In addition to the food hall — the back of Eataly is a real Italian grocery: pasta, olive oil, wine, cheese, prepared meals. Pricier than Whole Foods but quality.", emoji:"🛒" },
+  { day:0, type:"grocery",  name:"Bodega: Punjab Grocery & Deli", lat:40.7430, lng:-73.9899, addr:"50 W 24th St (next door to home)", tip:"24/7 corner bodega ~1 min from home. Water, beer, snacks, breakfast sandwiches, basics. Cash + card. Every NYC apartment has one of these next door.", emoji:"🛒" },
+
+  // SHOPS — pulled up via the 🛍 Shops filter
+  { day:0, type:"shop",     name:"📷 B&H Photo Video",          lat:40.7546, lng:-73.9963, addr:"420 9th Ave at 34th St (Midtown)", tip:"THE camera + electronics megastore. 70,000+ sq ft, every body + lens + accessory. Try-before-you-buy. CLOSED Saturdays (Orthodox Jewish ownership); also closed Friday from ~1pm. Best to go Mon–Thu or Sunday. Ride the conveyor belts up to the floor you need.", emoji:"📷", must:true },
+  { day:0, type:"shop",     name:"Adorama",                     lat:40.7388, lng:-73.9931, addr:"42 W 18th St (Chelsea)", tip:"B&H's #2 — but excellent. Slightly smaller, same gear, often competitive on price. Also closed Saturdays. Closer to home (5 min walk south).", emoji:"📷" },
+  { day:0, type:"shop",     name:"K&M Camera",                  lat:40.7367, lng:-73.9921, addr:"368 5th Ave (Flatiron)", tip:"Independent camera shop for vintage / film / repairs. If you want a Leica or a film body, come here, not B&H. 5 min walk from home.", emoji:"📷" }
 ];
+
+// ─── Price map for food pins (used in popups + stop list) ───
+const PRICES = {
+  "Madison Square Park": "",
+  "Shake Shack (MSP — original)": "$",
+  "Shake Shack (MSP)": "$",
+  "Eataly NYC Flatiron": "$$",
+  "🕷️ Joe's Pizza (Carmine)": "$",
+  "Pure Thai Cookhouse": "$$",
+  "J.G. Melon": "$$",
+  "Levain Bakery (UWS)": "$",
+  "Katz's Delicatessen": "$$$",
+  "Kiki's": "$$$",
+  "Café Habana": "$$",
+  "Frank": "$$",
+  "L'Industrie Pizza": "$"
+};
+function priceForPin(pin) {
+  return PRICES[pin.name] || "";
+}
 
 /* ============================================================
    NYC FACTS (random rotation)
@@ -807,8 +841,10 @@ function popupHtml(pin) {
   const distHtml = dist != null
     ? `<div class="popup-golden" style="background:#e6f2ff;color:#0066cc">📍 ${formatDistance(dist)} from you · ${walkMinutes(dist)} min walk</div>`
     : "";
+  const price = priceForPin(pin);
+  const priceTag = price ? `<span style="display:inline-block;margin-left:6px;font-size:11px;font-weight:700;color:#16a34a">${price}</span>` : "";
   return `
-    <div class="popup-name">${pin.emoji} ${pin.name}</div>
+    <div class="popup-name">${pin.emoji} ${pin.name}${priceTag}</div>
     <div class="popup-meta">${dayLabel} · ${pin.addr}</div>
     <div class="popup-tip">${pin.tip}</div>
     ${distHtml}
@@ -853,10 +889,16 @@ function applyFilters() {
   const visible = [];
   markers.forEach(m => {
     const p = m._pin;
-    const dayMatch = state.showAll || p.day === state.activeDay || p.day === 0;
+    const isUtility = p.day === 0 && (p.type === "grocery" || p.type === "shop");
+    let dayMatch = state.showAll || p.day === state.activeDay || p.day === 0;
     let typeMatch = state.activeFilter === "all" || p.type === state.activeFilter || p.type === "home";
     if (state.activeFilter === "hidden") typeMatch = p.type === "hidden" || p.type === "home";
     if (state.activeFilter === "eats") typeMatch = ["pizza","italian","american","thai","greek","latin"].includes(p.type) || p.type === "home";
+    // Utility pins (grocery/shop) only appear when their filter is explicitly selected
+    if (isUtility) {
+      typeMatch = state.activeFilter === p.type;
+      dayMatch = true;
+    }
     if (dayMatch && typeMatch) {
       m.setIcon(makeIcon(p)); // refresh icon for visited state
       m.addTo(map);
@@ -974,14 +1016,20 @@ function renderDayView() {
   const d = DAYS.find(x => x.n === state.activeDay);
   if (!d) return;
 
-  let pinsForDay = PINS.filter(p => p.day === d.n);
-  if (state.activeFilter !== "all") {
-    if (state.activeFilter === "hidden") {
-      pinsForDay = pinsForDay.filter(p => p.type === "hidden");
-    } else if (state.activeFilter === "eats") {
-      pinsForDay = pinsForDay.filter(p => ["pizza","italian","american","thai","greek","latin"].includes(p.type));
-    } else {
-      pinsForDay = pinsForDay.filter(p => p.type === state.activeFilter);
+  // When user picks Grocery or Shop filter, surface ALL utility pins regardless of selected day
+  let pinsForDay;
+  if (state.activeFilter === "grocery" || state.activeFilter === "shop") {
+    pinsForDay = PINS.filter(p => p.type === state.activeFilter);
+  } else {
+    pinsForDay = PINS.filter(p => p.day === d.n);
+    if (state.activeFilter !== "all") {
+      if (state.activeFilter === "hidden") {
+        pinsForDay = pinsForDay.filter(p => p.type === "hidden");
+      } else if (state.activeFilter === "eats") {
+        pinsForDay = pinsForDay.filter(p => ["pizza","italian","american","thai","greek","latin"].includes(p.type));
+      } else {
+        pinsForDay = pinsForDay.filter(p => p.type === state.activeFilter);
+      }
     }
   }
   // Sort by distance from user if toggle is on and we have location
@@ -1018,11 +1066,13 @@ function renderDayView() {
     const distPill = dist != null
       ? `<span class="distance-pill">📍 ${formatDistance(dist)}</span>`
       : "";
+    const price = priceForPin(p);
+    const pricePill = price ? `<span class="distance-pill" style="background:#dcfce7;color:#15803d">${price}</span>` : "";
     return `
       <div class="stop${workCls}${visitedCls}">
         <div class="check" data-num="${i + 1}" style="background:${d.color}" onclick="event.stopPropagation();toggleStop(${p.lat},${p.lng},${p.day})"></div>
         <div class="body" onclick="zoomTo(${p.lat},${p.lng})">
-          <div class="name"><span class="emoji">${p.emoji}</span>${p.name}${distPill}${badges.join("")}</div>
+          <div class="name"><span class="emoji">${p.emoji}</span>${p.name}${pricePill}${distPill}${badges.join("")}</div>
           <div class="addr">${p.addr}</div>
           <div class="tip">${p.tip}</div>
           <div class="actions">
