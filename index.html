@@ -410,22 +410,23 @@ const SUBWAY_LINES = {
    WALKING SEGMENTS (per day, dashed black on the map)
 ============================================================ */
 const WALK_SEGMENTS = {
-  // Day 1 — Sun May 10 — light MSP loop near home + optional WV detour
-  // Seg 1: home → MSP/Eataly/Shake Shack/Flatiron loop
-  // Seg 2 (optional, subway down): Christopher St 1 → Three Lives → Friends apt → 75½ Bedford → Joe's Pizza → home (subway back)
-  1: [
-    [[40.7424,-73.9908],[40.7423,-73.9897],[40.7414,-73.9881],[40.7423,-73.9879],
-     [40.7411,-73.9897],[40.7424,-73.9908]],
-    [[40.7338,-74.0030],[40.7339,-74.0030],[40.7314,-74.0050],[40.7308,-74.0048],
-     [40.7305,-74.0026],[40.7338,-74.0030]]
-  ],
-  // Day 2 — Mon — work cafe + 3pm MSP first outing + dinner
-  // Seg 1: home → Joe Coffee Flatiron (5 min)
-  // Seg 2: home (after work) → MSP → Flatiron → Eataly → Shake Shack → Union Sq → home
+  // Day 1 — Sun May 10 — light MSP loop near home (DONE)
+  1: [[
+    [40.7424,-73.9908],[40.7423,-73.9897],[40.7414,-73.9881],[40.7423,-73.9879],
+    [40.7411,-73.9897],[40.7424,-73.9908]
+  ]],
+  // Day 2 — Mon — work cafe + 2pm High Line + West Village + Joe's
+  // Seg 1: home → Joe Coffee Flatiron (5 min N)
+  // Seg 2: Joe Coffee → Chelsea Market → High Line south → Little Island → High Line north (Vessel)
+  // Seg 3: Christopher St 1 → Three Lives → Friends apt → 75½ Bedford → Joe's Pizza → Christopher St 1
+  // Seg 4: 23rd St 1 → home
   2: [
     [[40.7424,-73.9908],[40.7434,-73.9920]],
-    [[40.7424,-73.9908],[40.7423,-73.9879],[40.7411,-73.9897],[40.7423,-73.9897],
-     [40.7414,-73.9881],[40.7359,-73.9911],[40.7424,-73.9908]]
+    [[40.7434,-73.9920],[40.7424,-74.0061],[40.7397,-74.0085],[40.7423,-74.0107],
+     [40.7397,-74.0085],[40.7538,-74.0019]],
+    [[40.7338,-74.0030],[40.7339,-74.0030],[40.7314,-74.0050],[40.7308,-74.0048],
+     [40.7305,-74.0026],[40.7338,-74.0030]],
+    [[40.7440,-73.9954],[40.7424,-73.9908]]
   ],
   // Day 3 — Tue — work + Midtown + Daily Bugle + Tram + SUMMIT + Pure Thai
   // Seg 1: home → Culture Espresso (15 min walk N)
@@ -495,12 +496,12 @@ const DAYS = [
     tip:"From JFK: yellow cabs are flat $70 to anywhere in Manhattan + tolls + tip ≈ $90. Uber/Lyft can surge to $100+. AirTrain + E train: $11, ~60 min, reliable.",
     gem:{ name:"Eataly NYC Flatiron", addr:"200 5th Ave (across from MSP)", blurb:"World-famous Italian food hall founded by Mario Batali in 2010. Across from Madison Square Park. Multiple counters: pasta, pizza, salumi, gelato, espresso. The Italian crash course — and 1 block from your apartment.", lat:40.7423, lng:-73.9897 }
   },
-  { n:2, label:"Day 2", date:"Mon May 11", color:"#fcbf49", lines:[],
-    title:"Work · Madison Square Park · First Outing", theme:"4-hr work block 10–2. 3pm onwards: casual MSP + Flatiron + Eataly + dinner.",
+  { n:2, label:"Day 2", date:"Mon May 11", color:"#fcbf49", lines:["1"],
+    title:"Work · High Line · West Village · Joe's", theme:"4-hr work block 10–2. 2pm onwards: High Line + Chelsea + West Village + dinner.",
     sunset:"7:59 PM",
-    summary:"10am-2pm WORK at Joe Coffee (130 W 23rd St, 5 min walk). 2-3pm: lunch / recharge. 3pm: easy first outing starts. Walk Madison Square Park (right next to home — fountain, dogs, the original Shake Shack stand). Photo the Flatiron Building (1 block south, also the Daily Bugle in Sam Raimi's Spider-Man trilogy 🕷️). Stroll through Eataly — pick your poison: pasta counter, pizza, salumi, or just an espresso + cannoli. Dinner: Shake Shack in the park (the OG 2004 location), or stay for an Eataly sit-down. Easy night. Casual.",
-    tip:"Madison Square Park's Shake Shack is the ORIGINAL — opened 2004, sparked the global chain. Order a ShackBurger, fries, and a black-and-white shake. Eat outside under the trees.",
-    gem:{ name:"Eisenberg's-style nostalgia at 174 5th Ave", addr:"174 5th Ave (Flatiron)", blurb:"Eisenberg's Sandwich Shop (1929) closed in 2020, but the lunch counter was reborn as S&P Lunch in 2023 by the family of a Russ & Daughters partner. Same lime rickeys, egg salad, tuna melt, chocolate egg cream. A working 1929 NYC lunch counter — 2 blocks from your apartment.", lat:40.7406, lng:-73.9896 }
+    summary:"10am-2pm WORK at Joe Coffee Flatiron (130 W 23rd St, 5 min walk). 2:00pm onwards: walk west to Chelsea Market for late lunch (Los Tacos No.1, Lobster Place chowder). Then High Line south entry → walk the full 1.5 miles north → Little Island detour mid-way → Vessel at the north end (34th & 12th). 1 train back south from 34th-Penn Station → Christopher St. West Village walk: Three Lives & Co bookshop → Friends apartment exterior (90 Bedford) → 75½ Bedford (narrowest house in NYC). Dinner at Joe's Pizza Carmine (Spider-Man 2 \"Pizza Time!\"). 1 train home from Christopher St → 23rd St.",
+    tip:"Walk the High Line south-to-north — it's the better direction (south end is harder to find, north exit drops you at Hudson Yards). ~1 hour at a leisurely pace including Little Island stop.",
+    gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade. Photo from across the street. RIGHT NEXT to the Friends building — hit both at once.", lat:40.7308, lng:-74.0048 }
   },
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
     title:"Work · Midtown · Daily Bugle · SUMMIT", theme:"Every Midtown postcard + the best deck in NYC + Spider-Man bonuses.",
@@ -551,19 +552,17 @@ const PINS = [
   { day:1, type:"american",   name:"Shake Shack (MSP — original)",  lat:40.7414, lng:-73.9881, addr:"Madison Sq Park", tip:"The ORIGINAL Shake Shack. Opened 2004 as a hot dog cart, sparked a global empire. ShackBurger + crinkle fries + black-and-white shake. Eat at the picnic tables under the trees.", emoji:"🍔", must:true, photo:true },
   { day:1, type:"italian",    name:"Eataly NYC Flatiron",           lat:40.7423, lng:-73.9897, addr:"200 5th Ave (across from MSP)", tip:"Italian food hall founded by Batali + Bastianich in 2010. Multiple counters: pasta, pizza al taglio, salumi, gelato, espresso. The casual Italian arrival dinner — pick a counter, eat there, leave full.", emoji:"🍝", must:true },
   { day:1, type:"attraction", name:"🕷️ Flatiron Building",          lat:40.7411, lng:-73.9897, addr:"175 5th Ave at 23rd St", tip:"1 block south of home. Used as the Daily Bugle in Sam Raimi's Spider-Man trilogy. 1902 wedge — one of NYC's first skyscrapers. Photo from MSP diagonally.", emoji:"🕷️", photo:true },
-  { day:1, type:"pizza",      name:"🕷️ Joe's Pizza (Carmine)",      lat:40.7305, lng:-74.0026, addr:"7 Carmine St, Greenwich Village", tip:"Optional Day 1 stretch: 1 train 23rd → Christopher St (~15 min) for the iconic NY slice. Where Peter Parker delivers pizzas in Spider-Man 2 — \"Pizza Time!\" Eat standing on the sidewalk.", emoji:"🍕" },
-  { day:1, type:"attraction", name:"📺 Friends apartment building", lat:40.7314, lng:-74.0050, addr:"90 Bedford St (at Grove), West Village", tip:"Pair with Joe's Pizza — both in the West Village, 2 blocks apart. The Friends exterior. Photo from across Grove St. Little Owl restaurant on the ground floor.", emoji:"📺", photo:true },
-  { day:1, type:"bookstore",  name:"Three Lives & Company",         lat:40.7339, lng:-74.0030, addr:"154 W 10th St, West Village", tip:"Tiny, beloved village bookshop. Green-and-gold corner shopfront. Most charming in the city. 5 min walk from Friends apt.", emoji:"📚", photo:true },
-  { day:1, type:"hidden",     name:"75½ Bedford Street",            lat:40.7308, lng:-74.0048, addr:"75½ Bedford St, West Village", tip:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. RIGHT NEXT to the Friends building — hit both at once.", emoji:"🤫" },
 
-  // DAY 2 — Mon May 11 (work + 3pm MSP first outing + dinner)
+  // DAY 2 — Mon May 11 (work + 2pm High Line + WV + dinner)
   { day:2, type:"cafe",       name:"★ Joe Coffee Flatiron",         lat:40.7434, lng:-73.9920, addr:"130 W 23rd St", tip:"WORK CAFE — Mon 10am–2pm. 5-min walk from home. Laptop-friendly, fast wifi, solid espresso. Park yourself at the long communal table.", emoji:"💻", work:true },
-  { day:2, type:"attraction", name:"Madison Square Park",           lat:40.7423, lng:-73.9879, addr:"23rd-26th St, Madison Ave to 5th Ave", tip:"3pm — start here. Your first outing. Fountain, dogs, sculpture. Sit, breathe, recharge.", emoji:"⭐", must:true, photo:true },
-  { day:2, type:"attraction", name:"🕷️ Flatiron Building (Daily Bugle)", lat:40.7411, lng:-73.9897, addr:"175 5th Ave at 23rd St", tip:"Daily Bugle from Sam Raimi's Spider-Man trilogy. 1902 wedge. Photo from MSP diagonally for the classic shot.", emoji:"🕷️", must:true, photo:true },
-  { day:2, type:"italian",    name:"Eataly NYC Flatiron",           lat:40.7423, lng:-73.9897, addr:"200 5th Ave", tip:"Walk through the food hall. Pick up a glass of Aperol Spritz, an arancino, a wedge of Parmigiano. Or sit down at La Pizza & La Pasta for the proper meal.", emoji:"🍝", must:true },
-  { day:2, type:"american",   name:"Shake Shack (MSP)",             lat:40.7414, lng:-73.9881, addr:"Madison Sq Park", tip:"The OG Shake Shack. ShackBurger + fries + shake at the picnic tables. ~$15. Best NYC casual dinner.", emoji:"🍔", must:true },
-  { day:2, type:"attraction", name:"Union Square",                  lat:40.7359, lng:-73.9911, addr:"14th-17th St, Union Sq", tip:"If you've got energy after dinner: walk south 9 blocks. Greenmarket Wed/Sat. Chess hustlers. Where Broadway's diagonal meets the grid.", emoji:"⭐" },
-  { day:2, type:"hidden",     name:"S&P Lunch (former Eisenberg's)",lat:40.7406, lng:-73.9896, addr:"174 5th Ave (Flatiron)", tip:"Eisenberg's Sandwich Shop (1929) closed 2020. Reborn 2023 as S&P Lunch by the Russ & Daughters family. Same lime rickeys, egg salad, tuna melt, chocolate egg cream. A working 1929 lunch counter, 2 blocks from your apartment.", emoji:"🤫" },
+  { day:2, type:"attraction", name:"Chelsea Market",                lat:40.7424, lng:-74.0061, addr:"75 9th Ave (15th-16th)", tip:"Late lunch stop at 2:30pm. Indoor food market. Los Tacos No.1 (the carne asada), Lobster Place (chowder), Doughnuttery (tiny donuts), Mokbar (Korean). 15 min walk west of Joe Coffee.", emoji:"⭐", must:true },
+  { day:2, type:"attraction", name:"High Line (south entry)",       lat:40.7397, lng:-74.0085, addr:"Gansevoort St & Washington St", tip:"Enter here at 3:00pm. Elevated rail-line-turned-park, ~1.5 miles. Walk south-to-north — the better direction (less crowded entry, dramatic Hudson views opening up).", emoji:"⭐", must:true, photo:true },
+  { day:2, type:"viewpoint",  name:"Little Island",                 lat:40.7423, lng:-74.0107, addr:"Pier 55, Hudson River Park", tip:"Tulip-shaped floating park. 5-min detour off the High Line near 14th St. Walk up to the high point for the photo.", emoji:"👁", photo:true },
+  { day:2, type:"viewpoint",  name:"Vessel / Hudson Yards",         lat:40.7538, lng:-74.0019, addr:"20 Hudson Yards", tip:"Honeycomb sculpture at the High Line's north end. Climbing closed but free to view + photo. Then 1 train from 34th-Penn south to Christopher St.", emoji:"👁", photo:true },
+  { day:2, type:"bookstore",  name:"Three Lives & Company",         lat:40.7339, lng:-74.0030, addr:"154 W 10th St, West Village", tip:"Tiny, beloved village bookshop. Green-and-gold corner shopfront. Most charming bookstore in the city. 5 min from Christopher St 1 train.", emoji:"📚", photo:true },
+  { day:2, type:"attraction", name:"📺 Friends apartment building", lat:40.7314, lng:-74.0050, addr:"90 Bedford St (at Grove), West Village", tip:"The Friends exterior. Photo from across Grove St for the corner shot. (Interior was Burbank.) Little Owl restaurant on the ground floor.", emoji:"📺", must:true, photo:true },
+  { day:2, type:"hidden",     name:"75½ Bedford Street",            lat:40.7308, lng:-74.0048, addr:"75½ Bedford St, West Village", tip:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. RIGHT NEXT to the Friends building — hit both at once.", emoji:"🤫" },
+  { day:2, type:"pizza",      name:"🕷️ Joe's Pizza (Carmine)",      lat:40.7305, lng:-74.0026, addr:"7 Carmine St, Greenwich Village", tip:"Dinner. The classic NY slice. Plain cheese, fold it, eat standing on the sidewalk. Where Peter Parker delivers pizzas in Spider-Man 2 — \"Pizza Time!\" 5 min walk from 75½ Bedford.", emoji:"🍕", must:true, photo:true },
 
   // DAY 3 — Tue May 12 (work + Midtown + Tram + SUMMIT)
   { day:3, type:"cafe",       name:"★ Culture Espresso",            lat:40.7531, lng:-73.9871, addr:"72 W 38th St", tip:"WORK CAFE — Tue 10am–2pm. Midtown work café. Big tables, outlets, fast wifi. Famous chocolate-chip cookie too.", emoji:"💻", work:true },
