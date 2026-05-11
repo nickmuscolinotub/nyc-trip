@@ -428,15 +428,15 @@ const WALK_SEGMENTS = {
      [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7349,-73.9908]],
     [[40.7349,-73.9908],[40.7424,-73.9908]]
   ],
-  // Day 3 — Tue — work + Midtown + Daily Bugle + Tram + SUMMIT + Pure Thai
+  // Day 3 — Tue — work + Midtown + Top of the Rock at 6:40pm + Pure Thai
   // Seg 1: home → Culture Espresso (15 min walk N)
-  // Seg 2: Culture → MoMA → St Pat's → Rockefeller → ToTR → Times Sq → Bryant → Blue Bottle → NYPL → GC → Argosy → Roosevelt Tram → SUMMIT → Pure Thai (Hell's Kitchen) → home
+  // Seg 2: Culture → MoMA → St Pat's → Rockefeller plaza → Times Sq + TKTS → Bryant Park → Blue Bottle → NYPL → GC + Whisper → Argosy → Steinway → (optional Tram) → BACK to Top of the Rock at 6:40pm → Pure Thai → home
   3: [
     [[40.7424,-73.9908],[40.7531,-73.9871]],
     [[40.7531,-73.9871],[40.7614,-73.9776],[40.7585,-73.9759],[40.7587,-73.9787],
-     [40.7592,-73.9795],[40.7580,-73.9855],[40.7536,-73.9832],[40.7526,-73.9839],
-     [40.7532,-73.9822],[40.7527,-73.9772],[40.7625,-73.9685],[40.7595,-73.9624],
-     [40.7530,-73.9779],[40.7657,-73.9876],[40.7424,-73.9908]]
+     [40.7580,-73.9855],[40.7536,-73.9832],[40.7526,-73.9839],
+     [40.7532,-73.9822],[40.7527,-73.9772],[40.7625,-73.9685],[40.7654,-73.9776],
+     [40.7595,-73.9624],[40.7592,-73.9795],[40.7657,-73.9876],[40.7424,-73.9908]]
   ],
   // Day 4 — Wed — work UWS + Met + Park + J.G. Melon
   // Seg 1: home → 23rd St 1 station (3 blocks west)
@@ -505,9 +505,9 @@ const DAYS = [
     gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade. Photo from across the street. RIGHT NEXT to the Friends building — hit both at once.", lat:40.7308, lng:-74.0048 }
   },
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
-    title:"Work · Midtown · Daily Bugle · SUMMIT", theme:"Every Midtown postcard + the best deck in NYC + Spider-Man bonuses.",
+    title:"Work · Midtown · Top of the Rock 6:40pm", theme:"Day anchored to Top of the Rock at sunset. Everything else pads around it.",
     sunset:"8:00 PM",
-    summary:"Optional 8am bagel breakfast at Ess-a-Bagel (3rd Ave & 51st — 6 train 23rd St → 51st St, walk 2 blocks east). 10am-2pm WORK at Culture Espresso. 2pm onwards: MoMA → St. Patrick's → Rockefeller Center → Top of the Rock → Times Square (Spider-Man 1 World Unity Festival fight) — STOP AT TKTS BOOTH in Father Duffy Sq for same-day Broadway tickets (Wed or Thu evening). Bryant Park + NYPL Rose Reading Room → Grand Central whisper gallery → Argosy vintage bookstore → Steinway Tower (the supertall) → Roosevelt Island Tram (Spider-Man 2002 — Goblin attacks the tram) → SUMMIT at 7:00pm (sunset 8:00pm — book online). Dinner: Pure Thai Cookhouse (Hell's Kitchen). F home.",
+    summary:"Optional 8am bagel breakfast at Ess-a-Bagel (3rd Ave & 51st — 6 train 23rd St → 51st St). 10am-2pm WORK at Culture Espresso. 2pm-6:30pm Midtown loop: MoMA (book 2pm slot, allow 2hrs) → St. Patrick's → Rockefeller Center plaza → Times Square (Spider-Man 1 World Unity Festival fight) + grab Broadway tix at TKTS for Wed/Thu → Bryant Park + NYPL Rose Reading Room → Grand Central + Whispering Gallery → Argosy bookstore (closes 6pm, hit before) → Steinway Tower photo → Roosevelt Island Tram (optional 30-min round trip if time). **6:40pm: TOP OF THE ROCK** (sunset 8:00pm — you'll catch golden hour + skyline-on-fire). 8pm: descend → Pure Thai Cookhouse dinner (Hell's Kitchen, 10 min walk west). F home.",
     tip:"OMNY tap-to-pay is on every turnstile. No more MetroCard. $34 weekly cap — you'll never pay for a 13th ride in a week.",
     gem:{ name:"The Whispering Gallery", addr:"Lower level, outside Oyster Bar, Grand Central", blurb:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally across the room. Architectural accident. Magic.", lat:40.7526, lng:-73.9772 }
   },
@@ -573,7 +573,7 @@ const PINS = [
   { day:3, type:"museum",     name:"MoMA",                          lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Book a 2:30pm timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2 hrs.", emoji:"🏛", must:true },
   { day:3, type:"attraction", name:"St. Patrick's Cathedral",       lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
   { day:3, type:"attraction", name:"Rockefeller Center",            lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio.", emoji:"⭐", photo:true },
-  { day:3, type:"viewpoint",  name:"Top of the Rock",               lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"Best photo of the Empire State + Central Park. SKIP if doing SUMMIT — pick one.", emoji:"👁", photo:true },
+  { day:3, type:"viewpoint",  name:"⭐ Top of the Rock (6:40 PM BOOKED)", lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"BOOKED 6:40pm Tue. Be at the entrance by 6:30pm. Sunset is 8:00pm — you'll catch the city in gold light, then watch it fade. Best photo of the Empire State + Central Park in one frame. Stay ~1 hr.", emoji:"👁", must:true, photo:true },
   { day:3, type:"attraction", name:"Times Square",                  lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. Where the Spider-Man 1 World Unity Festival fight with Goblin happens. Best at night for the lights.", emoji:"⭐" },
   { day:3, type:"attraction", name:"🎭 TKTS Booth (Broadway tix)",   lat:40.7589, lng:-73.9853, addr:"Father Duffy Sq, 47th & Broadway", tip:"Same-day half-price Broadway tickets. Booth opens 3pm for evening shows. Lines move but go early. Picks: Hamilton, Wicked, MJ, Six, Hadestown, Outsiders. ~$50–100 post-discount. Solo seats often the best deal (singles fill last). Book a show for Wed or Thu evening.", emoji:"🎭", must:true },
   { day:3, type:"attraction", name:"Bryant Park",                   lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
@@ -583,8 +583,6 @@ const PINS = [
   { day:3, type:"bookstore",  name:"Argosy Book Store",             lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. Closes 6pm — go after Grand Central.", emoji:"📚" },
   { day:3, type:"attraction", name:"Steinway Tower (Tower 57)",     lat:40.7654, lng:-73.9776, addr:"111 W 57th St (between 6th & 7th Ave)", tip:"The world's skinniest supertall — 1,428 ft with a width-to-height ratio of 1:24. Architectural marvel by SHoP Architects, finished 2022. Best photo from 6th Ave looking up, or from Central Park looking south. 2-min walk from Argosy bookstore.", emoji:"🏗️", must:true, photo:true },
   { day:3, type:"viewpoint",  name:"🕷️ Roosevelt Island Tram",      lat:40.7595, lng:-73.9624, addr:"E 60th St & 2nd Ave", tip:"4-min aerial tram ride to Roosevelt Island. Tap OMNY ($2.90). Sam Raimi's Spider-Man (2002) — Goblin attacks the tram with the children on it. Free panorama. 30-min round trip from Argosy.", emoji:"🚡", must:true, photo:true },
-  { day:3, type:"viewpoint",  name:"SUMMIT One Vanderbilt",         lat:40.7530, lng:-73.9779, addr:"45 E 42nd St (next to Grand Central)", tip:"BEST VIEWING DECK IN NYC. 1,401 ft, mirrored glass rooms, glass-floor 'Levitation' boxes that hang OFF the building, full 360°. BOOK 7:00pm slot — sunset 8:00pm. Sells out — book days ahead.", emoji:"👁", must:true, photo:true },
-  { day:3, type:"viewpoint",  name:"Empire State Building",         lat:40.7484, lng:-73.9857, addr:"20 W 34th St", tip:"Skip if you did SUMMIT or Top of the Rock.", emoji:"👁" },
   { day:3, type:"thai",       name:"Pure Thai Cookhouse",           lat:40.7657, lng:-73.9876, addr:"766 9th Ave (Hell's Kitchen)", tip:"Famous tiny Thai noodle shop. Hand-pulled ratchaburi noodles, drunken noodles, tom yum. $$, casual, walk-ins, expect a wait. THE Thai pick in NYC.", emoji:"🍜", must:true },
   { day:3, type:"hidden",     name:"The Whispering Gallery",        lat:40.7526, lng:-73.9772, addr:"Lower level, outside Oyster Bar, Grand Central", tip:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally. Architectural accident — magic.", emoji:"🤫" },
 
