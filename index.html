@@ -431,12 +431,12 @@ const WALK_SEGMENTS = {
   // Day 3 — Tue — 4 distinct walking legs in order:
   // Leg 1 (morning): home → Gelatoville Chelsea
   // Leg 2 (post-work): Gelatoville Chelsea → home (drop off)
-  // Leg 3 (evening Midtown): 47-50 Sts F station → MoMA → Argosy → St Pat's → Rockefeller → Top of the Rock → Times Square
+  // Leg 3 (evening Midtown): 47-50 Sts F station → MoMA → Central Park south entrance (brief) → St Pat's → Rockefeller → Top of the Rock → Times Square
   // Leg 4 (home): 23rd St 1 station → home
   3: [
     [[40.7424,-73.9908],[40.7437,-74.0006]],
     [[40.7437,-74.0006],[40.7424,-73.9908]],
-    [[40.7585,-73.9805],[40.7614,-73.9776],[40.7625,-73.9685],[40.7585,-73.9759],
+    [[40.7585,-73.9805],[40.7614,-73.9776],[40.7647,-73.9743],[40.7585,-73.9759],
      [40.7587,-73.9787],[40.7592,-73.9795],[40.7580,-73.9855]],
     [[40.7440,-73.9954],[40.7424,-73.9908]]
   ],
@@ -509,7 +509,7 @@ const DAYS = [
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
     title:"Work · MoMA · Argosy · Top of the Rock 6:40pm", theme:"Tight evening anchored to Top of the Rock at sunset.",
     sunset:"8:00 PM",
-    summary:"**Order of the day:** 1) 10am-2:45pm WORK at Gelatoville Chelsea (234 8th Ave). 2) ~3pm walk home, drop everything off. 3) ~3:30pm subway F train 23rd St → 47-50 Sts-Rockefeller. 4) 3:45-5:30pm MoMA (book a 3:45 slot online). 5) 5:30pm walk NE to Argosy (closes 6pm — quick browse). 6) ~5:50pm walk back south via St. Patrick's. 7) Rockefeller Plaza buffer. 8) **6:40pm BOOKED Top of the Rock** (sunset 8pm). 9) ~8pm descend, walk south through Times Square at night. 10) Subway home from 42nd St-Times Sq (1 train → 23rd St → home).",
+    summary:"**Order of the day:** 1) 10am-2:45pm WORK at Gelatoville Chelsea (234 8th Ave). 2) ~3pm walk home, drop everything off. 3) ~3:30pm F train 23rd St → 47-50 Sts-Rockefeller. 4) 3:45-5:30pm MoMA (book a 3:45 slot online). 5) 5:30pm walk N up 5th Ave to Central Park south entrance / Grand Army Plaza for a 15-20 min brief stop. 6) Walk back south via St. Patrick's. 7) Rockefeller Plaza buffer. 8) **6:40pm BOOKED Top of the Rock** (sunset 8pm). 9) ~8pm descend, walk S through Times Square at night. 10) Subway home from 42nd St-Times Sq (1 train → 23rd St → home).",
     tip:"OMNY tap-to-pay is on every turnstile. $34 weekly cap — you'll never pay for a 13th ride in a week.",
     gem:null
   },
@@ -573,8 +573,8 @@ const PINS = [
   // Day 3 stops listed in visit order:
   { day:3, type:"cafe",       name:"1. ★ Gelatoville Chelsea (WORK)",  lat:40.7437, lng:-74.0006, addr:"234 8th Ave (between 21st-22nd St)", tip:"WORK CAFE — Tue 10am–2:45pm. ~8 min walk SW of home. Last meeting 2:45pm. Wifi + seating. After work: walk home, drop everything off, head to Midtown.", emoji:"💻", work:true },
   { day:3, type:"museum",     name:"2. MoMA",                         lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Book a 3:45pm timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow ~1h 45min until 5:30pm close.", emoji:"🏛", must:true },
-  { day:3, type:"bookstore",  name:"3. Argosy Book Store",            lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. CLOSES 6PM — quick browse only. 10 min walk NE from MoMA.", emoji:"📚" },
-  { day:3, type:"attraction", name:"4. St. Patrick's Cathedral",      lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"5 min stop on the walk back south from Argosy. Free entry. Stunning interior.", emoji:"⭐" },
+  { day:3, type:"attraction", name:"3. Central Park (brief stop)",    lat:40.7647, lng:-73.9743, addr:"Grand Army Plaza, 59th St & 5th Ave", tip:"Quick stop AFTER MoMA: walk north 6 blocks up 5th Ave to the SE corner of Central Park. Pulitzer Fountain, the gold General Sherman statue, peek into the park (Wollman Rink area, Sheep Meadow distant). 15-20 min — not the full walkthrough, just a quick taste. Then walk back south to Rockefeller area.", emoji:"⭐", must:true, photo:true },
+  { day:3, type:"attraction", name:"4. St. Patrick's Cathedral",      lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"5 min stop on the walk back south from Central Park. Free entry. Stunning interior.", emoji:"⭐" },
   { day:3, type:"attraction", name:"5. Rockefeller Center",           lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio. 1 block west of St. Pat's. Buffer until your Top of the Rock slot.", emoji:"⭐", photo:true },
   { day:3, type:"viewpoint",  name:"6. ⭐ Top of the Rock (6:40 PM BOOKED)", lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"BOOKED 6:40pm Tue. Be at the entrance by 6:30pm. Sunset is 8:00pm — you'll catch the city in gold light, then watch it fade. Best photo of the Empire State + Central Park in one frame. Stay ~1 hr.", emoji:"👁", must:true, photo:true },
   { day:3, type:"attraction", name:"7. Times Square (at night)",      lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"After Top of the Rock — walk south 5 min through Times Square at night for the lights. Don't eat or linger. Then subway home from 42nd St-Times Sq (1 train south to 23rd St).", emoji:"⭐" },
