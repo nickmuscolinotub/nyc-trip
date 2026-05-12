@@ -1,9 +1,9 @@
 // NYC Trip · service worker
 // Caches the app shell + map tiles so the app works offline on the subway.
 
-const VERSION = "nyc-trip-v10";
-const SHELL = "nyc-trip-shell-v10";
-const TILES = "nyc-trip-tiles-v10";
+const VERSION = "nyc-trip-v11";
+const SHELL = "nyc-trip-shell-v11";
+const TILES = "nyc-trip-tiles-v11";
 
 const SHELL_URLS = [
   "./",

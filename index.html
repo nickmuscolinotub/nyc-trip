@@ -428,13 +428,13 @@ const WALK_SEGMENTS = {
      [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7349,-73.9908]],
     [[40.7349,-73.9908],[40.7424,-73.9908]]
   ],
-  // Day 3 — Tue — work at Joe Coffee Chelsea + home drop-off + Midtown evening + Top of the Rock 6:40pm
-  // Seg 1: home → Joe Coffee Chelsea (10 min walk W) → home (drop off after work)
-  // Seg 2: Midtown evening — MoMA → St Pat's → Rockefeller → Times Sq → Top of the Rock 6:40pm → Pure Thai → home
+  // Day 3 — Tue — work Joe Coffee Chelsea + home drop-off + tight Midtown + Top of the Rock 6:40pm
+  // Seg 1: home → Joe Coffee Chelsea → home (after work)
+  // Seg 2: Midtown — MoMA → Argosy → St Pat's → Rockefeller → Top of the Rock 6:40pm → Times Square (at night) → subway home
   3: [
     [[40.7424,-73.9908],[40.7470,-74.0028],[40.7424,-73.9908]],
-    [[40.7614,-73.9776],[40.7585,-73.9759],[40.7587,-73.9787],
-     [40.7580,-73.9855],[40.7592,-73.9795],[40.7657,-73.9876],[40.7424,-73.9908]]
+    [[40.7614,-73.9776],[40.7625,-73.9685],[40.7585,-73.9759],[40.7587,-73.9787],
+     [40.7592,-73.9795],[40.7580,-73.9855]]
   ],
   // Day 4 — Wed — work UWS + Met + Park + J.G. Melon
   // Seg 1: home → 23rd St 1 station (3 blocks west)
@@ -503,11 +503,11 @@ const DAYS = [
     gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade. Photo from across the street. RIGHT NEXT to the Friends building — hit both at once.", lat:40.7308, lng:-74.0048 }
   },
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
-    title:"Work · Midtown · Top of the Rock 6:40pm", theme:"Day anchored to Top of the Rock at sunset. Everything else pads around it.",
+    title:"Work · MoMA · Argosy · Top of the Rock 6:40pm", theme:"Tight evening anchored to Top of the Rock at sunset.",
     sunset:"8:00 PM",
-    summary:"10am-2:45pm WORK at Joe Coffee Chelsea (405 W 23rd St, 10 min walk west of home). Last meeting 2:45pm. 2:45-3:15pm: walk home, drop everything off. 3:15pm: subway to Midtown (F train 23rd St → 47-50 Sts-Rockefeller). 3:30-5:30pm: MoMA (book a 3:30 slot in advance). 5:30-6:30pm: walk past St. Patrick's → Rockefeller Center plaza → quick Times Square photo + TKTS Booth for Broadway tickets if grabbing. **6:30pm: at Top of the Rock entrance · 6:40pm BOOKED entry** (sunset 8:00pm — golden hour from 1,250 ft). 8pm: descend → Pure Thai Cookhouse dinner (Hell's Kitchen, 10 min walk). F home. Skip / push to another day: Argosy (closes 6pm), Grand Central detail, Steinway Tower, Roosevelt Tram, Ess-a-Bagel (no longer makes sense with cafe near home).",
-    tip:"OMNY tap-to-pay is on every turnstile. No more MetroCard. $34 weekly cap — you'll never pay for a 13th ride in a week.",
-    gem:{ name:"The Whispering Gallery", addr:"Lower level, outside Oyster Bar, Grand Central", blurb:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally across the room. Architectural accident. Magic.", lat:40.7526, lng:-73.9772 }
+    summary:"10am-2:45pm WORK at Joe Coffee Chelsea. ~3pm: home, pack up, head north. 3:30pm: subway to Midtown. 3:45-5:30pm: MoMA (book a 3:45 slot). 5:30-5:50pm: walk NE to Argosy (closes 6pm — quick browse). 5:50-6:30pm: walk back to Rockefeller area via St. Patrick's + Rockefeller Plaza. **6:40pm BOOKED: TOP OF THE ROCK** (sunset 8pm — golden hour into night). 8pm: descend → walk south through Times Square at night (5 min) → subway home from Times Sq–42nd St. Bryant Park / NYPL / Grand Central all on the path if you've got buffer time.",
+    tip:"OMNY tap-to-pay is on every turnstile. $34 weekly cap — you'll never pay for a 13th ride in a week.",
+    gem:null
   },
   { n:4, label:"Day 4", date:"Wed May 13", color:"#118ab2", lines:["1"],
     title:"Work · Met · Central Park", theme:"4-hr work block on UWS, then the Met (closes 5pm) and the park.",
@@ -566,7 +566,6 @@ const PINS = [
   { day:2, type:"bookstore",  name:"Strand Bookstore",              lat:40.7332, lng:-73.9912, addr:"828 Broadway at 12th St (Union Sq)", tip:"\"18 miles of books.\" Iconic since 1927. Rare-books room on the 3rd floor. Get the red Strand tote — the unofficial NYC souvenir. ON THE WALK HOME: WSP → up Broadway past Strand → 14th-Union Sq subway → home.", emoji:"📚", must:true },
 
   // DAY 3 — Tue May 12 (work + Midtown + Tram + SUMMIT + Broadway optional)
-  { day:3, type:"american",   name:"🥯 Ess-a-Bagel",                 lat:40.7559, lng:-73.9697, addr:"831 3rd Ave at 51st St", tip:"NYC bagel done right since 1976. Hand-rolled, kettle-boiled, baked. Order the bagel-with-the-works (cream cheese + lox + tomato + onion + capers). Opens 6am — grab on the morning walk to Culture Espresso.", emoji:"🥯", must:true },
   { day:3, type:"cafe",       name:"★ Joe Coffee Chelsea",          lat:40.7470, lng:-74.0028, addr:"405 W 23rd St (Chelsea)", tip:"WORK CAFE — Tue 10am–2:45pm. 10 min walk west of home. Last meeting wraps 2:45pm. Solid espresso, laptop-friendly, fast wifi. After work: walk home (10 min), drop everything off, then head to Midtown for the evening.", emoji:"💻", work:true },
   { day:3, type:"museum",     name:"MoMA",                          lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Book a 2:30pm timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2 hrs.", emoji:"🏛", must:true },
   { day:3, type:"attraction", name:"St. Patrick's Cathedral",       lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
@@ -575,14 +574,9 @@ const PINS = [
   { day:3, type:"attraction", name:"Times Square",                  lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. Where the Spider-Man 1 World Unity Festival fight with Goblin happens. Best at night for the lights.", emoji:"⭐" },
   { day:3, type:"attraction", name:"🎭 TKTS Booth (Broadway tix)",   lat:40.7589, lng:-73.9853, addr:"Father Duffy Sq, 47th & Broadway", tip:"Same-day half-price Broadway tickets. Booth opens 3pm for evening shows. Lines move but go early. Picks: Hamilton, Wicked, MJ, Six, Hadestown, Outsiders. ~$50–100 post-discount. Solo seats often the best deal (singles fill last). Book a show for Wed or Thu evening.", emoji:"🎭", must:true },
   { day:3, type:"attraction", name:"Bryant Park",                   lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
-  { day:3, type:"cafe",       name:"Blue Bottle Bryant Park",       lat:40.7526, lng:-73.9839, addr:"54 W 40th St", tip:"Reliable Blue Bottle. The cafe itself is small — but Bryant Park is right outside with FREE public wifi and tables. Grab a latte, work at a park table. Backup work spot for Tue if Culture Espresso is full.", emoji:"☕", wifi:true },
   { day:3, type:"attraction", name:"NYPL Rose Reading Room",        lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Free entry. Rose Reading Room (3rd floor) is the iconic library shot. 15 min.", emoji:"⭐", photo:true },
   { day:3, type:"attraction", name:"Grand Central Terminal",        lat:40.7527, lng:-73.9772, addr:"89 E 42nd St", tip:"Main concourse + celestial ceiling. Find the Whisper Gallery (lower level outside Oyster Bar) — your whisper carries diagonally across the room.", emoji:"⭐", must:true, photo:true },
   { day:3, type:"bookstore",  name:"Argosy Book Store",             lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. Closes 6pm — go after Grand Central.", emoji:"📚" },
-  { day:3, type:"attraction", name:"Steinway Tower (Tower 57)",     lat:40.7654, lng:-73.9776, addr:"111 W 57th St (between 6th & 7th Ave)", tip:"The world's skinniest supertall — 1,428 ft with a width-to-height ratio of 1:24. Architectural marvel by SHoP Architects, finished 2022. Best photo from 6th Ave looking up, or from Central Park looking south. 2-min walk from Argosy bookstore.", emoji:"🏗️", must:true, photo:true },
-  { day:3, type:"viewpoint",  name:"🕷️ Roosevelt Island Tram",      lat:40.7595, lng:-73.9624, addr:"E 60th St & 2nd Ave", tip:"4-min aerial tram ride to Roosevelt Island. Tap OMNY ($2.90). Sam Raimi's Spider-Man (2002) — Goblin attacks the tram with the children on it. Free panorama. 30-min round trip from Argosy.", emoji:"🚡", must:true, photo:true },
-  { day:3, type:"thai",       name:"Pure Thai Cookhouse",           lat:40.7657, lng:-73.9876, addr:"766 9th Ave (Hell's Kitchen)", tip:"Famous tiny Thai noodle shop. Hand-pulled ratchaburi noodles, drunken noodles, tom yum. $$, casual, walk-ins, expect a wait. THE Thai pick in NYC.", emoji:"🍜", must:true },
-  { day:3, type:"hidden",     name:"The Whispering Gallery",        lat:40.7526, lng:-73.9772, addr:"Lower level, outside Oyster Bar, Grand Central", tip:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally. Architectural accident — magic.", emoji:"🤫" },
 
   // DAY 4 — Wed May 13 (work UWS + Met + Central Park + J.G. Melon)
   { day:4, type:"cafe",       name:"★ Joe Coffee (UWS)",            lat:40.7869, lng:-73.9737, addr:"514 Columbus Ave (at 85th)", tip:"WORK CAFE — Wed 10am–2pm. UWS laptop-friendly. 1 train 23rd → 86th, walk 3 min east. After work walk east to The Met (10 min).", emoji:"💻", work:true },
