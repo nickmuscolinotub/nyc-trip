@@ -428,14 +428,12 @@ const WALK_SEGMENTS = {
      [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7349,-73.9908]],
     [[40.7349,-73.9908],[40.7424,-73.9908]]
   ],
-  // Day 3 — Tue — 4 distinct walking legs in order:
-  // Leg 1 (morning): home → Gelatoville Chelsea
-  // Leg 2 (post-work): Gelatoville Chelsea → home (drop off)
-  // Leg 3 (evening Midtown): 47-50 Sts F station → MoMA → Central Park south entrance (brief) → St Pat's → Rockefeller → Top of the Rock → Times Square
-  // Leg 4 (home): 23rd St 1 station → home
+  // Day 3 — Tue — 3 distinct walking legs (dropped duplicate return-from-cafe leg):
+  // Leg 1 (morning + post-work, same path): home ↔ Gelatoville Chelsea
+  // Leg 2 (evening Midtown): 47-50 Sts F station → MoMA → Central Park south entrance (brief) → St Pat's → Rockefeller → Top of the Rock → Times Square
+  // Leg 3 (home from subway): 23rd St 1 station → home
   3: [
     [[40.7424,-73.9908],[40.7437,-74.0006]],
-    [[40.7437,-74.0006],[40.7424,-73.9908]],
     [[40.7585,-73.9805],[40.7614,-73.9776],[40.7647,-73.9743],[40.7585,-73.9759],
      [40.7587,-73.9787],[40.7592,-73.9795],[40.7580,-73.9855]],
     [[40.7440,-73.9954],[40.7424,-73.9908]]
@@ -506,7 +504,7 @@ const DAYS = [
     tip:"Walk the High Line south-to-north — it's the better direction (south end is harder to find, north exit drops you at Hudson Yards). ~1 hour at a leisurely pace including Little Island stop.",
     gem:{ name:"75½ Bedford Street", addr:"75½ Bedford St, West Village", blurb:"Narrowest house in NYC — 9.5 feet wide. Edna St. Vincent Millay lived here. Cary Grant too. Tiny brick facade. Photo from across the street. RIGHT NEXT to the Friends building — hit both at once.", lat:40.7308, lng:-74.0048 }
   },
-  { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
+  { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:[],
     title:"Work · MoMA · Argosy · Top of the Rock 6:40pm", theme:"Tight evening anchored to Top of the Rock at sunset.",
     sunset:"8:00 PM",
     summary:"**Order of the day:** 1) 10am-2:45pm WORK at Gelatoville Chelsea (234 8th Ave). 2) ~3pm walk home, drop everything off. 3) ~3:30pm F train 23rd St → 47-50 Sts-Rockefeller. 4) 3:45-5:30pm MoMA (book a 3:45 slot online). 5) 5:30pm walk N up 5th Ave to Central Park south entrance / Grand Army Plaza for a 15-20 min brief stop. 6) Walk back south via St. Patrick's. 7) Rockefeller Plaza buffer. 8) **6:40pm BOOKED Top of the Rock** (sunset 8pm). 9) ~8pm descend, walk S through Times Square at night. 10) Subway home from 42nd St-Times Sq (1 train → 23rd St → home).",
