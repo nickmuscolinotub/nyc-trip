@@ -451,14 +451,13 @@ const WALK_SEGMENTS = {
      [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7349,-73.9908]],
     [[40.7349,-73.9908],[40.7424,-73.9908]]
   ],
-  // Day 3 — Tue — OUTDOOR DAY (3 walking legs):
-  // Leg 1: home ↔ Gelatoville Chelsea (morning out + post-work return)
-  // Leg 2 (evening, outdoor): subway exit at 59 St-Lex Av → Central Park south entrance → Bryant Park → Rockefeller plaza → Top of the Rock → Times Square
-  // Leg 3 (home from subway): 23rd St 1 station → home
+  // Day 3 — Tue — OUTDOOR DAY (3 walking legs, clean N→S):
+  // Leg 1: home ↔ Gelatoville Chelsea
+  // Leg 2 (evening): Central Park south entrance → Rockefeller plaza → Top of the Rock → Times Square (clean N→S walk)
+  // Leg 3 (home from subway): 23rd St → home
   3: [
     [[40.7424,-73.9908],[40.7437,-74.0006]],
-    [[40.7626,-73.9678],[40.7647,-73.9743],[40.7536,-73.9832],[40.7587,-73.9787],
-     [40.7592,-73.9795],[40.7580,-73.9855]],
+    [[40.7647,-73.9743],[40.7587,-73.9787],[40.7592,-73.9795],[40.7580,-73.9855]],
     [[40.7440,-73.9954],[40.7424,-73.9908]]
   ],
   // Day 4 — Wed — work UWS + MoMA OR Met + Park + J.G. Melon
@@ -531,7 +530,7 @@ const DAYS = [
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:[],
     title:"Work · OUTDOOR DAY · Top of the Rock 6:40pm", theme:"Sunniest day of the week — stay outside. Anchored to 6:40pm Top of the Rock.",
     sunset:"8:00 PM",
-    summary:"**Order of the day:** 1) 10am-2:45pm WORK at Gelatoville Chelsea (234 8th Ave). 2) ~3pm walk home, drop everything off. 3) ~3:30pm F train 23rd St → Lex Av-59th — walk to Central Park south entrance / Grand Army Plaza for a 30-min brief stop in the sun. 4) Walk south down 5th Ave to Bryant Park — sit in the sun, café tables. 5) Walk N to Rockefeller plaza (outdoor) for buffer. 6) **6:40pm BOOKED Top of the Rock** (sunset 8pm). 7) ~8pm descend, walk S through Times Square at night for the lights. 8) Subway home from 42nd St-Times Sq (1 train → 23rd St → home). MoMA + indoor stops MOVED TO DAY 4.",
+    summary:"**Order of the day:** 1) 10am-2:45pm WORK at Gelatoville Chelsea (234 8th Ave). 2) ~3pm walk home, drop everything off. 3) ~3:30pm subway N/R/W from 23rd St to 5 Av-59 St (one-stop ride). 4) Central Park south entrance / Grand Army Plaza — take your time in the sun (45-60 min). 5) Walk south down 5th Ave to Rockefeller plaza (outdoor). 6) **6:40pm BOOKED Top of the Rock** (sunset 8pm). 7) ~8pm descend, walk S through Times Square at night for the lights. 8) Subway home from 42nd St-Times Sq (1 train → 23rd St → home). MoMA + indoor stops MOVED TO DAY 4.",
     tip:"OMNY tap-to-pay is on every turnstile. $34 weekly cap — you'll never pay for a 13th ride in a week.",
     gem:null
   },
@@ -595,7 +594,6 @@ const PINS = [
   // DAY 3 stops in visit order — OUTDOOR-FOCUSED (sunny day)
   { day:3, type:"cafe",       name:"★ Gelatoville Chelsea (WORK)",  lat:40.7437, lng:-74.0006, addr:"234 8th Ave (between 21st-22nd St)", tip:"WORK CAFE — Tue 10am–2:45pm. ~8 min walk SW of home. Last meeting 2:45pm. Wifi + seating. After work: walk home, drop everything off, head north.", emoji:"💻", work:true },
   { day:3, type:"attraction", name:"Central Park (south entrance)",  lat:40.7647, lng:-73.9743, addr:"Grand Army Plaza, 59th St & 5th Ave", tip:"Brief Central Park visit — Pulitzer Fountain, gold General Sherman statue, peek in to Wollman Rink area + Sheep Meadow. 20-30 min, take your time on a sunny day.", emoji:"⭐", must:true, photo:true },
-  { day:3, type:"attraction", name:"Bryant Park",                   lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Outdoor park behind the library. Lawn, fountain, café tables, free chess. Quintessential Midtown breathing-room. Sit in the sun.", emoji:"⭐", photo:true },
   { day:3, type:"attraction", name:"Rockefeller Center plaza",      lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"Outdoor plaza. The gold Prometheus, Channel Gardens, Today Show studio windows. Buffer until your Top of the Rock slot.", emoji:"⭐", photo:true },
   { day:3, type:"viewpoint",  name:"⭐ Top of the Rock (6:40 PM BOOKED)", lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"BOOKED 6:40pm Tue. Be at the entrance by 6:30pm. Sunset is 8:00pm — you'll catch the city in gold light, then watch it fade. Stay ~1 hr.", emoji:"👁", must:true, photo:true },
   { day:3, type:"attraction", name:"Times Square (at night)",       lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"After Top of the Rock — walk south 5 min through Times Square at night for the lights. Subway home from 42nd St-Times Sq (1 train south to 23rd St).", emoji:"⭐" },
