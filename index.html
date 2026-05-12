@@ -799,17 +799,9 @@ function updateRoutes() {
   if (state.showAll || state.activeDay === 0) return;
   const day = DAYS.find(d => d.n === state.activeDay);
   if (!day) return;
+  // Subway lines only — walking polylines disabled (icons + numbered badges are sufficient)
   if (day.lines && day.lines.length) {
     day.lines.forEach(k => { if (subwayLayers[k]) subwayLayers[k].addTo(map); });
-  }
-  const segs = WALK_SEGMENTS[day.n];
-  if (segs && segs.length) {
-    const polys = segs.map(seg => L.polyline(seg, {
-      color: "#0a0a0a", weight: 3.5, opacity: 0.85,
-      dashArray: "2, 8", lineCap: "round", lineJoin: "round"
-    }));
-    walkLayerGroup = L.layerGroup(polys);
-    walkLayerGroup.addTo(map);
   }
 }
 
