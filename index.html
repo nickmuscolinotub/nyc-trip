@@ -428,15 +428,13 @@ const WALK_SEGMENTS = {
      [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7349,-73.9908]],
     [[40.7349,-73.9908],[40.7424,-73.9908]]
   ],
-  // Day 3 — Tue — work + Midtown + Top of the Rock at 6:40pm + Pure Thai
-  // Seg 1: home → Culture Espresso (15 min walk N)
-  // Seg 2: Culture → MoMA → St Pat's → Rockefeller plaza → Times Sq + TKTS → Bryant Park → Blue Bottle → NYPL → GC + Whisper → Argosy → Steinway → (optional Tram) → BACK to Top of the Rock at 6:40pm → Pure Thai → home
+  // Day 3 — Tue — work at Joe Coffee Chelsea + home drop-off + Midtown evening + Top of the Rock 6:40pm
+  // Seg 1: home → Joe Coffee Chelsea (10 min walk W) → home (drop off after work)
+  // Seg 2: Midtown evening — MoMA → St Pat's → Rockefeller → Times Sq → Top of the Rock 6:40pm → Pure Thai → home
   3: [
-    [[40.7424,-73.9908],[40.7531,-73.9871]],
-    [[40.7531,-73.9871],[40.7614,-73.9776],[40.7585,-73.9759],[40.7587,-73.9787],
-     [40.7580,-73.9855],[40.7536,-73.9832],[40.7526,-73.9839],
-     [40.7532,-73.9822],[40.7527,-73.9772],[40.7625,-73.9685],[40.7654,-73.9776],
-     [40.7595,-73.9624],[40.7592,-73.9795],[40.7657,-73.9876],[40.7424,-73.9908]]
+    [[40.7424,-73.9908],[40.7470,-74.0028],[40.7424,-73.9908]],
+    [[40.7614,-73.9776],[40.7585,-73.9759],[40.7587,-73.9787],
+     [40.7580,-73.9855],[40.7592,-73.9795],[40.7657,-73.9876],[40.7424,-73.9908]]
   ],
   // Day 4 — Wed — work UWS + Met + Park + J.G. Melon
   // Seg 1: home → 23rd St 1 station (3 blocks west)
@@ -507,7 +505,7 @@ const DAYS = [
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
     title:"Work · Midtown · Top of the Rock 6:40pm", theme:"Day anchored to Top of the Rock at sunset. Everything else pads around it.",
     sunset:"8:00 PM",
-    summary:"Optional 8am bagel breakfast at Ess-a-Bagel (3rd Ave & 51st — 6 train 23rd St → 51st St). 10am-2pm WORK at Culture Espresso. 2pm-6:30pm Midtown loop: MoMA (book 2pm slot, allow 2hrs) → St. Patrick's → Rockefeller Center plaza → Times Square (Spider-Man 1 World Unity Festival fight) + grab Broadway tix at TKTS for Wed/Thu → Bryant Park + NYPL Rose Reading Room → Grand Central + Whispering Gallery → Argosy bookstore (closes 6pm, hit before) → Steinway Tower photo → Roosevelt Island Tram (optional 30-min round trip if time). **6:40pm: TOP OF THE ROCK** (sunset 8:00pm — you'll catch golden hour + skyline-on-fire). 8pm: descend → Pure Thai Cookhouse dinner (Hell's Kitchen, 10 min walk west). F home.",
+    summary:"10am-2:45pm WORK at Joe Coffee Chelsea (405 W 23rd St, 10 min walk west of home). Last meeting 2:45pm. 2:45-3:15pm: walk home, drop everything off. 3:15pm: subway to Midtown (F train 23rd St → 47-50 Sts-Rockefeller). 3:30-5:30pm: MoMA (book a 3:30 slot in advance). 5:30-6:30pm: walk past St. Patrick's → Rockefeller Center plaza → quick Times Square photo + TKTS Booth for Broadway tickets if grabbing. **6:30pm: at Top of the Rock entrance · 6:40pm BOOKED entry** (sunset 8:00pm — golden hour from 1,250 ft). 8pm: descend → Pure Thai Cookhouse dinner (Hell's Kitchen, 10 min walk). F home. Skip / push to another day: Argosy (closes 6pm), Grand Central detail, Steinway Tower, Roosevelt Tram, Ess-a-Bagel (no longer makes sense with cafe near home).",
     tip:"OMNY tap-to-pay is on every turnstile. No more MetroCard. $34 weekly cap — you'll never pay for a 13th ride in a week.",
     gem:{ name:"The Whispering Gallery", addr:"Lower level, outside Oyster Bar, Grand Central", blurb:"Stand in opposing corners of the tiled archway, face the wall, whisper. Your voice carries diagonally across the room. Architectural accident. Magic.", lat:40.7526, lng:-73.9772 }
   },
@@ -569,7 +567,7 @@ const PINS = [
 
   // DAY 3 — Tue May 12 (work + Midtown + Tram + SUMMIT + Broadway optional)
   { day:3, type:"american",   name:"🥯 Ess-a-Bagel",                 lat:40.7559, lng:-73.9697, addr:"831 3rd Ave at 51st St", tip:"NYC bagel done right since 1976. Hand-rolled, kettle-boiled, baked. Order the bagel-with-the-works (cream cheese + lox + tomato + onion + capers). Opens 6am — grab on the morning walk to Culture Espresso.", emoji:"🥯", must:true },
-  { day:3, type:"cafe",       name:"★ Culture Espresso",            lat:40.7531, lng:-73.9871, addr:"72 W 38th St", tip:"WORK CAFE — Tue 10am–2pm. Midtown work café. Big tables, outlets, fast wifi. Famous chocolate-chip cookie too.", emoji:"💻", work:true },
+  { day:3, type:"cafe",       name:"★ Joe Coffee Chelsea",          lat:40.7470, lng:-74.0028, addr:"405 W 23rd St (Chelsea)", tip:"WORK CAFE — Tue 10am–2:45pm. 10 min walk west of home. Last meeting wraps 2:45pm. Solid espresso, laptop-friendly, fast wifi. After work: walk home (10 min), drop everything off, then head to Midtown for the evening.", emoji:"💻", work:true },
   { day:3, type:"museum",     name:"MoMA",                          lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Book a 2:30pm timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2 hrs.", emoji:"🏛", must:true },
   { day:3, type:"attraction", name:"St. Patrick's Cathedral",       lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
   { day:3, type:"attraction", name:"Rockefeller Center",            lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio.", emoji:"⭐", photo:true },
