@@ -428,13 +428,17 @@ const WALK_SEGMENTS = {
      [40.7305,-74.0026],[40.7308,-73.9973],[40.7332,-73.9912],[40.7349,-73.9908]],
     [[40.7349,-73.9908],[40.7424,-73.9908]]
   ],
-  // Day 3 — Tue — work Joe Coffee Chelsea + home drop-off + tight Midtown + Top of the Rock 6:40pm
-  // Seg 1: home → Joe Coffee Chelsea → home (after work)
-  // Seg 2: Midtown — MoMA → Argosy → St Pat's → Rockefeller → Top of the Rock 6:40pm → Times Square (at night) → subway home
+  // Day 3 — Tue — 4 distinct walking legs in order:
+  // Leg 1 (morning): home → Gelatoville Chelsea
+  // Leg 2 (post-work): Gelatoville Chelsea → home (drop off)
+  // Leg 3 (evening Midtown): 47-50 Sts F station → MoMA → Argosy → St Pat's → Rockefeller → Top of the Rock → Times Square
+  // Leg 4 (home): 23rd St 1 station → home
   3: [
-    [[40.7424,-73.9908],[40.7470,-74.0028],[40.7424,-73.9908]],
-    [[40.7614,-73.9776],[40.7625,-73.9685],[40.7585,-73.9759],[40.7587,-73.9787],
-     [40.7592,-73.9795],[40.7580,-73.9855]]
+    [[40.7424,-73.9908],[40.7437,-74.0006]],
+    [[40.7437,-74.0006],[40.7424,-73.9908]],
+    [[40.7585,-73.9805],[40.7614,-73.9776],[40.7625,-73.9685],[40.7585,-73.9759],
+     [40.7587,-73.9787],[40.7592,-73.9795],[40.7580,-73.9855]],
+    [[40.7440,-73.9954],[40.7424,-73.9908]]
   ],
   // Day 4 — Wed — work UWS + Met + Park + J.G. Melon
   // Seg 1: home → 23rd St 1 station (3 blocks west)
@@ -505,7 +509,7 @@ const DAYS = [
   { n:3, label:"Day 3", date:"Tue May 12", color:"#06a77d", lines:["F"],
     title:"Work · MoMA · Argosy · Top of the Rock 6:40pm", theme:"Tight evening anchored to Top of the Rock at sunset.",
     sunset:"8:00 PM",
-    summary:"10am-2:45pm WORK at Joe Coffee Chelsea. ~3pm: home, pack up, head north. 3:30pm: subway to Midtown. 3:45-5:30pm: MoMA (book a 3:45 slot). 5:30-5:50pm: walk NE to Argosy (closes 6pm — quick browse). 5:50-6:30pm: walk back to Rockefeller area via St. Patrick's + Rockefeller Plaza. **6:40pm BOOKED: TOP OF THE ROCK** (sunset 8pm — golden hour into night). 8pm: descend → walk south through Times Square at night (5 min) → subway home from Times Sq–42nd St. Bryant Park / NYPL / Grand Central all on the path if you've got buffer time.",
+    summary:"**Order of the day:** 1) 10am-2:45pm WORK at Gelatoville Chelsea (234 8th Ave). 2) ~3pm walk home, drop everything off. 3) ~3:30pm subway F train 23rd St → 47-50 Sts-Rockefeller. 4) 3:45-5:30pm MoMA (book a 3:45 slot online). 5) 5:30pm walk NE to Argosy (closes 6pm — quick browse). 6) ~5:50pm walk back south via St. Patrick's. 7) Rockefeller Plaza buffer. 8) **6:40pm BOOKED Top of the Rock** (sunset 8pm). 9) ~8pm descend, walk south through Times Square at night. 10) Subway home from 42nd St-Times Sq (1 train → 23rd St → home).",
     tip:"OMNY tap-to-pay is on every turnstile. $34 weekly cap — you'll never pay for a 13th ride in a week.",
     gem:null
   },
@@ -566,17 +570,18 @@ const PINS = [
   { day:2, type:"bookstore",  name:"Strand Bookstore",              lat:40.7332, lng:-73.9912, addr:"828 Broadway at 12th St (Union Sq)", tip:"\"18 miles of books.\" Iconic since 1927. Rare-books room on the 3rd floor. Get the red Strand tote — the unofficial NYC souvenir. ON THE WALK HOME: WSP → up Broadway past Strand → 14th-Union Sq subway → home.", emoji:"📚", must:true },
 
   // DAY 3 — Tue May 12 (work + Midtown + Tram + SUMMIT + Broadway optional)
-  { day:3, type:"cafe",       name:"★ Joe Coffee Chelsea",          lat:40.7470, lng:-74.0028, addr:"405 W 23rd St (Chelsea)", tip:"WORK CAFE — Tue 10am–2:45pm. 10 min walk west of home. Last meeting wraps 2:45pm. Solid espresso, laptop-friendly, fast wifi. After work: walk home (10 min), drop everything off, then head to Midtown for the evening.", emoji:"💻", work:true },
-  { day:3, type:"museum",     name:"MoMA",                          lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Book a 2:30pm timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow 2 hrs.", emoji:"🏛", must:true },
-  { day:3, type:"attraction", name:"St. Patrick's Cathedral",       lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"Free. 5-min stop. Stunning interior even if you're not religious.", emoji:"⭐" },
-  { day:3, type:"attraction", name:"Rockefeller Center",            lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio.", emoji:"⭐", photo:true },
-  { day:3, type:"viewpoint",  name:"⭐ Top of the Rock (6:40 PM BOOKED)", lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"BOOKED 6:40pm Tue. Be at the entrance by 6:30pm. Sunset is 8:00pm — you'll catch the city in gold light, then watch it fade. Best photo of the Empire State + Central Park in one frame. Stay ~1 hr.", emoji:"👁", must:true, photo:true },
-  { day:3, type:"attraction", name:"Times Square",                  lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"Walk through once. Don't eat or linger. Where the Spider-Man 1 World Unity Festival fight with Goblin happens. Best at night for the lights.", emoji:"⭐" },
-  { day:3, type:"attraction", name:"🎭 TKTS Booth (Broadway tix)",   lat:40.7589, lng:-73.9853, addr:"Father Duffy Sq, 47th & Broadway", tip:"Same-day half-price Broadway tickets. Booth opens 3pm for evening shows. Lines move but go early. Picks: Hamilton, Wicked, MJ, Six, Hadestown, Outsiders. ~$50–100 post-discount. Solo seats often the best deal (singles fill last). Book a show for Wed or Thu evening.", emoji:"🎭", must:true },
-  { day:3, type:"attraction", name:"Bryant Park",                   lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Sit-down park behind the library. Free wifi if you need a backup work spot.", emoji:"⭐" },
-  { day:3, type:"attraction", name:"NYPL Rose Reading Room",        lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Free entry. Rose Reading Room (3rd floor) is the iconic library shot. 15 min.", emoji:"⭐", photo:true },
-  { day:3, type:"attraction", name:"Grand Central Terminal",        lat:40.7527, lng:-73.9772, addr:"89 E 42nd St", tip:"Main concourse + celestial ceiling. Find the Whisper Gallery (lower level outside Oyster Bar) — your whisper carries diagonally across the room.", emoji:"⭐", must:true, photo:true },
-  { day:3, type:"bookstore",  name:"Argosy Book Store",             lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. Closes 6pm — go after Grand Central.", emoji:"📚" },
+  // Day 3 stops listed in visit order:
+  { day:3, type:"cafe",       name:"1. ★ Gelatoville Chelsea (WORK)",  lat:40.7437, lng:-74.0006, addr:"234 8th Ave (between 21st-22nd St)", tip:"WORK CAFE — Tue 10am–2:45pm. ~8 min walk SW of home. Last meeting 2:45pm. Wifi + seating. After work: walk home, drop everything off, head to Midtown.", emoji:"💻", work:true },
+  { day:3, type:"museum",     name:"2. MoMA",                         lat:40.7614, lng:-73.9776, addr:"11 W 53rd St", tip:"Book a 3:45pm timed entry online. 5th floor first (Starry Night, Persistence of Memory, Picasso). Allow ~1h 45min until 5:30pm close.", emoji:"🏛", must:true },
+  { day:3, type:"bookstore",  name:"3. Argosy Book Store",            lat:40.7625, lng:-73.9685, addr:"116 E 59th St", tip:"1925 institution. RARE/vintage books, antique maps, autographs. Six floors. CLOSES 6PM — quick browse only. 10 min walk NE from MoMA.", emoji:"📚" },
+  { day:3, type:"attraction", name:"4. St. Patrick's Cathedral",      lat:40.7585, lng:-73.9759, addr:"5th Ave & 50th St", tip:"5 min stop on the walk back south from Argosy. Free entry. Stunning interior.", emoji:"⭐" },
+  { day:3, type:"attraction", name:"5. Rockefeller Center",           lat:40.7587, lng:-73.9787, addr:"45 Rockefeller Plaza", tip:"The plaza, gold Prometheus, Today Show studio. 1 block west of St. Pat's. Buffer until your Top of the Rock slot.", emoji:"⭐", photo:true },
+  { day:3, type:"viewpoint",  name:"6. ⭐ Top of the Rock (6:40 PM BOOKED)", lat:40.7592, lng:-73.9795, addr:"30 Rockefeller Plaza, 70th floor", tip:"BOOKED 6:40pm Tue. Be at the entrance by 6:30pm. Sunset is 8:00pm — you'll catch the city in gold light, then watch it fade. Best photo of the Empire State + Central Park in one frame. Stay ~1 hr.", emoji:"👁", must:true, photo:true },
+  { day:3, type:"attraction", name:"7. Times Square (at night)",      lat:40.7580, lng:-73.9855, addr:"Broadway & 7th Ave at 42nd-47th", tip:"After Top of the Rock — walk south 5 min through Times Square at night for the lights. Don't eat or linger. Then subway home from 42nd St-Times Sq (1 train south to 23rd St).", emoji:"⭐" },
+  { day:3, type:"attraction", name:"🎭 TKTS Booth (Broadway tix)",     lat:40.7589, lng:-73.9853, addr:"Father Duffy Sq, 47th & Broadway", tip:"Optional during Times Sq stop: same-day half-price Broadway tickets for tomorrow or Thu. Booth open till 8pm-ish. Hamilton, Wicked, MJ, Six, Hadestown.", emoji:"🎭" },
+  { day:3, type:"attraction", name:"Bryant Park (optional)",          lat:40.7536, lng:-73.9832, addr:"Between 40th & 42nd, behind NYPL", tip:"Optional pass-through if you've got time after MoMA. Park behind the library.", emoji:"⭐" },
+  { day:3, type:"attraction", name:"NYPL Rose Reading Room (optional)", lat:40.7532, lng:-73.9822, addr:"476 5th Ave", tip:"Optional. Free entry. Rose Reading Room (3rd floor) is the iconic library shot.", emoji:"⭐", photo:true },
+  { day:3, type:"attraction", name:"Grand Central Terminal (optional)", lat:40.7527, lng:-73.9772, addr:"89 E 42nd St", tip:"Optional. Main concourse + celestial ceiling.", emoji:"⭐", photo:true },
 
   // DAY 4 — Wed May 13 (work UWS + Met + Central Park + J.G. Melon)
   { day:4, type:"cafe",       name:"★ Joe Coffee (UWS)",            lat:40.7869, lng:-73.9737, addr:"514 Columbus Ave (at 85th)", tip:"WORK CAFE — Wed 10am–2pm. UWS laptop-friendly. 1 train 23rd → 86th, walk 3 min east. After work walk east to The Met (10 min).", emoji:"💻", work:true },
