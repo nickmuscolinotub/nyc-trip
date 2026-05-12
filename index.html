@@ -206,6 +206,29 @@
   .pin.photo-spot::after { content: "★"; position: absolute; top: -4px; right: -4px; width: 14px; height: 14px; background: #c9a961; border-radius: 50%; font-size: 9px; color: #000; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.3); border: 1.5px solid #fff; line-height: 1; }
   .pin.hidden-gem::after { content: "🤫"; position: absolute; top: -4px; right: -4px; width: 16px; height: 16px; font-size: 10px; }
 
+  /* Numbered order badge — top-left of pin, shows visit order on a specific day */
+  .pin-order {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #fff;
+    color: #0a0a0a;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0a0a0a;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    line-height: 1;
+    z-index: 5;
+    font-family: "Inter Tight", "Inter", sans-serif;
+  }
+
   /* Popup */
   .leaflet-popup-content-wrapper { border-radius: var(--r-md); box-shadow: var(--shadow-lg); border: 1px solid var(--line); }
   .leaflet-popup-content { margin: 14px 16px; font-size: 13px; min-width: 220px; }
@@ -798,7 +821,7 @@ function updateRoutes() {
    PIN MARKERS
 ============================================================ */
 const markers = [];
-function makeIcon(pin) {
+function makeIcon(pin, orderNumber) {
   const day = DAYS.find(d => d.n === pin.day);
   const color = day ? day.color : "#0a0a0a";
   const isHome = pin.type === "home";
@@ -807,9 +830,10 @@ function makeIcon(pin) {
   const visitedCls = isVisited(pin) ? " visited" : "";
   const photoCls = isPhoto ? " photo-spot" : "";
   const hiddenCls = isHidden ? " hidden-gem" : "";
+  const orderBadge = orderNumber ? `<div class="pin-order">${orderNumber}</div>` : "";
   return L.divIcon({
     className: "pin-icon",
-    html: `<div class="pin${isHome ? " home" : ""}${visitedCls}${photoCls}${hiddenCls}" style="background:${color};position:relative">${pin.emoji}</div>`,
+    html: `<div class="pin${isHome ? " home" : ""}${visitedCls}${photoCls}${hiddenCls}" style="background:${color};position:relative">${pin.emoji}${orderBadge}</div>`,
     iconSize: isHome ? [40, 40] : [34, 34],
     iconAnchor: isHome ? [20, 20] : [17, 17]
   });
@@ -870,6 +894,20 @@ PINS.forEach(pin => {
    FILTERS + MAP-FIT
 ============================================================ */
 function applyFilters() {
+  // Build the order map for a specific day's visible pins (in PINS-array order)
+  const orderMap = new Map();
+  if (!state.showAll && state.activeDay > 0) {
+    const dayPins = PINS.filter(p => {
+      if (p.day !== state.activeDay) return false;
+      if (p.type === "home" || p.type === "subway") return false;
+      if (state.activeFilter === "hidden") return p.type === "hidden";
+      if (state.activeFilter === "eats") return ["pizza","italian","american","thai","greek","latin"].includes(p.type);
+      if (state.activeFilter !== "all") return p.type === state.activeFilter;
+      return true;
+    });
+    dayPins.forEach((p, i) => orderMap.set(p, i + 1));
+  }
+
   markers.forEach(m => map.removeLayer(m));
   const visible = [];
   markers.forEach(m => {
@@ -885,7 +923,7 @@ function applyFilters() {
       dayMatch = true;
     }
     if (dayMatch && typeMatch) {
-      m.setIcon(makeIcon(p)); // refresh icon for visited state
+      m.setIcon(makeIcon(p, orderMap.get(p))); // refresh icon with order badge for current day
       m.addTo(map);
       visible.push(m);
     }
