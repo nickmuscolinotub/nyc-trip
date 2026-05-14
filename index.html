@@ -541,19 +541,19 @@ const DAYS = [
     tip:"The Met is pay-what-you-wish for NY/NJ/CT residents only. Out-of-staters pay full ($30). Last entry Wed: 4:30pm. Go straight from work — no detours.",
     gem:{ name:"Conservatory Garden", addr:"105th St & 5th Ave, Central Park", blurb:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Italian, French, English styles. Wisteria pergola in spring.", lat:40.7942, lng:-73.9522 }
   },
-  { n:5, label:"Day 5", date:"Thu May 14", color:"#f77f00", lines:["6"],
-    title:"Work · Lower Manhattan · Lady Liberty · Katz's", theme:"4-hr work in FiDi, then downtown loop, ferry, deli + Greek on the way home.",
+  { n:5, label:"Day 5", date:"Thu May 14", color:"#f77f00", lines:[],
+    title:"REST DAY · Thai dinner near home", theme:"Sick — take it easy. 9/11 done yesterday. No FiDi today. Just rest + Thai dinner.",
     sunset:"8:02 PM",
-    summary:"Optional 8am bagel breakfast at Russ & Daughters Cafe (LES, 127 Orchard) — the iconic NYC Jewish appetizing spot. 6 train 23rd St → Brooklyn Bridge–City Hall → walk to Black Fox Coffee → 10am-2pm WORK → 9/11 Memorial → Oculus → Charging Bull → Stone Street → Battery Park → Staten Island Ferry roundtrip (free, postcard Lady Liberty view) → walk up through Chinatown → into LES. Dinner: Katz's Delicatessen (1888, pastrami), Kiki's (Greek), Café Habana (Cuban), or Frank (Italian) — pick one or two.",
-    tip:"Stand on the right of escalators. Walk on the left. New Yorkers will lose their minds otherwise.",
-    gem:{ name:"The Elevated Acre", addr:"55 Water St, FiDi", blurb:"Secret 1-acre rooftop park hidden between office buildings. Free, panoramic harbor views. The escalator looks like it goes nowhere — take it.", lat:40.7037, lng:-74.0089 }
+    summary:"Easy day. Stay home, rest, hydrate. When you're up to it, walk 7 min south to **Kiin Thai** (5 E 18th St) for the famous Northern Thai — khao soi, nam khao tod. Or hit Thai Villa right next door (5 E 19th St). Both casual, $$, no reservations needed for solo. Back home early. Save energy for tomorrow's Brooklyn Bridge walk.",
+    tip:"Sick traveler tip: hot tom yum soup at Kiin Thai is the move. Lemongrass + chili clears the sinuses. Then bodega for water + electrolytes on the walk home.",
+    gem:null
   },
-  { n:6, label:"Day 6", date:"Fri May 15", color:"#4361ee", lines:["L","F","6"],
-    title:"Work · Brooklyn (LAST FULL DAY)", theme:"4-hr work block + ALL of Brooklyn in one afternoon-evening. Home by 9pm.",
+  { n:6, label:"Day 6", date:"Fri May 15", color:"#4361ee", lines:["F","1"],
+    title:"Work · Brooklyn Bridge walk · Staten Island Ferry", theme:"Light last day: just bridge walk + free ferry. Home early to pack.",
     sunset:"8:03 PM",
-    summary:"YOUR LAST DAY IN NYC. 10am-2pm WORK at Coffee Project NY (East Village, 5 min walk south). 2:15pm: L from 14th St-Union Sq → Bedford → Williamsburg afternoon (Bedford Ave, Domino Park, L'Industrie Pizza for late lunch, Devoción coffee). L back to Manhattan → 2nd Ave F → York St → DUMBO (Time Out Market, Empire Stores, Jane's Carousel, Pier 1 skyline shot) → Brooklyn Roasting break → Brooklyn Heights Promenade. Start Brooklyn Bridge walk ~7:00pm so you finish at sunset (8:03pm). 6 train from City Hall → 23rd St → home by 9pm. PACK TONIGHT — 3am cab tomorrow.",
-    tip:"You fly out at 6:55am Saturday — alarm 2:30am, cab 3:00am sharp, JFK by 3:45am. Pre-book the cab tonight. Pack tonight. Friday's bedtime is non-negotiable: 10pm at the latest.",
-    gem:{ name:"Squibb Park Bridge", addr:"Squibb Park, Brooklyn Heights", blurb:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to Brooklyn Bridge Park. Engineered to flex — and it does.", lat:40.7000, lng:-73.9970 }
+    summary:"YOUR LAST DAY. 10am-2pm WORK at Stumptown Ace Hotel. 2:15pm: F train 23rd St → York St (DUMBO). Quick skyline-shot at Brooklyn Bridge Park Pier 1. Walk Brooklyn Bridge back to Manhattan (~30-45 min, stay LEFT for pedestrians). Land at City Hall ~4pm → R/W south one stop to Whitehall. Board Staten Island Ferry — free, 25 min each way, Lady Liberty view. Back ~5:30pm. 1 train South Ferry → 23rd St → home. PACK TONIGHT — 3am cab tomorrow.",
+    tip:"You fly out at 6:55am Saturday — alarm 2:30am, cab 3am sharp, JFK by 3:45am. Pre-book the cab tonight. Pack tonight. Friday bedtime non-negotiable: 10pm at the latest.",
+    gem:null
   },
   { n:7, label:"Day 7", date:"Sat May 16", color:"#737373", lines:[],
     title:"Departure (3am cab · 6:55am flight)", theme:"No NYC day. Wake at 2:30am. Cab at 3am. JFK by 3:45am.",
@@ -615,37 +615,19 @@ const PINS = [
   { day:4, type:"hidden",     name:"Conservatory Garden",           lat:40.7942, lng:-73.9522, addr:"105th St & 5th Ave", tip:"Central Park's only formal garden. Hidden in the north corner — almost no one comes here. Italian, French, English styles. Wisteria pergola in spring.", emoji:"🤫" },
 
   // DAY 5 — Thu May 14 (work FiDi + Lower Manhattan + Ferry + LES food)
-  { day:5, type:"subway",     name:"6: 23rd St → BB-City Hall",     lat:40.7128, lng:-74.0040, addr:"Brooklyn Bridge–City Hall Station", tip:"6 train south to FiDi. ~10 min ride. Walk to Black Fox Coffee from there.", emoji:"🚇" },
-  { day:5, type:"cafe",       name:"★ Black Fox Coffee",            lat:40.7065, lng:-74.0079, addr:"70 Pine St, FiDi", tip:"WORK CAFE — Thu 10am–2pm. Best coffee in FiDi. Laptop-friendly, fast wifi. After work walk west to 9/11.", emoji:"💻", work:true },
-  { day:5, type:"attraction", name:"9/11 Memorial",                 lat:40.7115, lng:-74.0134, addr:"180 Greenwich St, FiDi", tip:"Two reflecting pools where the towers stood. Free outdoor memorial; museum is paid + needs ~2 hrs.", emoji:"⭐", photo:true },
-  { day:5, type:"attraction", name:"Oculus / WTC",                  lat:40.7117, lng:-74.0124, addr:"Oculus Plaza", tip:"Calatrava's white wing-rib transit hub. Photogenic from inside looking up.", emoji:"⭐", photo:true },
-  { day:5, type:"attraction", name:"Charging Bull",                 lat:40.7056, lng:-74.0134, addr:"Bowling Green / Broad St", tip:"Bull is at Bowling Green; Fearless Girl now stands opposite the NYSE on Broad St.", emoji:"⭐" },
-  { day:5, type:"attraction", name:"Stone Street",                  lat:40.7044, lng:-74.0117, addr:"Stone St, FiDi", tip:"Tiny cobblestone block of bars. Quick photo + a beer.", emoji:"⭐" },
-  { day:5, type:"viewpoint",  name:"Battery Park",                  lat:40.7033, lng:-74.0170, addr:"Battery Park, Lower Manhattan", tip:"Southern tip. Lady Liberty in the distance. Walk through to the ferry.", emoji:"👁" },
-  { day:5, type:"viewpoint",  name:"Staten Island Ferry",           lat:40.7013, lng:-74.0134, addr:"4 Whitehall St", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return.", emoji:"👁", must:true, photo:true },
-  { day:5, type:"attraction", name:"Chinatown walk",                lat:40.7152, lng:-73.9971, addr:"Mott St, Chinatown", tip:"Walk back through Chinatown on your way home from FiDi. Pell St, Doyers St (the curve), Mott St.", emoji:"⭐" },
-  { day:5, type:"american",   name:"🥯 Russ & Daughters Cafe",      lat:40.7196, lng:-73.9886, addr:"127 Orchard St, LES", tip:"Iconic since 1914. THE NYC Jewish appetizing brunch — bagel + lox + cream cheese, latkes, blintzes. Sit-down cafe (counter shop next door at 179 E Houston). Opens 8am. Stop on the morning walk to FiDi or as a lunch alternative.", emoji:"🥯", must:true },
-  { day:5, type:"american",   name:"Katz's Delicatessen",           lat:40.7223, lng:-73.9874, addr:"205 E Houston St, LES", tip:"Since 1888. THE pastrami sandwich, hand-carved, on rye, mustard, pickle. Ticket system at the door (don't lose it). \"I'll have what she's having\" filmed here.", emoji:"🥪", must:true, photo:true },
-  { day:5, type:"greek",      name:"Kiki's",                        lat:40.7138, lng:-73.9911, addr:"130 Division St, LES", tip:"Cult Greek taverna. Family-run since 2013. No reservations, cash only, expect a wait. Dakos, saganaki, lamb chops, anything with feta. THE Greek pick in NYC.", emoji:"🇬🇷", must:true },
-  { day:5, type:"latin",      name:"Café Habana",                   lat:40.7228, lng:-73.9947, addr:"17 Prince St (NoLita)", tip:"Cuban-Mexican corner spot since 1998. THE grilled corn — queso fresco, chili powder, lime. Cuban sandwich. Line out the door. Alternative LES-area dinner.", emoji:"🌽" },
-  { day:5, type:"italian",    name:"Frank",                         lat:40.7268, lng:-73.9871, addr:"88 2nd Ave (East Village)", tip:"Tiny neighborhood Italian since 1998. No reservations, cash only, expect a wait. Family-style pasta. East Village dinner alternative.", emoji:"🍝" },
-  { day:5, type:"hidden",     name:"The Elevated Acre",             lat:40.7037, lng:-74.0089, addr:"55 Water St, FiDi", tip:"Secret 1-acre rooftop park hidden between office buildings. Take the escalator that looks like it goes nowhere. Free, panoramic, almost empty. Great work-break spot.", emoji:"🤫" },
+  // Day 5 — Thu — REST DAY (sick). 9/11 Memorial done yesterday. No FiDi. Just Thai dinner near home.
+  { day:5, type:"thai",       name:"Kiin Thai",                     lat:40.7376, lng:-73.9897, addr:"5 E 18th St (Flatiron)", tip:"Northern Thai, cult favorite. Khao soi (curry noodles), nam khao tod (crispy rice salad). ~7-min walk south of home. Casual, $$, solo-friendly. Closest famous Thai to home.", emoji:"🍜", must:true },
+  { day:5, type:"thai",       name:"Thai Villa",                    lat:40.7388, lng:-73.9897, addr:"5 E 19th St (Flatiron)", tip:"Alternative Thai 5 blocks south of home — Royal Thai cuisine in an elegant setting. Mid-priced, ~$$. Slightly more upscale than Kiin.", emoji:"🍜" },
 
   // DAY 6 — Fri May 15 (work + Brooklyn, LAST FULL DAY)
-  { day:6, type:"cafe",       name:"★ Coffee Project NY",          lat:40.7286, lng:-73.9883, addr:"239 E 5th St, East Village", tip:"WORK CAFE — Fri 10am–2pm. Specialty coffee, laptop-friendly, fast wifi. After work, head straight to Brooklyn. PACK TONIGHT — 3am cab tomorrow.", emoji:"💻", work:true },
-  { day:6, type:"subway",     name:"L: 14th St-Union Sq → Bedford", lat:40.7172, lng:-73.9569, addr:"Bedford Ave Station, Williamsburg", tip:"After work: walk south to 14th St-Union Sq (~12 min from home) → L east 1 stop to Bedford. ~25 min total.", emoji:"🚇" },
-  { day:6, type:"attraction", name:"Bedford Ave",                   lat:40.7158, lng:-73.9595, addr:"Bedford Ave (N 4th – N 8th)", tip:"Williamsburg's main drag. Vintage shops, indie bookstores. Quick walk-through.", emoji:"⭐" },
-  { day:6, type:"viewpoint",  name:"Domino Park",                   lat:40.7150, lng:-73.9683, addr:"300 Kent Ave", tip:"Old sugar factory site, riverfront park. Best Manhattan skyline view from Brooklyn.", emoji:"👁", photo:true },
-  { day:6, type:"pizza",      name:"L'Industrie Pizza",             lat:40.7117, lng:-73.9612, addr:"254 S 2nd St", tip:"The cult Brooklyn slice. Burrata square or plain. Late lunch. Line moves fast.", emoji:"🍕", must:true },
-  { day:6, type:"subway",     name:"F: 23rd St → York St",          lat:40.7008, lng:-73.9869, addr:"York St Station, DUMBO", tip:"L back to 14th-Union Sq → transfer to F south → F 4 stops to York St. Or walk west to 6th Ave + grab F there.", emoji:"🚇" },
-  { day:6, type:"attraction", name:"Time Out Market Brooklyn",      lat:40.7027, lng:-73.9888, addr:"55 Water St, DUMBO", tip:"Curated food hall — quick snack if hungry.", emoji:"⭐" },
-  { day:6, type:"attraction", name:"Empire Stores",                 lat:40.7030, lng:-73.9895, addr:"53–83 Water St, DUMBO", tip:"Restored 19th-century coffee warehouses. Free rooftop view — go up.", emoji:"⭐" },
-  { day:6, type:"attraction", name:"Jane's Carousel",               lat:40.7028, lng:-73.9921, addr:"Old Dock St, DUMBO", tip:"Restored 1922 carousel in a glass pavilion. $2 ride. Photogenic from outside.", emoji:"⭐", photo:true },
-  { day:6, type:"viewpoint",  name:"Brooklyn Bridge Park Pier 1",   lat:40.7028, lng:-73.9968, addr:"Brooklyn Bridge Park", tip:"THE Manhattan skyline shot with both bridges. ~6pm = magic light.", emoji:"👁", must:true, photo:true },
-  { day:6, type:"viewpoint",  name:"Brooklyn Heights Promenade",    lat:40.6961, lng:-73.9964, addr:"Brooklyn Heights", tip:"Elevated walkway with full Manhattan + Lady Liberty + Brooklyn Bridge view. 0.5 miles. Walk it slowly ~7pm.", emoji:"👁", must:true, photo:true },
-  { day:6, type:"attraction", name:"Brooklyn Bridge (walk back)",   lat:40.7061, lng:-73.9969, addr:"Pedestrian entrance, BK side", tip:"1.1 miles across. Stay LEFT (pedestrian, not bike). Start ~7:00pm. Sunset 8:03pm — finish on the bridge for magic.", emoji:"⭐", must:true, photo:true },
-  { day:6, type:"subway",     name:"6: BB-City Hall → 23rd St",     lat:40.7117, lng:-74.0050, addr:"Brooklyn Bridge–City Hall Station", tip:"After the bridge walk, 6 train uptown to 23rd St → walk west to home. HOME BY 9PM. Pack tonight.", emoji:"🚇" },
-  { day:6, type:"hidden",     name:"Squibb Park Bridge",            lat:40.7000, lng:-73.9970, addr:"Squibb Park, Brooklyn Heights", tip:"A bouncy pedestrian bridge that swings as you walk. Connects Brooklyn Heights to BB Park. 30-second detour.", emoji:"🤫" },
+  // Day 6 — Fri — LIGHT BROOKLYN: just the Brooklyn Bridge walk + Staten Island Ferry. Home early to pack.
+  { day:6, type:"cafe",       name:"★ Stumptown (Ace Hotel)",       lat:40.7459, lng:-73.9883, addr:"18 W 29th St (Ace Hotel lobby)", tip:"WORK CAFE — Fri 10am–2pm. 5 min north of home. After work, head out for a light Brooklyn afternoon.", emoji:"💻", work:true },
+  { day:6, type:"subway",     name:"F: 23rd St → York St (DUMBO)",  lat:40.7008, lng:-73.9869, addr:"York St Station, DUMBO", tip:"F train from 23rd St (6th Ave) to York St. ~15 min. Exit 1 block from Brooklyn Bridge Park.", emoji:"🚇" },
+  { day:6, type:"viewpoint",  name:"Brooklyn Bridge Park Pier 1",   lat:40.7028, lng:-73.9968, addr:"Brooklyn Bridge Park", tip:"Quick skyline-shot stop before the bridge walk. Manhattan skyline + both bridges in frame.", emoji:"👁", must:true, photo:true },
+  { day:6, type:"attraction", name:"Brooklyn Bridge (walk to MH)",  lat:40.7061, lng:-73.9969, addr:"Pedestrian entrance, BK side", tip:"1.1 miles, walks back to Manhattan with skyline ahead. Stay LEFT (pedestrian, not bike). ~30-45 min crossing. Lands at City Hall.", emoji:"⭐", must:true, photo:true },
+  { day:6, type:"subway",     name:"R/W: City Hall → Whitehall",    lat:40.7013, lng:-74.0131, addr:"Whitehall St Station (R/W)", tip:"After the bridge walk, hop R/W south one stop from City Hall to Whitehall. Walk to the Staten Island Ferry terminal next door.", emoji:"🚇" },
+  { day:6, type:"viewpoint",  name:"Staten Island Ferry",           lat:40.7013, lng:-74.0134, addr:"4 Whitehall St (Whitehall Terminal)", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return — boats run every 30 min off-peak.", emoji:"👁", must:true, photo:true },
+  { day:6, type:"subway",     name:"1: South Ferry → 23rd St",      lat:40.7440, lng:-73.9954, addr:"23rd St Station (1 train)", tip:"After Ferry, 1 train uptown 23rd St → 3 block walk to home. PACK TONIGHT — 3am cab tomorrow.", emoji:"🚇" },
 
   // DAY 7 — Sat May 16 (3am cab departure)
   { day:7, type:"subway",     name:"🚕 3:00am cab to JFK",          lat:40.7424, lng:-73.9908, addr:"25 W 24th St → JFK", tip:"Pre-book a cab the night before — DO NOT rely on hailing one at 3am. Wake 2:30am, leave 3:00am sharp, arrive JFK ~3:45am for the 6:55am flight. Flat $70 + ~$10 toll + tip ≈ $90.", emoji:"🚕" },
@@ -679,7 +661,9 @@ const PRICES = {
   "Frank": "$$",
   "L'Industrie Pizza": "$",
   "🥯 Ess-a-Bagel": "$",
-  "🥯 Russ & Daughters Cafe": "$$"
+  "🥯 Russ & Daughters Cafe": "$$",
+  "Kiin Thai": "$$",
+  "Thai Villa": "$$"
 };
 function priceForPin(pin) {
   return PRICES[pin.name] || "";
