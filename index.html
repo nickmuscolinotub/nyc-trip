@@ -422,10 +422,11 @@ const SUBWAY_LINES = {
     [40.7758,-73.9776],[40.7813,-73.9719],[40.7858,-73.9682]
   ]},
   "1": { color: "#EE352E", label: "1", name: "Broadway-7th Ave Local", path: [
-    [40.7338,-74.0030],[40.7378,-73.9995],[40.7397,-73.9974],[40.7440,-73.9954],
-    [40.7474,-73.9929],[40.7506,-73.9909],[40.7556,-73.9884],[40.7615,-73.9836],
-    [40.7681,-73.9819],[40.7745,-73.9819],[40.7787,-73.9819],[40.7837,-73.9806],
-    [40.7886,-73.9786]
+    [40.7012,-74.0132],[40.7075,-74.0143],[40.7110,-74.0124],[40.7154,-74.0091],
+    [40.7193,-74.0066],[40.7222,-74.0064],[40.7283,-74.0058],[40.7338,-74.0030],
+    [40.7378,-73.9995],[40.7397,-73.9974],[40.7440,-73.9954],[40.7474,-73.9929],
+    [40.7506,-73.9909],[40.7556,-73.9884],[40.7615,-73.9836],[40.7681,-73.9819],
+    [40.7745,-73.9819],[40.7787,-73.9819],[40.7837,-73.9806],[40.7886,-73.9786]
   ]}
 };
 
@@ -548,18 +549,18 @@ const DAYS = [
     tip:"Sick traveler tip: hot tom yum soup at Kiin Thai is the move. Lemongrass + chili clears the sinuses. Then bodega for water + electrolytes on the walk home.",
     gem:null
   },
-  { n:6, label:"Day 6", date:"Fri May 15", color:"#4361ee", lines:["F","1"],
-    title:"Work · Brooklyn Bridge walk · Staten Island Ferry", theme:"Light last day: just bridge walk + free ferry. Home early to pack.",
+  { n:6, label:"Day 6", date:"Fri May 15", color:"#4361ee", lines:[],
+    title:"Work · Recovery · Pack", theme:"Light recovery day. Brooklyn Bridge + Ferry moved to Saturday. Pack tonight.",
     sunset:"8:03 PM",
-    summary:"YOUR LAST DAY. 10am-2pm WORK at Stumptown Ace Hotel. 2:15pm: F train 23rd St → York St (DUMBO). Quick skyline-shot at Brooklyn Bridge Park Pier 1. Walk Brooklyn Bridge back to Manhattan (~30-45 min, stay LEFT for pedestrians). Land at City Hall ~4pm → R/W south one stop to Whitehall. Board Staten Island Ferry — free, 25 min each way, Lady Liberty view. Back ~5:30pm. 1 train South Ferry → 23rd St → home. PACK TONIGHT — 3am cab tomorrow.",
-    tip:"You fly out at 6:55am Saturday — alarm 2:30am, cab 3am sharp, JFK by 3:45am. Pre-book the cab tonight. Pack tonight. Friday bedtime non-negotiable: 10pm at the latest.",
+    summary:"Easy day. 10am-2pm WORK at Stumptown Ace Hotel. Afternoon: keep recovering from this week's bug, pack the heavy stuff, get supplies if you need anything from Whole Foods or the bodega. Saturday is now the big day (Yankees → Central Park → Met → DUMBO → Brooklyn Bridge → Staten Island Ferry).",
+    tip:"Pack tonight — Saturday's full from morning to evening. Confirm new departure (likely Sunday) and pre-book a cab if early.",
     gem:null
   },
-  { n:7, label:"Day 7", date:"Sat May 16", color:"#737373", lines:[],
-    title:"Departure (3am cab · 6:55am flight)", theme:"No NYC day. Wake at 2:30am. Cab at 3am. JFK by 3:45am.",
-    sunset:"—",
-    summary:"Saturday is cut — you're at the airport by 3:45am, never see daylight in NYC. Wake 2:30am, last sweep of the apartment, cab 3:00am sharp, arrive JFK ~3:45am for the 6:55am flight. Bag drop ~5am, security ~5:15am, gate ~5:45am, board ~6:25am. Sleep on the plane.",
-    tip:"Yellow cabs from Manhattan to JFK are flat $70 + ~$10 toll + tip ≈ $90. Pre-book via Curb or a car service the night before — do NOT rely on hailing one at 3am.",
+  { n:7, label:"Day 7", date:"Sat May 16", color:"#4361ee", lines:["1","6","F"],
+    title:"FULL DAY · Yankees + Park + Met + Brooklyn + Ferry", theme:"Two halves: morning Manhattan (Yankees → Central Park → Met) → home break → evening (DUMBO → Brooklyn Bridge → Staten Island Ferry).",
+    sunset:"8:04 PM",
+    summary:"**MORNING:** 1 train to Times Sq-42 St → 🧢 Yankees Clubhouse Shop (grab 3 caps, opens 10am) → walk N to Central Park Columbus Circle entrance → Bethesda Terrace for photos + Sheep Meadow for reading (1-2 hrs) → walk N through park to The Met (10am-9pm Sat, last entry 8pm). **HOME BREAK** in afternoon. **EVENING:** F train 23rd St → York St (DUMBO) → Brooklyn Bridge Park Pier 1 skyline shot → walk Brooklyn Bridge back to Manhattan (~45 min) → 1 train Chambers → South Ferry → 🗽 Staten Island Ferry roundtrip (free, Lady Liberty + skyline) → 1 train South Ferry → 23rd St → home.",
+    tip:"Yankees Clubhouse Shop opens 10am. Met Saturday hours: 10am-9pm (last entry 8pm). Staten Island Ferry runs every 20-30 min weekends. Sunset 8:04pm — try to catch the ferry near sunset for the best light.",
     gem:null
   }
 ];
@@ -621,16 +622,22 @@ const PINS = [
 
   // DAY 6 — Fri May 15 (work + Brooklyn, LAST FULL DAY)
   // Day 6 — Fri — LIGHT BROOKLYN: just the Brooklyn Bridge walk + Staten Island Ferry. Home early to pack.
-  { day:6, type:"cafe",       name:"★ Stumptown (Ace Hotel)",       lat:40.7459, lng:-73.9883, addr:"18 W 29th St (Ace Hotel lobby)", tip:"WORK CAFE — Fri 10am–2pm. 5 min north of home. After work, head out for a light Brooklyn afternoon.", emoji:"💻", work:true },
-  { day:6, type:"subway",     name:"F: 23rd St → York St (DUMBO)",  lat:40.7008, lng:-73.9869, addr:"York St Station, DUMBO", tip:"F train from 23rd St (6th Ave) to York St. ~15 min. Exit 1 block from Brooklyn Bridge Park.", emoji:"🚇" },
-  { day:6, type:"viewpoint",  name:"Brooklyn Bridge Park Pier 1",   lat:40.7028, lng:-73.9968, addr:"Brooklyn Bridge Park", tip:"Quick skyline-shot stop before the bridge walk. Manhattan skyline + both bridges in frame.", emoji:"👁", must:true, photo:true },
-  { day:6, type:"attraction", name:"Brooklyn Bridge (walk to MH)",  lat:40.7061, lng:-73.9969, addr:"Pedestrian entrance, BK side", tip:"1.1 miles, walks back to Manhattan with skyline ahead. Stay LEFT (pedestrian, not bike). ~30-45 min crossing. Lands at City Hall.", emoji:"⭐", must:true, photo:true },
-  { day:6, type:"subway",     name:"R/W: City Hall → Whitehall",    lat:40.7013, lng:-74.0131, addr:"Whitehall St Station (R/W)", tip:"After the bridge walk, hop R/W south one stop from City Hall to Whitehall. Walk to the Staten Island Ferry terminal next door.", emoji:"🚇" },
-  { day:6, type:"viewpoint",  name:"Staten Island Ferry",           lat:40.7013, lng:-74.0134, addr:"4 Whitehall St (Whitehall Terminal)", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return — boats run every 30 min off-peak.", emoji:"👁", must:true, photo:true },
-  { day:6, type:"subway",     name:"1: South Ferry → 23rd St",      lat:40.7440, lng:-73.9954, addr:"23rd St Station (1 train)", tip:"After Ferry, 1 train uptown 23rd St → 3 block walk to home. PACK TONIGHT — 3am cab tomorrow.", emoji:"🚇" },
+  // Day 6 — Fri — light recovery day (Brooklyn Bridge + Ferry moved to Sat)
+  { day:6, type:"cafe",       name:"★ Stumptown (Ace Hotel)",       lat:40.7459, lng:-73.9883, addr:"18 W 29th St (Ace Hotel lobby)", tip:"WORK CAFE — Fri 10am–2pm. 5 min north of home. After work: continue recovering / pack the heavy stuff. Saturday is the full day.", emoji:"💻", work:true },
 
   // DAY 7 — Sat May 16 (3am cab departure)
-  { day:7, type:"subway",     name:"🚕 3:00am cab to JFK",          lat:40.7424, lng:-73.9908, addr:"25 W 24th St → JFK", tip:"Pre-book a cab the night before — DO NOT rely on hailing one at 3am. Wake 2:30am, leave 3:00am sharp, arrive JFK ~3:45am for the 6:55am flight. Flat $70 + ~$10 toll + tip ≈ $90.", emoji:"🚕" },
+  // Day 7 — Sat — FULL DAY: morning (Yankees + Central Park + Met) → home break → evening (DUMBO + Brooklyn Bridge + Ferry)
+  // MORNING
+  { day:7, type:"shop",       name:"🧢 Yankees Clubhouse Shop",      lat:40.7565, lng:-73.9874, addr:"245 W 42nd St (Times Square)", tip:"Closest Yankees store to home — Times Square area, 1 train 23rd St → Times Sq-42 St. Grab your 3 caps. Opens 10am.", emoji:"🧢", must:true },
+  { day:7, type:"attraction", name:"Central Park (reading + photos)", lat:40.7740, lng:-73.9710, addr:"Bethesda Terrace / mid-park 72nd St", tip:"Walk N from Yankees store, enter park at Columbus Circle. Bethesda Terrace for photos (the angel + lake). Sheep Meadow nearby for spreading out with a book in the sun. 1-2 hours.", emoji:"📷", must:true, photo:true },
+  { day:7, type:"museum",     name:"The Met",                       lat:40.7794, lng:-73.9632, addr:"1000 5th Ave", tip:"Walk N through the park from Bethesda (~12 min) to Met at 82nd & 5th. Saturday hours: 10am-9pm (last entry 8pm) — plenty of time. Egyptian wing, Temple of Dendur, European Paintings, American Wing.", emoji:"🏛", must:true },
+  // EVENING (after home break)
+  { day:7, type:"subway",     name:"F: 23rd St → York St (DUMBO)",  lat:40.7008, lng:-73.9869, addr:"York St Station, DUMBO", tip:"F train from 23rd St (6th Ave) to York St. ~15 min.", emoji:"🚇" },
+  { day:7, type:"viewpoint",  name:"Brooklyn Bridge Park Pier 1",   lat:40.7028, lng:-73.9968, addr:"Brooklyn Bridge Park", tip:"DUMBO arrival. Quick skyline-shot stop before the bridge walk.", emoji:"👁", must:true, photo:true },
+  { day:7, type:"attraction", name:"Brooklyn Bridge (walk to MH)",  lat:40.7061, lng:-73.9969, addr:"Pedestrian entrance, BK side", tip:"1.1 miles back to Manhattan with skyline ahead. Stay LEFT (pedestrian, not bike). ~30-45 min crossing. Lands at City Hall.", emoji:"⭐", must:true, photo:true },
+  { day:7, type:"subway",     name:"1: City Hall area → South Ferry", lat:40.7013, lng:-74.0131, addr:"Whitehall / South Ferry Terminal", tip:"After bridge walk: 1 train from Chambers St south to South Ferry (3 stops). Walk to the Staten Island Ferry terminal.", emoji:"🚇" },
+  { day:7, type:"viewpoint",  name:"Staten Island Ferry",           lat:40.7013, lng:-74.0134, addr:"4 Whitehall St (Whitehall Terminal)", tip:"FREE. 25 min each way. Sit on the right going out, left coming back, for Lady Liberty + skyline. Stay onboard for the return — boats run every 20-30 min weekends.", emoji:"👁", must:true, photo:true },
+  { day:7, type:"subway",     name:"1: South Ferry → 23rd St",      lat:40.7440, lng:-73.9954, addr:"23rd St Station (1 train)", tip:"After Ferry, 1 train uptown to 23rd St → 3 block walk to home.", emoji:"🚇" },
 
   // ─── UTILITY PINS (cross-day: grocery + shops) ───
   // GROCERY — pulled up via the 🛒 Grocery filter
